@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SWAG 新手限定禮包</title>
+    <title>SWAG 新手限定雙重禮遇</title>
     <style>
         /* --- 基礎設定 --- */
         :root {
             --swag-pink: #ff2d55;
             --swag-purple: #9d00ff;
             --neon-red: #ff003c;
-            --gold: #ffcc00;
-            --bg-dark: #0a0a0a;
-            --card-bg: rgba(255, 255, 255, 0.05);
+            --gold: #ffd700;
+            --gold-gradient: linear-gradient(135deg, #fff8db 0%, #ffd700 50%, #d4af37 100%);
+            --bg-dark: #050505;
+            --card-bg: rgba(25, 25, 25, 0.9);
         }
 
         body {
@@ -20,310 +21,267 @@
             padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             background-color: var(--bg-dark);
-            background-image: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            /* 深邃的背景，強調私密感 */
+            background-image: radial-gradient(circle at center, #1a0b2e 0%, #000000 100%);
             color: white;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 10px;
         }
 
         .container {
             width: 100%;
-            max-width: 800px;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(10px);
+            max-width: 600px; /* 手機版型優化寬度 */
+            background: rgba(0, 0, 0, 0.4);
             border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 0 50px rgba(157, 0, 255, 0.2);
+            padding: 20px 15px;
+            box-shadow: 0 0 30px rgba(157, 0, 255, 0.15);
             border: 1px solid rgba(255, 255, 255, 0.1);
             position: relative;
+        }
+
+        /* --- 頂部倒數區 --- */
+        .header-section {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #00f2ea;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+            display: inline-block;
+        }
+
+        .timer-box {
+            background: rgba(255, 0, 60, 0.1);
+            border: 1px solid var(--neon-red);
+            display: inline-block;
+            padding: 5px 20px;
+            border-radius: 50px;
+            margin-top: 10px;
+        }
+
+        .countdown {
+            font-family: 'Courier New', monospace;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--neon-red);
+            text-shadow: 0 0 10px var(--neon-red);
+        }
+
+        .timer-label {
+            color: #ffcccc;
+            font-size: 0.8rem;
+            margin-top: 5px;
+        }
+
+        /* --- 商品卡片容器 --- */
+        .products-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* --- 通用卡片樣式 --- */
+        .product-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 15px;
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* --- 主力商品 (5880鑽) 特殊樣式 --- */
+        .card-premium {
+            border: 2px solid var(--gold);
+            background: linear-gradient(to bottom, rgba(40, 30, 10, 0.9), rgba(0,0,0,0.9));
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+            flex-direction: column; /* 垂直排列內容以獲得更多空間 */
+            padding: 25px 20px;
+            order: 1; /* 確保它排在第一個 (或視需求調整) */
             overflow: hidden;
         }
 
-        /* --- 頂部標籤 --- */
-        .header-badge {
+        /* 皇冠標籤 */
+        .best-value-badge {
             position: absolute;
             top: 0;
             right: 0;
-            background: linear-gradient(90deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
-            color: #333;
+            background: var(--gold-gradient);
+            color: #584600;
             font-weight: bold;
             font-size: 0.8rem;
             padding: 5px 15px;
             border-bottom-left-radius: 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-            z-index: 10;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
         }
 
-        /* --- LOGO --- */
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: #00f2ea;
-            text-shadow: 0 0 10px #00f2ea;
-            margin-bottom: 10px;
-            display: inline-block;
-        }
-
-        /* --- 倒數計時器區 --- */
-        .timer-section {
-            text-align: center;
-            margin-bottom: 25px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding-bottom: 20px;
-        }
-
-        .countdown {
-            font-family: 'Courier New', Courier, monospace; /* 模擬數位時鐘字體 */
-            font-size: 3.5rem;
-            font-weight: bold;
-            color: var(--neon-red);
-            text-shadow: 0 0 20px var(--neon-red);
-            letter-spacing: 2px;
-            line-height: 1;
-            margin: 10px 0;
-        }
-
-        .urgent-text {
-            color: #ffcccc;
-            font-size: 0.9rem;
-        }
-
-        .highlight-red {
-            color: var(--neon-red);
-            font-weight: bold;
-            text-decoration: underline;
-        }
-
-        /* --- 主要內容區 (Grid/Flex) --- */
-        .main-content {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        @media (min-width: 768px) {
-            .main-content {
-                flex-direction: row;
-                align-items: stretch;
-            }
-        }
-
-        /* --- 左側：視覺慾望區 --- */
-        .visual-card {
-            flex: 1;
-            background: #000;
-            border-radius: 15px;
-            position: relative;
-            overflow: hidden;
-            min-height: 250px;
-            display: flex;
-            align-items: flex-end;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-
-        /* 模擬主播圖片背景 */
-        .visual-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            /* 這裡請替換成你的真實圖片 URL */
-            background-image: url('https://images.unsplash.com/photo-1616004655123-8185ebd97984?q=80&w=1000&auto=format&fit=crop'); 
-            background-size: cover;
-            background-position: center;
-            opacity: 0.7;
-            filter: blur(2px); /* 模糊處理增加神秘感 */
-            transition: 0.3s;
-        }
-        
-        .visual-card:hover .visual-bg {
-            filter: blur(0px); /* 滑鼠移過去變清晰 */
-            opacity: 1;
-        }
-
-        .visual-text {
-            position: relative;
-            z-index: 2;
-            padding: 15px;
-            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-            width: 100%;
-            text-align: center;
-        }
-
-        .visual-text h3 {
-            margin: 0;
-            font-size: 1.2rem;
-            color: white;
-            text-shadow: 0 2px 4px black;
-        }
-
-        /* --- 右側：價格與價值區 --- */
-        .offer-card {
-            flex: 1;
-            background: var(--card-bg);
-            border-radius: 15px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .offer-title {
-            font-size: 1.1rem;
-            color: #fff;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .price-box {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .original-price {
-            text-decoration: line-through;
-            color: #888;
-            font-size: 1rem;
-        }
-
-        .final-price {
-            font-size: 3rem;
-            font-weight: 800;
-            color: var(--gold);
-            text-shadow: 0 0 15px rgba(255, 204, 0, 0.4);
-            line-height: 1;
-        }
-
-        .currency {
-            font-size: 1.5rem;
-            color: #fff;
-        }
-
-        .formula-box {
-            background: rgba(0,0,0,0.3);
-            border-radius: 10px;
-            padding: 10px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            margin-bottom: 10px;
-            font-size: 0.9rem;
-        }
-        
-        .formula-item {
-            text-align: center;
-        }
-        
-        .formula-item span {
-            display: block;
-            color: #aaa;
-            font-size: 0.7rem;
-        }
-        
-        .plus-sign, .equal-sign {
-            color: #fff;
-            font-weight: bold;
-        }
-
-        .total-value {
-            color: var(--gold);
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-
-        .bonus-tag {
-            font-size: 0.7rem;
+        /* 100% 加量標籤 */
+        .bonus-sticker {
             background: var(--neon-red);
-            padding: 2px 5px;
-            border-radius: 3px;
             color: white;
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            transform: rotate(-5deg);
+            display: inline-block;
+            margin-bottom: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            animation: pulse-scale 1.5s infinite;
+        }
+
+        .premium-content {
+            text-align: center;
+            width: 100%;
+        }
+
+        .premium-title {
+            font-size: 1.2rem;
+            color: var(--gold);
+            margin-bottom: 5px;
+        }
+
+        .diamond-display {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: white;
+            margin: 10px 0;
+            text-shadow: 0 2px 10px rgba(255,255,255,0.3);
+        }
+
+        .diamond-calc {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-bottom: 15px;
+            background: rgba(255,255,255,0.05);
+            padding: 5px;
+            border-radius: 5px;
             display: inline-block;
         }
 
-        /* --- 社群驗證 --- */
-        .social-proof {
-            margin-top: 15px;
-            font-size: 0.8rem;
-            color: #ccc;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 8px;
-            border-radius: 50px;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-        }
-        
-        .fire-icon { animation: flicker 1.5s infinite alternate; }
-
-        @keyframes flicker {
-            0% { opacity: 1; }
-            100% { opacity: 0.5; }
+        .premium-price {
+            font-size: 1.5rem;
+            color: var(--gold);
+            font-weight: bold;
+            margin-bottom: 15px;
         }
 
-        /* --- CTA 按鈕 --- */
-        .cta-container {
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        .cta-btn {
-            background: linear-gradient(90deg, var(--swag-purple), var(--swag-pink));
+        .btn-premium {
+            background: var(--gold-gradient);
+            color: #4a3b00;
             border: none;
             width: 100%;
-            padding: 18px;
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: white;
+            padding: 15px;
+            font-size: 1.1rem;
+            font-weight: 900;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 0 20px rgba(255, 45, 85, 0.5);
-            transition: transform 0.1s;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
             position: relative;
             overflow: hidden;
-            animation: pulse 2s infinite;
+        }
+        
+        /* --- 入門商品 (99元) 特殊樣式 --- */
+        .card-entry {
+            order: 2;
+            padding: 15px 20px;
         }
 
-        .cta-btn:active {
-            transform: scale(0.98);
+        .entry-left {
+            flex: 1;
         }
 
-        /* 按鈕光效掃過 */
-        .cta-btn::after {
+        .entry-title {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .entry-desc {
+            font-size: 0.8rem;
+            color: #bbb;
+            margin-top: 3px;
+        }
+
+        .entry-right {
+            text-align: right;
+        }
+
+        .entry-price {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--swag-pink);
+        }
+
+        .original-price-small {
+            font-size: 0.8rem;
+            text-decoration: line-through;
+            color: #666;
+        }
+
+        .btn-entry {
+            background: transparent;
+            border: 1px solid var(--swag-pink);
+            color: var(--swag-pink);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-top: 5px;
+            cursor: pointer;
+        }
+        
+        .btn-entry:hover {
+            background: var(--swag-pink);
+            color: white;
+        }
+
+        /* --- 社群驗證與底部 --- */
+        .social-proof {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        .highlight-num {
+            color: white;
+            font-weight: bold;
+        }
+
+        /* --- 動畫 --- */
+        @keyframes pulse-scale {
+            0% { transform: scale(1) rotate(-5deg); }
+            50% { transform: scale(1.1) rotate(-5deg); }
+            100% { transform: scale(1) rotate(-5deg); }
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .btn-premium::after {
             content: '';
             position: absolute;
             top: 0;
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            animation: shine 3s infinite;
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(255, 45, 85, 0.7); }
-            70% { box-shadow: 0 0 0 15px rgba(255, 45, 85, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 45, 85, 0); }
-        }
-
-        @keyframes shine {
-            0% { left: -100%; }
-            20% { left: 100%; }
-            100% { left: 100%; }
-        }
-
-        .terms {
-            margin-top: 10px;
-            font-size: 0.7rem;
-            color: #666;
-            text-align: center;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+            animation: shimmer 2.5s infinite;
         }
 
     </style>
@@ -331,78 +289,74 @@
 <body>
 
     <div class="container">
-        <div class="header-badge">🔔 僅限首次儲值用戶</div>
-
-        <div style="text-align: center;">
+        <div class="header-section">
             <div class="logo">SWAG</div>
-        </div>
-
-        <div class="timer-section">
-            <div class="countdown" id="countdown">23:58:47</div>
-            <div class="urgent-text">
-                ⚠️ 緊急：你的新手專屬福利正在流失中！
-                <span class="highlight-red">錯過永久失效</span>
+            <div>
+                <div class="timer-box">
+                    <span style="font-size: 0.8rem; vertical-align: middle;">⏳ 限時優惠倒數</span>
+                    <div class="countdown" id="countdown">23:59:59</div>
+                </div>
             </div>
+            <div class="timer-label">新用戶限定福利，離開後無法找回</div>
         </div>
 
-        <div class="main-content">
+        <div class="products-container">
             
-            <div class="visual-card">
-                <div class="visual-bg"></div>
-                <div class="visual-text">
-                    <h3>💎 解鎖她們的私密動態...</h3>
-                    <div style="font-size: 0.8rem; color: #ddd; margin-top: 5px;">觀看無碼影片 / 私訊互動</div>
+            <div class="product-card card-premium">
+                <div class="best-value-badge">👑 用戶首選 TOP 1</div>
+                
+                <div class="premium-content">
+                    <div class="bonus-sticker">🔥 限時加量 100%</div>
+                    <div class="premium-title">大戶開局禮包</div>
+                    
+                    <div class="diamond-display">11,760 鑽</div>
+                    
+                    <div class="diamond-calc">
+                        包含：5880 基礎 + <span style="color:var(--gold)">5880 額外贈送</span>
+                    </div>
+
+                    <div style="font-size: 0.8rem; color:#ccc; margin-bottom: 10px;">
+                        💎 足夠解鎖 <span style="color:white; font-weight:bold;">20+ 部</span> 高清長片或深度私訊
+                    </div>
+
+                    <div class="premium-price">
+                        $ 5,880 TWD
+                    </div>
+
+                    <button class="btn-premium" onclick="alert('購買 5880 方案')">
+                        立即開通 (獲得雙倍鑽石) 👉
+                    </button>
                 </div>
-                <div style="position: absolute; top: 10px; left: 10px; font-size: 2rem;">💎</div>
-                <div style="position: absolute; top: 40px; right: 20px; font-size: 1.5rem; opacity: 0.8;">💎</div>
             </div>
 
-            <div class="offer-card">
-                <div class="offer-title">
-                    <span class="fire-icon">🔥</span> 破盤價：百元有找入門禮
-                </div>
-
-                <div class="price-box">
-                    <div class="original-price">$300 TWD</div>
-                    <div class="final-price">$ 99 <span class="currency">TWD</span></div>
-                </div>
-
-                <div class="formula-box">
-                    <div class="formula-item">
-                        <span>基礎</span>
-                        500 鑽
+            <div class="product-card card-entry">
+                <div class="entry-left">
+                    <div class="entry-title">
+                        🎫 10分鐘暢遊券
                     </div>
-                    <div class="plus-sign">+</div>
-                    <div class="formula-item">
-                        <span>🎁 額外贈送</span>
-                        500 鑽
-                    </div>
-                    <div class="equal-sign">=</div>
-                    <div class="formula-item">
-                        <span class="bonus-tag">加量 100%</span>
-                        <div class="total-value">1000 鑽</div>
+                    <div class="entry-desc">
+                        只要銅板價，全站內容任你探索。<br>
+                        <span style="color: #888; font-size: 0.75rem;">適合想先體驗看看的你</span>
                     </div>
                 </div>
-
-                <div class="social-proof">
-                    <span class="fire-icon">🔥</span>
-                    社群驗證：今日已有 <strong id="buyer-count" style="color:white; margin: 0 3px;">843</strong> 位新用戶購買
+                <div class="entry-right">
+                    <div class="original-price-small">$299</div>
+                    <div class="entry-price">$ 99</div>
+                    <button class="btn-entry" onclick="alert('購買 99 方案')">
+                        立即體驗
+                    </button>
                 </div>
             </div>
+
         </div>
 
-        <div class="cta-container">
-            <button class="cta-btn" onclick="alert('跳轉至支付頁面...')">
-                👆 領取新手福利 (立即變強)
-            </button>
-            <div class="terms">
-                點擊即視為同意購買條款，優惠機會僅此一次，無法轉讓。
-            </div>
+        <div class="social-proof">
+            🔥 過去 24 小時已有 <span class="highlight-num" id="buyer-count">843</span> 位新用戶選擇了開局禮包
         </div>
     </div>
 
     <script>
-        // 1. 倒數計時器邏輯
+        // 1. 倒數計時器
         function startTimer(duration, display) {
             var timer = duration, hours, minutes, seconds;
             setInterval(function () {
@@ -417,29 +371,26 @@
                 display.textContent = hours + ":" + minutes + ":" + seconds;
 
                 if (--timer < 0) {
-                    timer = 0; // 倒數結束停在 0
-                    display.style.color = "#555"; // 變灰表示失效
+                    timer = 0;
                     display.textContent = "00:00:00";
+                    display.style.color = "#555";
                 }
             }, 1000);
         }
 
-        // 2. 隨機社群驗證數字 (500 - 1000)
+        // 2. 隨機人數
         function setRandomBuyers() {
-            const min = 500;
-            const max = 1000;
+            const min = 700;
+            const max = 1200;
             const randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
             document.getElementById('buyer-count').innerText = randomNum;
         }
 
-        // 初始化執行
         window.onload = function () {
-            // 設定倒數 23小時 59分 59秒 (以秒為單位)
-            var twentyFourHours = (23 * 60 * 60) + (59 * 60) + 59; 
+            // 倒數 23:59:59
+            var daySeconds = (23 * 60 * 60) + (59 * 60) + 59; 
             var display = document.querySelector('#countdown');
-            startTimer(twentyFourHours, display);
-            
-            // 設定隨機人數
+            startTimer(daySeconds, display);
             setRandomBuyers();
         };
     </script>
