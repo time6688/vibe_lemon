@@ -8,71 +8,113 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        [v-cloak] { display: none; } /* 防止 Vue 載入前的閃爍 */
-        body { background: #0f172a; color: #f8fafc; font-family: sans-serif; min-height: 100vh; }
-        .glass-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 1.25rem; }
+        [v-cloak] { display: none; }
+        body { background: #0f172a; color: #f8fafc; font-family: 'PingFang TC', sans-serif; min-height: 100vh; overflow-x: hidden; }
+        .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 1.5rem; transition: all 0.3s ease; }
+        .glass-card:hover { border-color: rgba(99, 102, 241, 0.4); background: rgba(255, 255, 255, 0.05); }
         .gradient-text { background: linear-gradient(90deg, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        /* 跑馬燈動畫 */
+        .marquee-container { overflow: hidden; white-space: nowrap; position: relative; background: rgba(99, 102, 241, 0.1); padding: 15px 0; border-y: 1px solid rgba(255,255,255,0.1); }
+        .marquee-content { display: inline-block; animation: marquee 60s linear infinite; }
+        .marquee-item { display: inline-block; margin: 0 30px; color: #a5b4fc; font-weight: 500; font-size: 0.9rem; }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* 更新按鈕旋轉動畫 */
+        .refresh-btn:active i { transform: rotate(180deg); }
+        .refresh-btn i { transition: transform 0.5s ease; }
+
+        /* 捲軸美化 */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
     </style>
 </head>
 <body>
-    <div id="app" v-cloak class="max-w-7xl mx-auto px-6 py-10">
+    <div id="app" v-cloak>
         
-        <header class="flex flex-col md:flex-row justify-between items-center mb-12 gap-8">
+        <header class="max-w-4xl mx-auto px-6 pt-12 pb-8 flex flex-col md:flex-row justify-between items-center gap-6">
             <div>
-                <h1 class="text-5xl font-extrabold gradient-text mb-2">{{ t.title }}</h1>
-                <p class="text-slate-400">Celebrating our amazing teammates together.</p>
+                <h1 class="text-4xl font-extrabold gradient-text mb-2">{{ t.title }}</h1>
+                <p class="text-slate-500 text-sm italic tracking-widest">REAL-TIME GRATITUDE FEED</p>
             </div>
-            <div class="flex p-1.5 bg-slate-900 rounded-2xl border border-slate-700">
+            <div class="flex p-1 bg-slate-900/50 rounded-xl border border-slate-800 shadow-inner">
                 <button v-for="(name, lang) in languages" :key="lang" @click="currentLang = lang"
-                        :class="['px-5 py-2 rounded-xl transition', currentLang === lang ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:text-white']">
+                        :class="['px-4 py-1.5 rounded-lg text-xs transition font-bold', currentLang === lang ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-500 hover:text-slate-300']">
                     {{ name }}
                 </button>
             </div>
         </header>
 
-        <section v-if="topThree.length > 0" class="mb-20">
-            <h2 class="text-2xl font-bold mb-8 flex items-center"><i class="fas fa-crown text-yellow-500 mr-3"></i>{{ t.topThree }}</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div v-for="(item, index) in topThree" :key="index" class="glass-card p-8 text-center group">
-                    <i class="fas fa-medal text-4xl mb-4" :class="index === 0 ? 'text-yellow-400' : index === 1 ? 'text-slate-300' : 'text-orange-500'"></i>
-                    <h3 class="text-2xl font-bold mb-1">{{ item.name }}</h3>
-                    <p class="text-indigo-400 text-sm mb-4">{{ item.dept }}</p>
-                    <div class="text-pink-500 font-bold bg-pink-500/10 py-2 px-4 rounded-full inline-flex items-center"><i class="fas fa-heart mr-2"></i>{{ item.likes }}</div>
-                </div>
+        <div v-if="rawData.length > 0" class="marquee-container mb-12">
+            <div class="marquee-content">
+                <span v-for="msg in [...rawData, ...rawData]" :key="msg.id" class="marquee-item">
+                    <i class="fas fa-bolt text-indigo-500 mr-2"></i>
+                    <strong>{{ msg.name }}</strong>: "{{ msg.content.substring(0,30) }}..."
+                </span>
             </div>
-        </section>
+        </div>
 
-        <section class="glass-card p-10 mb-20 border-l-8 border-indigo-500">
-            <h3 class="text-2xl font-bold mb-6"><i class="fas fa-scroll mr-3 text-indigo-400"></i>{{ t.rulesTitle }}</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div v-for="rule in t.rules" :key="rule" class="text-slate-300 border-b border-white/5 pb-2">★ {{ rule }}</div>
-            </div>
-        </section>
-
-        <section>
-            <div class="flex justify-between items-center mb-10">
-                <h2 class="text-3xl font-bold">{{ t.wallTitle }}</h2>
-                <select v-model="selectedDept" class="bg-slate-800 text-white border border-slate-700 p-2 rounded-xl">
-                    <option value="All">{{ t.allDepts }}</option>
-                    <option v-for="dept in departments" :key="dept" :value="dept">{{ dept }}</option>
-                </select>
-            </div>
-
-            <div v-if="loading" class="text-center py-20 text-indigo-500 animate-pulse text-xl font-bold">載入資料中...</div>
-
-            <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div v-for="msg in filteredMessages" :key="msg.id" class="glass-card p-8 flex flex-col justify-between">
+        <section v-if="topThree.length > 0" class="max-w-4xl mx-auto px-6 mb-16">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div v-for="(item, index) in topThree" :key="index" class="glass-card p-6 flex items-center gap-4 relative overflow-hidden">
+                    <div class="text-3xl opacity-20 absolute -right-2 -bottom-2 rotate-12">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div class="text-2xl font-black w-10 h-10 rounded-full flex items-center justify-center" 
+                         :class="index === 0 ? 'bg-yellow-500/20 text-yellow-500' : index === 1 ? 'bg-slate-400/20 text-slate-400' : 'bg-orange-600/20 text-orange-600'">
+                        {{ index + 1 }}
+                    </div>
                     <div>
-                        <div class="flex justify-between mb-4"><span class="bg-indigo-500/20 text-indigo-300 px-3 py-1 rounded text-[10px]">{{ msg.dept }}</span><span class="text-[10px] text-slate-500">{{ msg.time }}</span></div>
-                        <p class="text-slate-200 text-lg italic mb-8">"{{ msg.content }}"</p>
-                    </div>
-                    <div class="flex justify-between items-center pt-4 border-t border-white/5">
-                        <span class="font-bold text-white">{{ msg.name }}</span>
-                        <div class="text-slate-500 text-sm"><i class="fas fa-heart text-pink-500/30 mr-1"></i>0</div>
+                        <div class="font-bold text-lg leading-tight">{{ item.name }}</div>
+                        <div class="text-[10px] text-slate-500 uppercase tracking-tighter">{{ item.dept }}</div>
+                        <div class="text-xs text-pink-500 font-bold mt-1"><i class="fas fa-heart mr-1"></i>{{ item.likes }}</div>
                     </div>
                 </div>
             </div>
         </section>
+
+        <main class="max-w-3xl mx-auto px-6 pb-20">
+            <div class="flex justify-between items-end mb-8 px-2">
+                <div>
+                    <h2 class="text-2xl font-bold flex items-center gap-3">
+                        {{ t.wallTitle }}
+                        <button @click="fetchData" class="refresh-btn text-indigo-500 hover:text-indigo-400 text-sm transition p-2">
+                            <i class="fas fa-sync-alt" :class="{'fa-spin': loading}"></i>
+                        </button>
+                    </h2>
+                </div>
+                <div class="relative">
+                    <select v-model="selectedDept" class="bg-slate-900 border border-slate-800 text-slate-300 text-xs rounded-lg px-3 py-2 outline-none focus:ring-1 ring-indigo-500 appearance-none pr-8">
+                        <option value="All">{{ t.allDepts }}</option>
+                        <option v-for="dept in departments" :key="dept" :value="dept">{{ dept }}</option>
+                    </select>
+                    <i class="fas fa-chevron-down absolute right-3 top-3 text-[10px] text-slate-600 pointer-events-none"></i>
+                </div>
+            </div>
+
+            <div v-if="loading && rawData.length === 0" class="text-center py-20 text-slate-600 italic">Synchronizing...</div>
+
+            <div v-else class="space-y-6">
+                <div v-for="msg in filteredMessages" :key="msg.id" 
+                     class="glass-card p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 border-l-4 border-transparent hover:border-indigo-500 group">
+                    <div class="flex-1">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="text-xs font-bold text-indigo-400/80 bg-indigo-500/5 px-2 py-0.5 rounded">{{ msg.dept }}</span>
+                            <span class="text-[10px] text-slate-600 font-mono">{{ msg.time }}</span>
+                        </div>
+                        <p class="text-slate-200 text-md leading-relaxed">
+                            <i class="fas fa-quote-left text-slate-800 mr-2"></i>{{ msg.content }}
+                        </p>
+                    </div>
+                    <div class="flex items-center justify-between md:justify-end md:w-32 border-t md:border-t-0 border-white/5 pt-4 md:pt-0">
+                        <span class="font-bold text-slate-100">{{ msg.name }}</span>
+                        <div class="md:hidden flex items-center text-pink-500/40 text-xs">
+                             <i class="fas fa-heart mr-1"></i> {{ msg.likes || 0 }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
 
     <script>
@@ -85,36 +127,26 @@
                 const rawData = ref([]);
                 const loading = ref(true);
 
-                // --- ⚠️ 重要：請在此替換你的 Google Apps Script URL ⚠️ ---
-                const API_URL = "https://script.google.com/macros/s/AKfycbxyQdcpF2mRS1JP6DViNJIen7uv70gmjTAPOp16On74NME507zFBoKRf4qdS0bqkM9x/exec"; 
+                // 已保留你的 API URL
+                const API_URL = "https://script.google.com/macros/s/AKfycbxyQdcpF2mRS1JP6DVInJIen7uv70gmjTAPOp16On74NME507zFBoKRf4qdS0bqkM9x/exec"; 
 
                 const TRANSLATIONS = {
-                    zh: { title: "神隊友感恩牆", topThree: "感恩人氣排行榜", rulesTitle: "活動詳情與規則", rules: ["保持正面與感恩的心", "每列最多推薦三位神隊友", "系統與試算表同步", "前三名將獲得神秘禮物"], wallTitle: "感謝留言板", filterByDept: "篩選", allDepts: "所有部門" },
-                    cn: { title: "神队友感恩墙", topThree: "感恩人气排行榜", rulesTitle: "活动详情与规则", rules: ["保持正面与感恩的心", "每行最多推荐三位神队友", "系统与试算表同步", "前三名将获得神秘礼物"], wallTitle: "感谢留言板", filterByDept: "筛选", allDepts: "所有部门" },
-                    en: { title: "Teammate Wall", topThree: "Leaderboard", rulesTitle: "Rules", rules: ["Keep it positive", "Max 3 nominations per entry", "Synced with Sheet", "Top 3 win prizes"], wallTitle: "Appreciation Wall", filterByDept: "Filter", allDepts: "All Depts" },
-                    jp: { title: "感謝の壁", topThree: "ランキング", rulesTitle: "ルール", rules: ["ポジティブに", "1行につき3人まで", "スプレッドシートと同期", "上位3名にプレゼント"], wallTitle: "メッセージ一覧", filterByDept: "部署", allDepts: "すべての部署" }
+                    zh: { title: "神隊友感恩牆", topThree: "人氣王排行榜", wallTitle: "最新感言", allDepts: "所有部門" },
+                    cn: { title: "神队友感恩墙", topThree: "人气王排行榜", wallTitle: "最新感言", allDepts: "所有部门" },
+                    en: { title: "Team Gratitude", topThree: "Top Heroes", wallTitle: "Live Feed", allDepts: "All Depts" },
+                    jp: { title: "感謝の壁", topThree: "人気ランキング", wallTitle: "最新メッセージ", allDepts: "全部門" }
                 };
 
                 const fetchData = async () => {
                     loading.value = true;
                     try {
-                        // 加入 redirect: 'follow' 處理 Google Script 的跳轉
-                        const res = await fetch(API_URL, {
-                            method: 'GET',
-                            mode: 'cors',
-                            redirect: 'follow'
-                        });
-                        
+                        const res = await fetch(API_URL, { redirect: 'follow' });
                         const data = await res.json();
-                        
                         if (data && Array.isArray(data)) {
-                            // 這裡加個小過濾，確保資料裡有名字才顯示
-                            rawData.value = data.filter(item => item.name && item.name.trim() !== "");
+                            rawData.value = data;
                         }
                     } catch (e) {
-                        console.error("資料讀取失敗，原因：", e);
-                        // 讓使用者知道發生什麼事
-                        alert("資料讀取發生錯誤，請檢查網路或 API 網址是否正確。");
+                        console.error("Fetch failed", e);
                     } finally {
                         loading.value = false;
                     }
@@ -125,18 +157,23 @@
                 const t = computed(() => TRANSLATIONS[currentLang.value]);
                 const languages = { zh: '繁', cn: '簡', en: 'EN', jp: 'JP' };
                 const departments = computed(() => [...new Set(rawData.value.map(m => m.dept))].filter(d => d));
+                
                 const filteredMessages = computed(() => {
                     let list = [...rawData.value].sort((a, b) => new Date(b.time) - new Date(a.time));
                     return selectedDept.value === 'All' ? list : list.filter(m => m.dept === selectedDept.value);
                 });
+
                 const topThree = computed(() => {
                     const counts = {};
                     rawData.value.forEach(m => counts[m.name] = (counts[m.name] || 0) + 1);
-                    return Object.keys(counts).map(n => ({ name: n, dept: rawData.value.find(m => m.name === n).dept, likes: counts[n] }))
-                        .sort((a, b) => b.likes - a.likes).slice(0, 3);
+                    return Object.keys(counts).map(n => ({ 
+                        name: n, 
+                        dept: rawData.value.find(m => m.name === n).dept, 
+                        likes: counts[n] 
+                    })).sort((a, b) => b.likes - a.likes).slice(0, 3);
                 });
 
-                return { currentLang, selectedDept, loading, languages, t, departments, filteredMessages, topThree };
+                return { currentLang, selectedDept, loading, languages, t, departments, filteredMessages, topThree, fetchData };
             }
         }).mount('#app');
     </script>
