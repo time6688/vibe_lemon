@@ -15,16 +15,12 @@
         .gradient-text { background: linear-gradient(90deg, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
         /* 跑馬燈動畫 */
-        .marquee-container { overflow: hidden; white-space: nowrap; position: relative; background: rgba(99, 102, 241, 0.1); padding: 15px 0; border-y: 1px solid rgba(255,255,255,0.1); }
+        .marquee-container { overflow: hidden; white-space: nowrap; position: relative; background: rgba(99, 102, 241, 0.1); padding: 15px 0; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); }
         .marquee-content { display: inline-block; animation: marquee 60s linear infinite; }
         .marquee-item { display: inline-block; margin: 0 30px; color: #a5b4fc; font-weight: 500; font-size: 0.9rem; }
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* 更新按鈕旋轉動畫 */
-        .refresh-btn:active i { transform: rotate(180deg); }
         .refresh-btn i { transition: transform 0.5s ease; }
-
-        /* 捲軸美化 */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
     </style>
@@ -35,7 +31,7 @@
         <header class="max-w-4xl mx-auto px-6 pt-12 pb-8 flex flex-col md:flex-row justify-between items-center gap-6">
             <div>
                 <h1 class="text-4xl font-extrabold gradient-text mb-2">{{ t.title }}</h1>
-                <p class="text-slate-500 text-sm italic tracking-widest">REAL-TIME GRATITUDE FEED</p>
+                <p class="text-slate-500 text-sm italic tracking-widest uppercase">Real-time Gratitude Feed</p>
             </div>
             <div class="flex p-1 bg-slate-900/50 rounded-xl border border-slate-800 shadow-inner">
                 <button v-for="(name, lang) in languages" :key="lang" @click="currentLang = lang"
@@ -45,10 +41,10 @@
             </div>
         </header>
 
-        <div v-if="rawData.length > 0" class="marquee-container mb-12">
+        <div v-if="rawData && rawData.length > 0" class="marquee-container mb-12">
             <div class="marquee-content">
-                <span v-for="msg in [...rawData, ...rawData]" :key="msg.id" class="marquee-item">
-                    <i class="fas fa-bolt text-indigo-500 mr-2"></i>
+                <span v-for="(msg, idx) in [...rawData, ...rawData]" :key="idx" class="marquee-item">
+                    <i class="fas fa-heart text-pink-500 mr-2"></i>
                     <strong>{{ msg.name }}</strong>: "{{ msg.content.substring(0,30) }}..."
                 </span>
             </div>
@@ -57,9 +53,7 @@
         <section v-if="topThree.length > 0" class="max-w-4xl mx-auto px-6 mb-16">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div v-for="(item, index) in topThree" :key="index" class="glass-card p-6 flex items-center gap-4 relative overflow-hidden">
-                    <div class="text-3xl opacity-20 absolute -right-2 -bottom-2 rotate-12">
-                        <i class="fas fa-award"></i>
-                    </div>
+                    <div class="text-3xl opacity-20 absolute -right-2 -bottom-2 rotate-12"><i class="fas fa-award"></i></div>
                     <div class="text-2xl font-black w-10 h-10 rounded-full flex items-center justify-center" 
                          :class="index === 0 ? 'bg-yellow-500/20 text-yellow-500' : index === 1 ? 'bg-slate-400/20 text-slate-400' : 'bg-orange-600/20 text-orange-600'">
                         {{ index + 1 }}
@@ -75,16 +69,14 @@
 
         <main class="max-w-3xl mx-auto px-6 pb-20">
             <div class="flex justify-between items-end mb-8 px-2">
-                <div>
-                    <h2 class="text-2xl font-bold flex items-center gap-3">
-                        {{ t.wallTitle }}
-                        <button @click="fetchData" class="refresh-btn text-indigo-500 hover:text-indigo-400 text-sm transition p-2">
-                            <i class="fas fa-sync-alt" :class="{'fa-spin': loading}"></i>
-                        </button>
-                    </h2>
-                </div>
+                <h2 class="text-2xl font-bold flex items-center gap-3">
+                    {{ t.wallTitle }}
+                    <button @click="fetchData" class="refresh-btn text-indigo-500 hover:text-indigo-400 text-sm p-2 transition active:scale-90">
+                        <i class="fas fa-sync-alt" :class="{'fa-spin': loading}"></i>
+                    </button>
+                </h2>
                 <div class="relative">
-                    <select v-model="selectedDept" class="bg-slate-900 border border-slate-800 text-slate-300 text-xs rounded-lg px-3 py-2 outline-none focus:ring-1 ring-indigo-500 appearance-none pr-8">
+                    <select v-model="selectedDept" class="bg-slate-900 border border-slate-800 text-slate-300 text-xs rounded-lg px-3 py-2 outline-none appearance-none pr-8">
                         <option value="All">{{ t.allDepts }}</option>
                         <option v-for="dept in departments" :key="dept" :value="dept">{{ dept }}</option>
                     </select>
@@ -92,7 +84,7 @@
                 </div>
             </div>
 
-            <div v-if="loading && rawData.length === 0" class="text-center py-20 text-slate-600 italic">Synchronizing...</div>
+            <div v-if="loading && rawData.length === 0" class="text-center py-20 text-slate-600 italic">Synchronizing Feed...</div>
 
             <div v-else class="space-y-6">
                 <div v-for="msg in filteredMessages" :key="msg.id" 
@@ -108,9 +100,7 @@
                     </div>
                     <div class="flex items-center justify-between md:justify-end md:w-32 border-t md:border-t-0 border-white/5 pt-4 md:pt-0">
                         <span class="font-bold text-slate-100">{{ msg.name }}</span>
-                        <div class="md:hidden flex items-center text-pink-500/40 text-xs">
-                             <i class="fas fa-heart mr-1"></i> {{ msg.likes || 0 }}
-                        </div>
+                        <div class="md:hidden text-pink-500/40 text-xs"><i class="fas fa-heart mr-1"></i>{{ msg.likes || 0 }}</div>
                     </div>
                 </div>
             </div>
@@ -127,14 +117,13 @@
                 const rawData = ref([]);
                 const loading = ref(true);
 
-                // 已保留你的 API URL
                 const API_URL = "https://script.google.com/macros/s/AKfycbxyQdcpF2mRS1JP6DVInJIen7uv70gmjTAPOp16On74NME507zFBoKRf4qdS0bqkM9x/exec"; 
 
                 const TRANSLATIONS = {
-                    zh: { title: "神隊友感恩牆", topThree: "人氣王排行榜", wallTitle: "最新感言", allDepts: "所有部門" },
-                    cn: { title: "神队友感恩墙", topThree: "人气王排行榜", wallTitle: "最新感言", allDepts: "所有部门" },
-                    en: { title: "Team Gratitude", topThree: "Top Heroes", wallTitle: "Live Feed", allDepts: "All Depts" },
-                    jp: { title: "感謝の壁", topThree: "人気ランキング", wallTitle: "最新メッセージ", allDepts: "全部門" }
+                    zh: { title: "神隊友感恩牆", wallTitle: "最新感言", allDepts: "所有部門" },
+                    cn: { title: "神队友感恩墙", wallTitle: "最新感言", allDepts: "所有部门" },
+                    en: { title: "Teammate Wall", wallTitle: "Live Feed", allDepts: "All Depts" },
+                    jp: { title: "感謝の壁", wallTitle: "最新メッセージ", allDepts: "全部門" }
                 };
 
                 const fetchData = async () => {
@@ -146,7 +135,7 @@
                             rawData.value = data;
                         }
                     } catch (e) {
-                        console.error("Fetch failed", e);
+                        console.error("Fetch Error:", e);
                     } finally {
                         loading.value = false;
                     }
@@ -154,7 +143,7 @@
 
                 onMounted(fetchData);
 
-                const t = computed(() => TRANSLATIONS[currentLang.value]);
+                const t = computed(() => TRANSLATIONS[currentLang.value] || TRANSLATIONS.zh);
                 const languages = { zh: '繁', cn: '簡', en: 'EN', jp: 'JP' };
                 const departments = computed(() => [...new Set(rawData.value.map(m => m.dept))].filter(d => d));
                 
@@ -168,12 +157,16 @@
                     rawData.value.forEach(m => counts[m.name] = (counts[m.name] || 0) + 1);
                     return Object.keys(counts).map(n => ({ 
                         name: n, 
-                        dept: rawData.value.find(m => m.name === n).dept, 
+                        dept: (rawData.value.find(m => m.name === n) || {}).dept || "Other", 
                         likes: counts[n] 
                     })).sort((a, b) => b.likes - a.likes).slice(0, 3);
                 });
 
-                return { currentLang, selectedDept, loading, languages, t, departments, filteredMessages, topThree, fetchData };
+                // --- ⚠️ 修正重點：務必把 rawData 丟出來給 template 使用 ---
+                return { 
+                    currentLang, selectedDept, loading, languages, t, 
+                    departments, filteredMessages, topThree, fetchData, rawData 
+                };
             }
         }).mount('#app');
     </script>
