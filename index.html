@@ -194,15 +194,21 @@
                 const API_URL = "https://script.google.com/macros/s/AKfycbxyQdcpF2mRS1JP6DViNJIen7uv70gmjTAPOp16On74NME507zFBoKRf4qdS0bqkM9x/exec"; 
 
                 const fetchData = async () => {
-                    loading.value = true;
+                    loading.value = true; // 確保這裡有 .value
                     try {
                         const response = await fetch(API_URL);
                         const json = await response.json();
-                        rawData.value = json;
+                        
+                        // 檢查資料是否為陣列，避免格式錯誤導致網頁掛掉
+                        if (Array.isArray(json)) {
+                            rawData.value = json;
+                        } else {
+                            console.error("API 回傳格式不是陣列:", json);
+                        }
                     } catch (e) {
                         console.error("Fetch Error:", e);
                     } finally {
-                        loading.value = false;
+                        loading.value = false; // 確保這裡有 .value
                     }
                 };
 
