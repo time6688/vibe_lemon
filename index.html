@@ -117,7 +117,7 @@
                 const rawData = ref([]);
                 const loading = ref(true);
 
-                const API_URL = "https://script.google.com/macros/s/AKfycbxyQdcpF2mRS1JP6DVInJIen7uv70gmjTAPOp16On74NME507zFBoKRf4qdS0bqkM9x/exec"; 
+                const API_URL = "https://script.google.com/macros/s/AKfycby-f5Rq-Iqu6Oql3odyR0srALXVuDhYeE-UDUanxI0/dev"; 
 
                 const TRANSLATIONS = {
                     zh: { title: "神隊友感恩牆", wallTitle: "最新感言", allDepts: "所有部門" },
@@ -126,20 +126,27 @@
                     jp: { title: "感謝の壁", wallTitle: "最新メッセージ", allDepts: "全部門" }
                 };
 
-                const fetchData = async () => {
-                    loading.value = true;
-                    try {
-                        const res = await fetch(API_URL, { redirect: 'follow' });
-                        const data = await res.json();
-                        if (data && Array.isArray(data)) {
-                            rawData.value = data;
-                        }
-                    } catch (e) {
-                        console.error("Fetch Error:", e);
-                    } finally {
-                        loading.value = false;
-                    }
-                };
+// 確認 fetchData 是長這樣
+const fetchData = async () => {
+    loading.value = true;
+    try {
+        const res = await fetch(API_URL); // 移除 mode: 'cors' 等設定，讓瀏覽器用預設行為處理重導向
+        const data = await res.json();
+        if (data && Array.isArray(data)) {
+            rawData.value = data;
+        }
+    } catch (e) {
+        console.error("Fetch Error:", e);
+    } finally {
+        loading.value = false;
+    }
+};
+
+// 務必確認最後 return 有這些東西 (尤其是 rawData)
+return { 
+    currentLang, selectedDept, loading, languages, t, 
+    departments, filteredMessages, topThree, fetchData, rawData 
+};
 
                 onMounted(fetchData);
 
