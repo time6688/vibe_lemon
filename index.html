@@ -1,398 +1,252 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SWAG 新手限定雙重禮遇</title>
+    <title>2025 神隊友感恩牆 | Gratitude Wall</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* --- 基礎設定 --- */
-        :root {
-            --swag-pink: #ff2d55;
-            --swag-purple: #9d00ff;
-            --neon-red: #ff003c;
-            --gold: #ffd700;
-            --gold-gradient: linear-gradient(135deg, #fff8db 0%, #ffd700 50%, #d4af37 100%);
-            --bg-dark: #050505;
-            --card-bg: rgba(25, 25, 25, 0.9);
-        }
-
         body {
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background-color: var(--bg-dark);
-            /* 深邃的背景，強調私密感 */
-            background-image: radial-gradient(circle at center, #1a0b2e 0%, #000000 100%);
-            color: white;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            color: #f8fafc;
+            font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif;
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 10px;
         }
-
-        .container {
-            width: 100%;
-            max-width: 600px; /* 手機版型優化寬度 */
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 20px;
-            padding: 20px 15px;
-            box-shadow: 0 0 30px rgba(157, 0, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1.25rem;
+            transition: all 0.3s ease;
         }
-
-        /* --- 頂部倒數區 --- */
-        .header-section {
-            text-align: center;
-            margin-bottom: 20px;
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.07);
+            transform: translateY(-5px);
+            border-color: rgba(99, 102, 241, 0.5);
         }
-        
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 900;
-            color: #00f2ea;
-            letter-spacing: 2px;
-            margin-bottom: 5px;
-            display: inline-block;
+        .gradient-text {
+            background: linear-gradient(90deg, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-
-        .timer-box {
-            background: rgba(255, 0, 60, 0.1);
-            border: 1px solid var(--neon-red);
-            display: inline-block;
-            padding: 5px 20px;
-            border-radius: 50px;
-            margin-top: 10px;
-        }
-
-        .countdown {
-            font-family: 'Courier New', monospace;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--neon-red);
-            text-shadow: 0 0 10px var(--neon-red);
-        }
-
-        .timer-label {
-            color: #ffcccc;
-            font-size: 0.8rem;
-            margin-top: 5px;
-        }
-
-        /* --- 商品卡片容器 --- */
-        .products-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        /* --- 通用卡片樣式 --- */
-        .product-card {
-            background: var(--card-bg);
-            border-radius: 15px;
-            padding: 15px;
-            position: relative;
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: transform 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        /* --- 主力商品 (5880鑽) 特殊樣式 --- */
-        .card-premium {
-            border: 2px solid var(--gold);
-            background: linear-gradient(to bottom, rgba(40, 30, 10, 0.9), rgba(0,0,0,0.9));
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
-            flex-direction: column; /* 垂直排列內容以獲得更多空間 */
-            padding: 25px 20px;
-            order: 1; /* 確保它排在第一個 (或視需求調整) */
-            overflow: hidden;
-        }
-
-        /* 皇冠標籤 */
-        .best-value-badge {
-            position: absolute;
-            top: 0;
-            right: 0;
-            background: var(--gold-gradient);
-            color: #584600;
-            font-weight: bold;
-            font-size: 0.8rem;
-            padding: 5px 15px;
-            border-bottom-left-radius: 15px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-        }
-
-        /* 100% 加量標籤 */
-        .bonus-sticker {
-            background: var(--neon-red);
-            color: white;
-            font-weight: bold;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            transform: rotate(-5deg);
-            display: inline-block;
-            margin-bottom: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-            animation: pulse-scale 1.5s infinite;
-        }
-
-        .premium-content {
-            text-align: center;
-            width: 100%;
-        }
-
-        .premium-title {
-            font-size: 1.2rem;
-            color: var(--gold);
-            margin-bottom: 5px;
-        }
-
-        .diamond-display {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: white;
-            margin: 10px 0;
-            text-shadow: 0 2px 10px rgba(255,255,255,0.3);
-        }
-
-        .diamond-calc {
-            font-size: 0.9rem;
-            color: #aaa;
-            margin-bottom: 15px;
-            background: rgba(255,255,255,0.05);
-            padding: 5px;
-            border-radius: 5px;
-            display: inline-block;
-        }
-
-        .premium-price {
-            font-size: 1.5rem;
-            color: var(--gold);
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-
-        .btn-premium {
-            background: var(--gold-gradient);
-            color: #4a3b00;
-            border: none;
-            width: 100%;
-            padding: 15px;
-            font-size: 1.1rem;
-            font-weight: 900;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        /* --- 入門商品 (99元) 特殊樣式 --- */
-        .card-entry {
-            order: 2;
-            padding: 15px 20px;
-        }
-
-        .entry-left {
-            flex: 1;
-        }
-
-        .entry-title {
-            font-size: 1rem;
-            font-weight: bold;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .entry-desc {
-            font-size: 0.8rem;
-            color: #bbb;
-            margin-top: 3px;
-        }
-
-        .entry-right {
-            text-align: right;
-        }
-
-        .entry-price {
-            font-size: 1.4rem;
-            font-weight: bold;
-            color: var(--swag-pink);
-        }
-
-        .original-price-small {
-            font-size: 0.8rem;
-            text-decoration: line-through;
-            color: #666;
-        }
-
-        .btn-entry {
-            background: transparent;
-            border: 1px solid var(--swag-pink);
-            color: var(--swag-pink);
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            margin-top: 5px;
-            cursor: pointer;
-        }
-        
-        .btn-entry:hover {
-            background: var(--swag-pink);
-            color: white;
-        }
-
-        /* --- 社群驗證與底部 --- */
-        .social-proof {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 0.8rem;
-            color: #888;
-        }
-
-        .highlight-num {
-            color: white;
-            font-weight: bold;
-        }
-
-        /* --- 動畫 --- */
-        @keyframes pulse-scale {
-            0% { transform: scale(1) rotate(-5deg); }
-            50% { transform: scale(1.1) rotate(-5deg); }
-            100% { transform: scale(1) rotate(-5deg); }
-        }
-
-        @keyframes shimmer {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        .btn-premium::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
-            animation: shimmer 2.5s infinite;
-        }
-
+        /* 捲軸美化 */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
     </style>
 </head>
 <body>
-
-    <div class="container">
-        <div class="header-section">
-            <div class="logo">SWAG</div>
+    <div id="app" class="max-w-7xl mx-auto px-6 py-10">
+        
+        <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-8">
             <div>
-                <div class="timer-box">
-                    <span style="font-size: 0.8rem; vertical-align: middle;">⏳ 限時優惠倒數</span>
-                    <div class="countdown" id="countdown">23:59:59</div>
-                </div>
+                <h1 class="text-5xl font-extrabold gradient-text mb-3 tracking-tight">{{ t.title }}</h1>
+                <p class="text-slate-400 text-lg">Celebrating our amazing teammates together.</p>
             </div>
-            <div class="timer-label">新用戶限定福利，離開後無法找回</div>
-        </div>
-
-        <div class="products-container">
             
-            <div class="product-card card-premium">
-                <div class="best-value-badge">👑 用戶首選 TOP 1</div>
-                
-                <div class="premium-content">
-                    <div class="bonus-sticker">🔥 限時加量 100%</div>
-                    <div class="premium-title">新手超值禮包</div>
-                    
-                    <div class="diamond-display">5,880 鑽</div>
-                    
-                    <div class="diamond-calc">
-                        包含：2990 基礎 + <span style="color:var(--gold)">2990 額外贈送</span>
-                    </div>
+            <div class="flex p-1.5 bg-slate-900/80 rounded-2xl border border-slate-700/50 shadow-2xl">
+                <button v-for="(name, lang) in languages" :key="lang" 
+                        @click="currentLang = lang"
+                        :class="['px-5 py-2.5 rounded-xl transition-all duration-200 text-sm font-medium', 
+                                currentLang === lang ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/20' : 'text-slate-400 hover:text-white hover:bg-slate-800']">
+                    {{ name }}
+                </button>
+            </div>
+        </header>
 
-                    <div style="font-size: 0.8rem; color:#ccc; margin-bottom: 10px;">
-                        💎 足夠觀看 <span style="color:white; font-weight:bold;">30+ 分鐘</span> 超鹹濕真人直播互動
+        <section v-if="topThree.length > 0" class="mb-20">
+            <h2 class="text-2xl font-bold mb-8 flex items-center">
+                <span class="bg-yellow-500/20 p-2 rounded-lg mr-3">
+                    <i class="fas fa-crown text-yellow-500"></i>
+                </span>
+                {{ t.topThree }}
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div v-for="(item, index) in topThree" :key="index" 
+                     class="glass-card p-8 text-center relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <i class="fas fa-award text-6xl"></i>
                     </div>
-
-                    <div class="premium-price">
-                        $ 199 TWD
+                    <div class="mb-4 inline-block">
+                        <i class="fas fa-medal text-4xl" 
+                           :class="index === 0 ? 'text-yellow-400' : index === 1 ? 'text-slate-300' : 'text-orange-500'"></i>
                     </div>
-
-                    <button class="btn-premium" onclick="alert('購買 5880 方案')">
-                        立即購買 👉
-                    </button>
+                    <h3 class="text-2xl font-bold text-white mb-1">{{ item.name }}</h3>
+                    <p class="text-indigo-400 text-sm font-medium mb-4">{{ item.dept }}</p>
+                    <div class="text-pink-500 font-bold bg-pink-500/10 py-2 px-4 rounded-full inline-flex items-center">
+                        <i class="fas fa-heart mr-2"></i> {{ item.likes }}
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <div class="product-card card-entry">
-                <div class="entry-left">
-                    <div class="entry-title">
-                        🎫 10分鐘暢遊券
-                    </div>
-                    <div class="entry-desc">
-                        只要銅板價，全站內容任你探索。<br>
-                        <span style="color: #888; font-size: 0.75rem;">適合想先體驗看看的你</span>
-                    </div>
-                </div>
-                <div class="entry-right">
-                    <div class="original-price-small">$120</div>
-                    <div class="entry-price">$ 99</div>
-                    <button class="btn-entry" onclick="alert('購買 99 方案')">
-                        立即體驗
-                    </button>
+        <section class="glass-card p-10 mb-20 border-l-8 border-indigo-500">
+            <h3 class="text-2xl font-bold mb-6 flex items-center">
+                <i class="fas fa-scroll mr-3 text-indigo-400"></i> {{ t.rulesTitle }}
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4">
+                <div v-for="rule in t.rules" :key="rule" class="flex items-center text-slate-300 border-b border-white/5 pb-2">
+                    <i class="fas fa-star mr-3 text-indigo-500 text-xs"></i> {{ rule }}
                 </div>
             </div>
+        </section>
 
+        <section class="mb-10">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <h2 class="text-3xl font-bold">{{ t.wallTitle }}</h2>
+                <div class="flex items-center bg-slate-900/50 border border-slate-700 p-2 rounded-2xl w-full md:w-auto">
+                    <i class="fas fa-filter ml-3 mr-2 text-slate-500 text-sm"></i>
+                    <select v-model="selectedDept" class="bg-transparent text-slate-200 outline-none pr-8 py-2 w-full cursor-pointer">
+                        <option value="All">{{ t.allDepts }}</option>
+                        <option v-for="dept in departments" :key="dept" :value="dept" class="bg-slate-900">{{ dept }}</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <div v-if="loading" class="flex flex-col items-center justify-center py-40">
+            <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-indigo-500 mb-4"></div>
+            <p class="text-slate-400 animate-pulse">Loading gratitude data...</p>
         </div>
 
-        <div class="social-proof">
-            🔥 過去 24 小時已有 <span class="highlight-num" id="buyer-count">843</span> 位新用戶選擇了開局禮包
+        <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div v-for="msg in filteredMessages" :key="msg.id" class="glass-card p-8 flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-center mb-6">
+                        <span class="bg-indigo-500/20 text-indigo-300 text-[10px] px-3 py-1 rounded-md font-bold tracking-widest uppercase">{{ msg.dept }}</span>
+                        <span class="text-[10px] text-slate-500 font-mono">{{ msg.time }}</span>
+                    </div>
+                    <p class="text-slate-200 text-lg leading-relaxed mb-8 italic">
+                        <i class="fas fa-quote-left text-indigo-500/30 mr-2 text-xl"></i>
+                        {{ msg.content }}
+                    </p>
+                </div>
+                <div class="flex justify-between items-center pt-6 border-t border-white/5">
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-xs font-bold mr-3 shadow-lg">
+                            {{ msg.name.substring(0,1) }}
+                        </div>
+                        <span class="font-bold text-white">{{ msg.name }}</span>
+                    </div>
+                    <button @click="likeMessage(msg.id)" 
+                            class="flex items-center space-x-2 group cursor-pointer hover:bg-white/5 px-3 py-1 rounded-lg transition">
+                        <i class="fas fa-heart text-slate-600 group-hover:text-pink-500 transition-colors"></i>
+                        <span class="text-slate-400 group-hover:text-white font-mono">{{ msg.likes }}</span>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
-        // 1. 倒數計時器
-        function startTimer(duration, display) {
-            var timer = duration, hours, minutes, seconds;
-            setInterval(function () {
-                hours = parseInt(timer / 3600, 10);
-                minutes = parseInt((timer % 3600) / 60, 10);
-                seconds = parseInt(timer % 60, 10);
-
-                hours = hours < 10 ? "0" + hours : hours;
-                minutes = minutes < 10 ? "0" + minutes : minutes;
-                seconds = seconds < 10 ? "0" + seconds : seconds;
-
-                display.textContent = hours + ":" + minutes + ":" + seconds;
-
-                if (--timer < 0) {
-                    timer = 0;
-                    display.textContent = "00:00:00";
-                    display.style.color = "#555";
-                }
-            }, 1000);
-        }
-
-        // 2. 隨機人數
-        function setRandomBuyers() {
-            const min = 700;
-            const max = 1200;
-            const randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
-            document.getElementById('buyer-count').innerText = randomNum;
-        }
-
-        window.onload = function () {
-            // 倒數 23:59:59
-            var daySeconds = (23 * 60 * 60) + (59 * 60) + 59; 
-            var display = document.querySelector('#countdown');
-            startTimer(daySeconds, display);
-            setRandomBuyers();
+        const TRANSLATIONS = {
+            zh: {
+                title: "神隊友感恩牆",
+                topThree: "感恩人氣排行榜",
+                rulesTitle: "活動詳情與規則",
+                rules: ["留言請保持正面與感恩的心", "每列試算表最多可推薦三位神隊友", "系統每小時與試算表同步資料", "排行榜依據留言中被推薦的次數計算", "前三名英雄將獲得神秘感謝禮物"],
+                wallTitle: "大家的感謝信",
+                filterByDept: "部門篩選",
+                allDepts: "所有部門"
+            },
+            cn: {
+                title: "神队友感恩墙",
+                topThree: "感恩人气排行榜",
+                rulesTitle: "活动详情与规则",
+                rules: ["留言请保持正面与感恩的心", "每行试算表最多可推荐三位神队友", "系统每小时與试算表同步数据", "排行榜依据留言中被推荐的次数计算", "前三名英雄将获得神秘感谢礼物"],
+                wallTitle: "大家的感谢信",
+                filterByDept: "部门筛选",
+                allDepts: "所有部门"
+            },
+            en: {
+                title: "Teammate Gratitude Wall",
+                topThree: "Popularity Leaderboard",
+                rulesTitle: "Campaign Rules",
+                rules: ["Please keep comments positive and kind", "Nominate up to 3 teammates per entry", "Syncs with Google Sheets every hour", "Ranking based on total nominations", "Top 3 heroes will receive special gifts"],
+                wallTitle: "Letters of Appreciation",
+                filterByDept: "Department",
+                allDepts: "All Depts"
+            },
+            jp: {
+                title: "神チームメイト感謝の壁",
+                topThree: "人気ランキング",
+                rulesTitle: "イベント詳細とルール",
+                rules: ["感謝とポジティブな気持ちを込めましょう", "1回のフォームで最大3名まで推薦可能", "1時間ごとにスプレッドシートと同期", "推薦された回数でランキングが決まります", "上位3名には素敵なプレゼントを贈呈"],
+                wallTitle: "感謝のメッセージ",
+                filterByDept: "部署",
+                allDepts: "すべての部署"
+            }
         };
-    </script>
-</body>
-</html>
+
+        const { createApp, ref, computed, onMounted } = Vue;
+
+        createApp({
+            setup() {
+                const currentLang = ref('zh');
+                const selectedDept = ref('All');
+                const rawData = ref([]);
+                const loading = ref(true);
+
+                // --- ⚠️ 重要：請在此替換你的 Google Apps Script URL ⚠️ ---
+                const API_URL = "https://script.google.com/macros/s/AKfycbxyQdcpF2mRS1JP6DViNJIen7uv70gmjTAPOp16On74NME507zFBoKRf4qdS0bqkM9x/exec"; 
+
+                const fetchData = async () => {
+                    loading.value = true;
+                    try {
+                        const response = await fetch(API_URL);
+                        const json = await response.json();
+                        rawData.value = json;
+                    } catch (e) {
+                        console.error("Fetch Error:", e);
+                    } finally {
+                        loading.value = false;
+                    }
+                };
+
+                onMounted(fetchData);
+
+                const t = computed(() => TRANSLATIONS[currentLang.value]);
+                const languages = { zh: '繁', cn: '簡', en: 'EN', jp: 'JP' };
+
+                const departments = computed(() => {
+                    return [...new Set(rawData.value.map(m => m.dept))].filter(d => d && d !== "其他");
+                });
+
+                const filteredMessages = computed(() => {
+                    let list = [...rawData.value].sort((a, b) => new Date(b.time) - new Date(a.time));
+                    if (selectedDept.value !== 'All') {
+                        list = list.filter(m => m.dept === selectedDept.value);
+                    }
+                    return list;
+                });
+
+                // 排行榜邏輯：統計每個姓名出現的總次數
+                const topThree = computed(() => {
+                    const counts = {};
+                    rawData.value.forEach(m => {
+                        counts[m.name] = (counts[m.name] || 0) + 1;
+                    });
+                    
+                    return Object.keys(counts)
+                        .map(name => {
+                            const info = rawData.value.find(m => m.name === name);
+                            return {
+                                name: name,
+                                dept: info ? info.dept : "",
+                                likes: counts[name]
+                            };
+                        })
+                        .sort((a, b) => b.likes - a.likes)
+                        .slice(0, 3);
+                });
+
+                const likeMessage = (id) => {
+                    const msg = rawData.value.find(m => m.id === id);
+                    if (msg) msg.likes++;
+                };
+
+                return {
+                    currentLang, selectedDept,
