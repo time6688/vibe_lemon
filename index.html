@@ -98,13 +98,23 @@
                 const fetchData = async () => {
                     loading.value = true;
                     try {
-                        const res = await fetch(API_URL);
+                        // 加入 redirect: 'follow' 處理 Google Script 的跳轉
+                        const res = await fetch(API_URL, {
+                            method: 'GET',
+                            mode: 'cors',
+                            redirect: 'follow'
+                        });
+                        
                         const data = await res.json();
+                        
                         if (data && Array.isArray(data)) {
-                            rawData.value = data;
+                            // 這裡加個小過濾，確保資料裡有名字才顯示
+                            rawData.value = data.filter(item => item.name && item.name.trim() !== "");
                         }
                     } catch (e) {
-                        console.error("資料讀取失敗:", e);
+                        console.error("資料讀取失敗，原因：", e);
+                        // 讓使用者知道發生什麼事
+                        alert("資料讀取發生錯誤，請檢查網路或 API 網址是否正確。");
                     } finally {
                         loading.value = false;
                     }
