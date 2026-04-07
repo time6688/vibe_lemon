@@ -14,7 +14,6 @@
         .glass-card:hover { border-color: rgba(99, 102, 241, 0.4); background: rgba(255, 255, 255, 0.05); }
         .gradient-text { background: linear-gradient(90deg, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        /* 跑馬燈動畫 */
         .marquee-container { overflow: hidden; white-space: nowrap; position: relative; background: rgba(99, 102, 241, 0.1); padding: 15px 0; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); }
         .marquee-content { display: inline-block; animation: marquee 60s linear infinite; }
         .marquee-item { display: inline-block; margin: 0 30px; color: #a5b4fc; font-weight: 500; font-size: 0.9rem; }
@@ -53,7 +52,6 @@
         <section v-if="topThree.length > 0" class="max-w-4xl mx-auto px-6 mb-16">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div v-for="(item, index) in topThree" :key="index" class="glass-card p-6 flex items-center gap-4 relative overflow-hidden">
-                    <div class="text-3xl opacity-20 absolute -right-2 -bottom-2 rotate-12"><i class="fas fa-award"></i></div>
                     <div class="text-2xl font-black w-10 h-10 rounded-full flex items-center justify-center" 
                          :class="index === 0 ? 'bg-yellow-500/20 text-yellow-500' : index === 1 ? 'bg-slate-400/20 text-slate-400' : 'bg-orange-600/20 text-orange-600'">
                         {{ index + 1 }}
@@ -80,7 +78,6 @@
                         <option value="All">{{ t.allDepts }}</option>
                         <option v-for="dept in departments" :key="dept" :value="dept">{{ dept }}</option>
                     </select>
-                    <i class="fas fa-chevron-down absolute right-3 top-3 text-[10px] text-slate-600 pointer-events-none"></i>
                 </div>
             </div>
 
@@ -99,8 +96,7 @@
                         </p>
                     </div>
                     <div class="flex items-center justify-between md:justify-end md:w-32 border-t md:border-t-0 border-white/5 pt-4 md:pt-0">
-                        <span class="font-bold text-slate-100">{{ msg.name }}</span>
-                        <div class="md:hidden text-pink-500/40 text-xs"><i class="fas fa-heart mr-1"></i>{{ msg.likes || 0 }}</div>
+                        <span class="font-bold text-slate-100 text-right">{{ msg.name }}</span>
                     </div>
                 </div>
             </div>
@@ -112,13 +108,14 @@
 
         createApp({
             setup() {
+                // 1. 先定義基礎變數
                 const currentLang = ref('zh');
                 const selectedDept = ref('All');
                 const rawData = ref([]);
                 const loading = ref(true);
+                const languages = { zh: '繁', cn: '簡', en: 'EN', jp: 'JP' };
 
-                const API_URL = "https://script.google.com/macros/s/AKfycby-f5Rq-Iqu6Oql3odyR0srALXVuDhYeE-UDUanxI0/dev"; 
-
+                // 2. 翻譯字典
                 const TRANSLATIONS = {
                     zh: { title: "神隊友感恩牆", wallTitle: "最新感言", allDepts: "所有部門" },
                     cn: { title: "神队友感恩墙", wallTitle: "最新感言", allDepts: "所有部门" },
@@ -126,34 +123,17 @@
                     jp: { title: "感謝の壁", wallTitle: "最新メッセージ", allDepts: "全部門" }
                 };
 
-// 確認 fetchData 是長這樣
-const fetchData = async () => {
-    loading.value = true;
-    try {
-        const res = await fetch(API_URL); // 移除 mode: 'cors' 等設定，讓瀏覽器用預設行為處理重導向
-        const data = await res.json();
-        if (data && Array.isArray(data)) {
-            rawData.value = data;
-        }
-    } catch (e) {
-        console.error("Fetch Error:", e);
-    } finally {
-        loading.value = false;
-    }
-};
+                // 3. API URL (請確認此處為正確的 /exec 網址)
+                const API_URL = "https://script.google.com/macros/s/AKfycby-f5Rq-Iqu6Oql3odyR0srALXVuDhYeE-UDUanxI0/dev"; 
 
-// 務必確認最後 return 有這些東西 (尤其是 rawData)
-return { 
-    currentLang, selectedDept, loading, languages, t, 
-    departments, filteredMessages, topThree, fetchData, rawData 
-};
-
-                onMounted(fetchData);
-
-                const t = computed(() => TRANSLATIONS[currentLang.value] || TRANSLATIONS.zh);
-                const languages = { zh: '繁', cn: '簡', en: 'EN', jp: 'JP' };
-                const departments = computed(() => [...new Set(rawData.value.map(m => m.dept))].filter(d => d));
+                // 4. 計算屬性
+                const t = computed(() => TRANSLATIONS[currentLang.value]);
                 
+                const departments = computed(() => {
+                    const depts = rawData.value.map(m => m.dept);
+                    return [...new Set(depts)].filter(d => d);
+                });
+
                 const filteredMessages = computed(() => {
                     let list = [...rawData.value].sort((a, b) => new Date(b.time) - new Date(a.time));
                     return selectedDept.value === 'All' ? list : list.filter(m => m.dept === selectedDept.value);
@@ -161,15 +141,34 @@ return {
 
                 const topThree = computed(() => {
                     const counts = {};
-                    rawData.value.forEach(m => counts[m.name] = (counts[m.name] || 0) + 1);
-                    return Object.keys(counts).map(n => ({ 
-                        name: n, 
-                        dept: (rawData.value.find(m => m.name === n) || {}).dept || "Other", 
-                        likes: counts[n] 
-                    })).sort((a, b) => b.likes - a.likes).slice(0, 3);
+                    rawData.value.forEach(m => {
+                        if (m.name) counts[m.name] = (counts[m.name] || 0) + 1;
+                    });
+                    return Object.keys(counts).map(n => {
+                        const info = rawData.value.find(m => m.name === n);
+                        return { name: n, dept: info ? info.dept : "", likes: counts[n] };
+                    }).sort((a, b) => b.likes - a.likes).slice(0, 3);
                 });
 
-                // --- ⚠️ 修正重點：務必把 rawData 丟出來給 template 使用 ---
+                // 5. 抓取資料函式
+                const fetchData = async () => {
+                    loading.value = true;
+                    try {
+                        const res = await fetch(API_URL);
+                        const data = await res.json();
+                        if (Array.isArray(data)) {
+                            rawData.value = data;
+                        }
+                    } catch (e) {
+                        console.error("Fetch Error:", e);
+                    } finally {
+                        loading.value = false;
+                    }
+                };
+
+                onMounted(fetchData);
+
+                // 6. 最後將所有東西回傳
                 return { 
                     currentLang, selectedDept, loading, languages, t, 
                     departments, filteredMessages, topThree, fetchData, rawData 
