@@ -1,609 +1,835 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>鑽石經濟監控 2026 Q1 — SWAG</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>直播間尋寶｜VIP 2.0 任務體系提案</title>
 <style>
-  :root {
-    --bg: #0d0f14;
-    --surface: #13161e;
-    --surface2: #1a1e28;
-    --border: rgba(255,255,255,0.07);
-    --border2: rgba(255,255,255,0.12);
-    --text: #e8eaf0;
-    --muted: #6b7280;
-    --dim: #3d4352;
-    --accent: #4fc3f7;
-    --accent2: #81d4fa;
-    --red: #ef5350;
-    --red-bg: rgba(239,83,80,0.08);
-    --amber: #ffb74d;
-    --amber-bg: rgba(255,183,77,0.08);
-    --green: #66bb6a;
-    --green-bg: rgba(102,187,106,0.08);
-    --mono: 'DM Mono', monospace;
-    --sans: 'Noto Sans TC', sans-serif;
-  }
- 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
- 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--sans);
-    font-size: 14px;
-    line-height: 1.6;
-    min-height: 100vh;
-  }
- 
-  /* Grid bg */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(79,195,247,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(79,195,247,0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events: none;
-    z-index: 0;
-  }
- 
-  .page { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 48px 24px 80px; }
- 
-  /* Header */
-  header { margin-bottom: 48px; }
-  .header-top {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 24px;
-    margin-bottom: 12px;
-  }
-  .badge {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    color: var(--accent);
-    border: 1px solid rgba(79,195,247,0.3);
-    padding: 3px 10px;
-    border-radius: 2px;
-    white-space: nowrap;
-  }
-  h1 {
-    font-family: var(--mono);
-    font-size: 28px;
-    font-weight: 500;
-    color: var(--text);
-    letter-spacing: -0.02em;
-  }
-  h1 span { color: var(--accent); }
-  .subtitle {
-    font-size: 13px;
-    color: var(--muted);
-    margin-top: 6px;
-  }
-  .source-tag {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--dim);
-    margin-top: 4px;
-  }
- 
-  /* KPI row */
-  .kpi-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    margin-bottom: 40px;
-  }
-  .kpi-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 16px 18px;
-    position: relative;
-    overflow: hidden;
-  }
-  .kpi-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: var(--accent);
-    opacity: 0.5;
-  }
-  .kpi-card.red::before { background: var(--red); }
-  .kpi-card.amber::before { background: var(--amber); }
-  .kpi-card.green::before { background: var(--green); }
-  .kpi-label {
-    font-size: 11px;
-    color: var(--muted);
-    margin-bottom: 8px;
-    font-family: var(--mono);
-    letter-spacing: 0.04em;
-  }
-  .kpi-val {
-    font-family: var(--mono);
-    font-size: 26px;
-    font-weight: 500;
-    color: var(--text);
-    line-height: 1;
-  }
-  .kpi-card.red .kpi-val { color: var(--red); }
-  .kpi-card.green .kpi-val { color: var(--green); }
-  .kpi-sub {
-    font-size: 11px;
-    color: var(--muted);
-    margin-top: 6px;
-  }
-  .kpi-delta {
-    font-family: var(--mono);
-    font-size: 11px;
-    margin-top: 6px;
-    color: var(--green);
-  }
-  .kpi-delta.neg { color: var(--red); }
- 
-  /* Section */
-  .section { margin-bottom: 32px; }
-  .section-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 2px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--border);
-  }
-  .section-code {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--accent);
-    background: rgba(79,195,247,0.08);
-    padding: 2px 8px;
-    border-radius: 2px;
-  }
-  .section-name {
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--muted);
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-  }
- 
-  /* Table */
-  .tbl-wrap { overflow-x: auto; }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13px;
-  }
-  thead th {
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--muted);
-    text-align: right;
-    padding: 10px 14px;
-    background: var(--surface2);
-    border-bottom: 1px solid var(--border2);
-    white-space: nowrap;
-  }
-  thead th:first-child { text-align: left; width: 36%; }
- 
-  tbody tr {
-    border-bottom: 1px solid var(--border);
-    transition: background 0.1s;
-  }
-  tbody tr:hover { background: rgba(255,255,255,0.02); }
-  tbody tr.subtotal { background: var(--surface2); }
-  tbody tr.subtotal td { font-weight: 500; }
-  tbody tr.total-row { background: rgba(79,195,247,0.05); border-top: 1px solid rgba(79,195,247,0.15); border-bottom: 1px solid rgba(79,195,247,0.15); }
-  tbody tr.spacer-row td { height: 8px; background: transparent; border: none; }
- 
-  td {
-    padding: 9px 14px;
-    text-align: right;
-    color: var(--text);
-    font-family: var(--mono);
-    font-size: 12px;
-    white-space: nowrap;
-  }
-  td:first-child {
-    font-family: var(--sans);
-    font-size: 13px;
-    text-align: left;
-    color: var(--muted);
-  }
-  td.row-label { padding-left: 28px; color: #4a5568; font-size: 12px; }
-  td.num-kpi { font-size: 14px; font-weight: 500; color: var(--accent2); }
-  td.num-red { color: var(--red); font-weight: 500; }
-  td.num-warn { color: var(--amber); }
-  td.num-ok { color: var(--green); }
-  td.bps { font-size: 13px; font-weight: 500; }
-  td.bps-red { color: var(--red); font-size: 13px; font-weight: 500; }
-  td.bps-ok  { color: var(--green); font-size: 13px; font-weight: 500; }
- 
-  /* Note */
-  .note-box {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--amber);
-    border-radius: 0 4px 4px 0;
-    padding: 14px 16px;
-    margin-top: 32px;
-    font-size: 12px;
-    color: var(--muted);
-    line-height: 1.8;
-  }
-  .note-box strong { color: var(--amber); font-weight: 500; }
- 
-  /* Chart mini */
-  .chart-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 32px;
-  }
-  .chart-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 16px 18px;
-  }
-  .chart-title {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 0.05em;
-    margin-bottom: 14px;
-  }
-  canvas { display: block; }
- 
-  @media (max-width: 700px) {
-    .kpi-grid { grid-template-columns: 1fr 1fr; }
-    .chart-row { grid-template-columns: 1fr; }
-    h1 { font-size: 20px; }
-  }
+:root{
+  --ink:#0A0B0D;
+  --panel:#14171B;
+  --panel2:#1B1F25;
+  --line:#282D35;
+  --line2:#363D47;
+  --text:#EDEFF2;
+  --muted:#8B929C;
+  --dim:#5D646E;
+  --cyan:#24E0D0;
+  --cyan-d:#0E9C92;
+  --gold:#F0B429;
+  --magenta:#FF2E76;
+  --copper:#B87333;
+  --silver:#B9C2CC;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--ink);color:var(--text);
+  font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei","Hiragino Sans TC",sans-serif;
+  font-size:16px;line-height:1.75;
+  font-feature-settings:"tnum" 1;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 28px 140px}
+
+/* ---------- hero ---------- */
+.hero{padding:84px 0 0}
+.kicker{color:var(--cyan);font-size:13px;letter-spacing:.14em;margin:0 0 22px}
+h1{
+  font-size:clamp(46px,8vw,84px);line-height:.94;letter-spacing:-.03em;
+  font-weight:800;margin:0 0 26px;
+}
+.lede{font-size:19px;line-height:1.7;color:var(--muted);max-width:34em;margin:0}
+.lede b{color:var(--text);font-weight:600}
+
+/* ---------- chest row ---------- */
+.chests{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+  margin:64px 0 0;border:1px solid var(--line);border-radius:3px;overflow:hidden;
+  background:linear-gradient(180deg,#101317,#0C0E11);
+}
+.chest{padding:30px 18px 22px;text-align:center;border-right:1px solid var(--line)}
+.chest:last-child{border-right:0}
+.chest svg{display:block;margin:0 auto}
+.chest .tier{font-size:12px;color:var(--dim);margin:16px 0 3px;letter-spacing:.1em}
+.chest .cname{font-size:17px;font-weight:700;letter-spacing:.02em}
+.chest .crole{font-size:12.5px;color:var(--muted);margin-top:5px;line-height:1.5}
+
+/* ---------- sections ---------- */
+section{margin-top:112px}
+h2{
+  font-size:clamp(27px,3.4vw,36px);line-height:1.2;letter-spacing:-.02em;
+  font-weight:750;margin:0 0 10px;
+}
+.sub{color:var(--muted);font-size:16px;margin:0 0 34px;max-width:40em}
+h3{font-size:17px;font-weight:700;margin:44px 0 12px;letter-spacing:.01em}
+p{max-width:40em}
+.rule{height:1px;background:var(--line);border:0;margin:0}
+
+/* ---------- why: two columns ---------- */
+.swap{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.swap>div{background:var(--panel);padding:26px 24px}
+.swap .tag{font-size:12px;letter-spacing:.1em;margin:0 0 14px;color:var(--dim)}
+.swap .now .tag{color:var(--cyan)}
+.swap ul{margin:0;padding-left:1.1em;color:var(--muted);font-size:14.5px;line-height:1.85}
+.swap .now ul{color:var(--text)}
+.swap h4{margin:0 0 10px;font-size:16.5px;font-weight:700}
+
+/* ---------- flow strip ---------- */
+.flow{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 8px;align-items:center}
+.step{
+  border:1px solid var(--line2);border-radius:2px;padding:9px 14px;font-size:14px;
+  background:var(--panel);white-space:nowrap;
+}
+.step em{font-style:normal;color:var(--cyan);font-weight:700;margin-right:7px;font-size:12px}
+.arrow{color:var(--dim);font-size:13px}
+
+/* ---------- param table ---------- */
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:3px;margin-top:8px}
+table{border-collapse:collapse;width:100%;min-width:820px;font-size:14px}
+th,td{text-align:left;padding:15px 18px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.6}
+thead th{background:#101317;font-weight:700;font-size:13px;color:var(--muted);letter-spacing:.06em;white-space:nowrap}
+tbody th{font-weight:600;color:var(--muted);font-size:13.5px;white-space:nowrap;background:#101317;width:150px}
+tr:last-child td,tr:last-child th{border-bottom:0}
+td b{font-weight:650}
+.t1c{color:var(--copper)}.t2c{color:var(--silver)}.t3c{color:var(--gold)}.t4c{color:var(--cyan)}
+
+/* ---------- phones ---------- */
+.screens{display:flex;gap:20px;overflow-x:auto;padding:6px 2px 22px;scroll-snap-type:x proximity}
+.screencell{flex:0 0 auto;width:236px;scroll-snap-align:start}
+.screencell .cap{font-size:13px;color:var(--muted);margin:14px 0 0;line-height:1.6}
+.screencell .cap b{color:var(--text);display:block;font-size:14px;font-weight:700;margin-bottom:3px}
+.screencell .cap b i{font-style:normal;color:var(--cyan);font-size:11.5px;margin-right:6px}
+
+.phone{
+  width:236px;height:470px;border:1px solid var(--line2);border-radius:16px;
+  background:#0D0F12;position:relative;overflow:hidden;display:flex;flex-direction:column;
+}
+.pbar{display:flex;align-items:center;gap:6px;padding:9px 10px 7px;font-size:9.5px;color:var(--text)}
+.pav{width:17px;height:17px;border-radius:50%;background:linear-gradient(140deg,#3A4048,#22262C);flex:0 0 auto}
+.pdia{margin-left:auto;display:flex;align-items:center;gap:3px;background:#1D2126;border-radius:9px;padding:2px 7px;font-size:9px;color:var(--cyan)}
+.px{color:var(--dim);font-size:11px}
+.pvid{
+  flex:1;position:relative;margin:0 8px;border-radius:6px;
+  background:
+    radial-gradient(120% 80% at 30% 20%,#252A31 0%,#171A1F 55%,#101317 100%);
+  overflow:hidden;
+}
+.pwm{position:absolute;top:14px;left:12px;font-size:11px;font-weight:800;color:rgba(36,224,208,.34);letter-spacing:.02em}
+.pchat{position:absolute;left:8px;right:8px;bottom:8px;display:flex;flex-direction:column;gap:4px}
+.pmsg{height:13px;border-radius:7px;background:rgba(255,255,255,.09)}
+.pmsg.w1{width:78%}.pmsg.w2{width:62%}.pmsg.w3{width:70%}
+.pfoot{display:flex;align-items:center;gap:5px;padding:8px 10px 10px}
+.pinput{flex:1;height:22px;border-radius:11px;background:#1B1F25;border:1px solid #262B32}
+.pdot{width:20px;height:20px;border-radius:50%;background:#1B1F25;flex:0 0 auto}
+
+/* floating chest pill in room */
+.pill{
+  position:absolute;right:8px;top:76px;width:46px;border-radius:10px;
+  background:rgba(12,14,17,.86);border:1px solid var(--line2);
+  padding:6px 4px 5px;text-align:center;
+}
+.pill.live{border-color:var(--gold);box-shadow:0 0 0 1px rgba(240,180,41,.22),0 0 22px rgba(240,180,41,.3)}
+.pill .ptime{font-size:9px;color:var(--muted);margin-top:2px;letter-spacing:.02em}
+.pill.live .ptime{color:var(--gold)}
+.pill .plab{font-size:8.5px;color:var(--gold);margin-top:2px;font-weight:700}
+
+/* open overlay */
+.ovl{
+  position:absolute;inset:0;background:rgba(6,7,9,.82);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:0 16px;
+}
+.ovl .stars{font-size:14px;letter-spacing:2px;color:var(--gold);margin-top:8px}
+.ovl .stars span{color:#3A3F47}
+.ovl .grade{font-size:14px;font-weight:800;margin-top:5px}
+.ovl .mult{font-size:10.5px;color:var(--muted);margin-top:3px;text-align:center;line-height:1.55}
+.ovl .cta{
+  margin-top:12px;font-size:10.5px;font-weight:700;color:#06211F;
+  background:var(--cyan);border-radius:12px;padding:6px 16px;
+}
+
+/* bonus bar */
+.bonusbar{
+  position:absolute;left:8px;right:8px;bottom:8px;
+  border:1px solid rgba(240,180,41,.45);border-radius:7px;background:rgba(14,12,8,.92);
+  padding:7px 9px;
+}
+.bonusbar .brow{display:flex;align-items:center;gap:5px;font-size:9.5px}
+.bonusbar .bstar{color:var(--gold);font-weight:800}
+.bonusbar .bmul{color:var(--gold);font-weight:800;margin-left:auto}
+.bonusbar .btrack{height:3px;border-radius:2px;background:#2A2620;margin-top:6px;overflow:hidden}
+.bonusbar .bfill{height:100%;width:44%;background:var(--gold)}
+.bonusbar .bnote{font-size:8.5px;color:var(--muted);margin-top:5px}
+
+/* toast */
+.toast{
+  position:absolute;left:8px;right:8px;top:76px;
+  border:1px solid var(--line2);border-radius:7px;background:rgba(12,14,17,.94);padding:8px 10px;
+}
+.toast .trow{font-size:10px;font-weight:700}
+.toast .trow span{color:var(--cyan)}
+.toast .tnote{font-size:8.5px;color:var(--muted);margin-top:4px}
+
+/* ---------- explore cards ---------- */
+.cards{display:flex;gap:14px;overflow-x:auto;padding:6px 2px 20px}
+.card{
+  flex:0 0 auto;width:210px;border:1px solid var(--line);border-radius:5px;overflow:hidden;background:var(--panel);
+}
+.card .thumb{
+  height:132px;position:relative;
+  background:radial-gradient(110% 80% at 35% 25%,#262B32 0%,#181B20 60%,#101317 100%);
+}
+.card .tagr{position:absolute;top:7px;right:7px;background:rgba(255,255,255,.9);color:#111;font-size:8.5px;border-radius:3px;padding:2px 5px;font-weight:700}
+.card .tagl{position:absolute;top:7px;left:7px;background:rgba(255,255,255,.9);color:#111;font-size:8.5px;border-radius:3px;padding:2px 5px;font-weight:700}
+.card .chesticon{position:absolute;top:32px;right:7px}
+.card .vcount{position:absolute;bottom:7px;left:7px;font-size:9px;color:#fff}
+.card .rate{position:absolute;bottom:7px;right:7px;font-size:9px;color:#fff;background:rgba(0,0,0,.5);border-radius:3px;padding:1px 5px}
+.card .meta{padding:8px 9px 10px}
+.card .ttl{font-size:11.5px;font-weight:600}
+.card .who{font-size:10px;color:var(--muted);margin-top:2px}
+.cardcap{font-size:13px;color:var(--muted);margin-top:10px;line-height:1.6}
+.cardcap b{color:var(--text);font-weight:700}
+
+.chips{display:flex;gap:7px;flex-wrap:wrap;margin:22px 0 0}
+.chip{border:1px solid var(--line2);border-radius:13px;padding:5px 13px;font-size:12.5px;color:var(--muted);background:var(--panel)}
+.chip.on{border-color:var(--gold);color:var(--gold)}
+
+/* ---------- vip panel mock ---------- */
+.panelmock{
+  width:300px;border:1px solid var(--line2);border-radius:16px;background:#0D0F12;overflow:hidden;flex:0 0 auto;
+}
+.vp{padding:13px 14px}
+.vp+.vp{border-top:1px solid var(--line)}
+.vphead{display:flex;align-items:center;gap:11px}
+.vplv{font-size:21px;font-weight:800;letter-spacing:-.01em}
+.vptier{font-size:10px;color:var(--silver);margin-top:1px}
+.vptrack{height:4px;border-radius:2px;background:#20242A;margin-top:10px;overflow:hidden}
+.vpfill{height:100%;width:58%;background:var(--cyan)}
+.vpmeta{font-size:9.5px;color:var(--muted);margin-top:6px}
+.vplab{font-size:10.5px;color:var(--muted);margin:0 0 9px;letter-spacing:.06em}
+.slots{display:flex;gap:6px}
+.slot{flex:1;height:38px;border:1px solid var(--line);border-radius:5px;display:flex;align-items:center;justify-content:center;background:#12151A}
+.slot.done{border-color:var(--gold);background:rgba(240,180,41,.08)}
+.slotnote{font-size:9.5px;color:var(--muted);margin-top:7px}
+.streak{display:flex;align-items:baseline;gap:6px}
+.streak .n{font-size:19px;font-weight:800;color:var(--gold)}
+.streak .u{font-size:10px;color:var(--muted)}
+.rooms{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:5px;overflow:hidden}
+.room{display:flex;align-items:center;gap:8px;background:#12151A;padding:8px 9px}
+.rav{width:20px;height:20px;border-radius:50%;background:linear-gradient(140deg,#343A42,#20242A);flex:0 0 auto}
+.rname{font-size:10.5px;font-weight:600}
+.rmeta{font-size:9px;color:var(--muted);margin-top:1px}
+.rgo{margin-left:auto;font-size:9.5px;font-weight:700;color:#06211F;background:var(--cyan);border-radius:10px;padding:3px 10px}
+.rgo.off{background:#22262C;color:var(--dim)}
+.oddsrow{display:flex;align-items:center;gap:7px;margin-top:7px;font-size:9.5px}
+.oddsrow .ol{width:34px;color:var(--muted);flex:0 0 auto}
+.otrack{flex:1;height:6px;border-radius:3px;background:#20242A;overflow:hidden;display:flex}
+.otrack i{display:block;height:100%}
+.oddsleg{font-size:9px;color:var(--dim);margin-top:8px;line-height:1.6}
+.ptsrow{display:flex;align-items:baseline;gap:6px}
+.ptsrow .n{font-size:19px;font-weight:800}
+.ptsrow .u{font-size:10px;color:var(--muted)}
+
+.mockrow{display:flex;gap:26px;align-items:flex-start;overflow-x:auto;padding:6px 2px 20px}
+.mocknote{font-size:14px;color:var(--muted);max-width:26em;line-height:1.8}
+.mocknote b{color:var(--text);font-weight:700}
+.mocknote ol{padding-left:1.2em;margin:0}
+.mocknote li{margin-bottom:14px}
+
+/* ---------- rules ---------- */
+.rules{border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.ruleitem{display:flex;gap:16px;padding:18px 20px;border-bottom:1px solid var(--line);background:var(--panel)}
+.ruleitem:last-child{border-bottom:0}
+.ruleitem .rn{font-size:12px;color:var(--cyan);font-weight:700;flex:0 0 20px;padding-top:4px}
+.ruleitem .rt{font-size:15.5px;font-weight:650;margin-bottom:5px}
+.ruleitem .rd{font-size:14px;color:var(--muted);line-height:1.7;max-width:44em}
+
+/* ---------- open items ---------- */
+.open{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.open>div{background:var(--panel);padding:24px 22px}
+.open h4{margin:0 0 4px;font-size:16.5px;font-weight:700}
+.open .oh{font-size:12.5px;color:var(--dim);margin:0 0 16px}
+.open ul{margin:0;padding-left:1.15em;font-size:14px;color:var(--muted);line-height:1.8}
+.open li{margin-bottom:9px}
+.open li b{color:var(--text);font-weight:650}
+.settled{margin-top:26px;border:1px solid var(--line);border-left:2px solid var(--cyan-d);border-radius:3px;padding:20px 22px;background:var(--panel)}
+.settled h4{margin:0 0 12px;font-size:15.5px;font-weight:700}
+.settled ul{margin:0;padding-left:1.15em;font-size:14px;color:var(--muted);line-height:1.8}
+
+footer{margin-top:96px;padding-top:26px;border-top:1px solid var(--line);font-size:13px;color:var(--dim);line-height:1.8}
+
+@media(max-width:760px){
+  .wrap{padding:0 20px 100px}
+  .hero{padding:56px 0 0}
+  .chests{grid-template-columns:repeat(2,1fr)}
+  .chest:nth-child(2){border-right:0}
+  .chest:nth-child(1),.chest:nth-child(2){border-bottom:1px solid var(--line)}
+  .swap,.open{grid-template-columns:1fr}
+  section{margin-top:80px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
-<div class="page">
- 
-  <header>
-    <div class="header-top">
-      <div>
-        <div class="badge">SWAG LIVE — OP RATIO KPI</div>
-        <h1 style="margin-top:10px;">鑽石經濟監控 <span>2026 Q1</span></h1>
-        <p class="subtitle">Diamond Economy &amp; Sales Purity Monitor｜Jan – Apr 2026</p>
-        <p class="source-tag">資料來源：Mixpanel Project 1262196 / OP Ratio KPI Dashboard</p>
-      </div>
-      <div style="text-align:right; flex-shrink:0;">
-        <div style="font-family:var(--mono); font-size:11px; color:var(--muted);">最後更新</div>
-        <div style="font-family:var(--mono); font-size:13px; color:var(--text); margin-top:2px;">2026-05-13</div>
-      </div>
-    </div>
-  </header>
- 
-  <!-- KPI Cards -->
-  <div class="kpi-grid">
-    <div class="kpi-card green">
-      <div class="kpi-label">賣收匯率（4月）</div>
-      <div class="kpi-val">15.46</div>
-      <div class="kpi-sub">Diamond / TWD</div>
-      <div class="kpi-delta">↑ +0.02 vs 3月</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-label">有效匯率（4月）</div>
-      <div class="kpi-val">15.76</div>
-      <div class="kpi-sub">稀釋後 Dmd / TWD</div>
-      <div class="kpi-delta">差距 +0.30 dmd</div>
-    </div>
-    <div class="kpi-card green">
-      <div class="kpi-label">稀釋率（4月）</div>
-      <div class="kpi-val">1.94%</div>
-      <div class="kpi-sub">194 Basis Points</div>
-      <div class="kpi-delta">↓ 最低點，改善中</div>
-    </div>
-    <div class="kpi-card red">
-      <div class="kpi-label">稀釋率（1月 峰值）</div>
-      <div class="kpi-val">3.11%</div>
-      <div class="kpi-sub">311 Basis Points</div>
-      <div class="kpi-delta neg">↑ CN Referral 活動推高</div>
-    </div>
-  </div>
- 
-  <!-- Charts -->
-  <div class="chart-row">
-    <div class="chart-card">
-      <div class="chart-title">DILUTION RATE — Monthly Trend</div>
-      <div style="position:relative;height:180px;"><canvas id="c1" role="img" aria-label="稀釋率月趨勢圖">稀釋率：1月3.11%，2月2.20%，3月2.26%，4月1.94%</canvas></div>
-    </div>
-    <div class="chart-card">
-      <div class="chart-title">OP_REWARD_COST — Component Breakdown (Apr 2026)</div>
-      <div style="position:relative;height:180px;"><canvas id="c2" role="img" aria-label="4月獎勵成本細項圓餅圖">BattlePass 27%, 活動Campaign 29%, 每日登入 36%, 其他 8%</canvas></div>
-    </div>
-  </div>
- 
-  <!-- Section A -->
-  <div class="section">
-    <div class="section-header">
-      <span class="section-code">A</span>
-      <span class="section-name">賣收匯率 &amp; 系統購買力</span>
-    </div>
-    <div class="tbl-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th>項目</th>
-          <th>單位</th>
-          <th>2026年1月</th>
-          <th>2026年2月</th>
-          <th>2026年3月</th>
-          <th>2026年4月</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>賣收匯率（每 1 TWD 買到鑽石數）</td>
-          <td style="font-family:var(--mono);font-size:11px;color:var(--dim);text-align:right;">Dmd/TWD</td>
-          <td class="num-kpi">15.42</td>
-          <td class="num-kpi">15.54</td>
-          <td class="num-kpi">15.44</td>
-          <td class="num-kpi">15.46</td>
-        </tr>
-        <tr>
-          <td>USD-to-Diamond 比率</td>
-          <td style="font-family:var(--mono);font-size:11px;color:var(--dim);text-align:right;">Dmd/USD</td>
-          <td>486.33</td>
-          <td>492.65</td>
-          <td>503.34</td>
-          <td>493.74</td>
-        </tr>
-        <tr>
-          <td>用戶購買鑽石存入量</td>
-          <td style="font-family:var(--mono);font-size:11px;color:var(--dim);text-align:right;">Diamonds</td>
-          <td>1,948,517,595</td>
-          <td>2,149,044,734</td>
-          <td>2,217,386,189</td>
-          <td>2,200,018,548</td>
-        </tr>
-        <tr>
-          <td>用戶購買銷售額</td>
-          <td style="font-family:var(--mono);font-size:11px;color:var(--dim);text-align:right;">USD</td>
-          <td>$4,006,545</td>
-          <td>$4,362,191</td>
-          <td>$4,405,373</td>
-          <td>$4,455,824</td>
-        </tr>
-      </tbody>
-    </table>
-    </div>
-  </div>
- 
-  <!-- Section B -->
-  <div class="section">
-    <div class="section-header">
-      <span class="section-code">B</span>
-      <span class="section-name">獎勵鑽石細項（Reward Dilution Items）</span>
-    </div>
-    <div class="tbl-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th>項目</th>
-          <th>單位</th>
-          <th>2026年1月</th>
-          <th>2026年2月</th>
-          <th>2026年3月</th>
-          <th>2026年4月</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="row-label">BattlePass（不含 paid）</td>
-          <td style="font-family:var(--mono);font-size:11px;color:var(--dim);text-align:right;">Diamonds</td>
-          <td style="color:var(--dim);">0</td>
-          <td class="num-red">5,523,140</td>
-          <td>10,705,060</td>
-          <td>9,716,090</td>
-        </tr>
-        <tr>
-          <td class="row-label">推薦人獎勵</td>
-          <td style="font-family:var(--mono);font-size:11px;color:var(--dim);text-align:right;">Diamonds</td>
-          <td>862,000</td>
-          <td>1,680,000</td>
-          <td>2,286,000</td>
-          <td>1,546,500</td>
-        </tr>
-        <tr>
-          <td class="row-label">每日登入獎勵</td>
-          <td style="font-family:var(--mono);font-size:11px;color:var(--dim);text-align:right;">Diamonds</td>
-          <td>21,018,800</td>
-          <td>14,720,320</td>
-          <td>14,623,720</td>
-          <td>12,975,480</td>
-        </tr>
-        <tr>
-          <td class="row-label">活動 Campaign（excl. vp 發鑽）</td>
-          <td style="font-family:var(--mono);font-size:11px;color:var(--dim);text-align:right;">Diamonds</td>
-          <td class="num-red">37,448,879</td>
-          <td>19,347,947</td>
-          <td>14,699,905</td>
-          <td>10,384,105</td>
-        </tr>
-        <tr>
-          <td class="row-label">被推薦人獎勵</td>
-          <td style="font-family:var(--mono);font-size:11px;color:var(--dim);text-align:right;">Diamonds</td>
-          <td>161,000</td>
-          <td>201,880</td>
-          <td>157,090</td>
-          <td>279,760</td>
-        </tr>
-        <tr>
-          <td class="row-label">點數卡</td>
-          <td style="font-family:var(--mono);font-size:11px;color:var(--dim);text-align:right;">Diamonds</td>
-          <td>1,136,451</td>
-          <td>1,177,156</td>
-          <td>1,653,712</td>
-          <td>1,060,049</td>
-        </tr>
-        <tr class="total-row">
-          <td>獎勵鑽石總計（OP_Reward_Diamond_Cost）</td>
-          <td style="font-family:var(--mono);font-size:11px;color:var(--dim);text-align:right;">Diamonds</td>
-          <td class="num-red">60,627,130</td>
-          <td>42,650,443</td>
-          <td>44,125,487</td>
-          <td style="color:var(--green);font-weight:500;">35,961,984</td>
-        </tr>
-      </tbody>
-    </table>
-    </div>
-  </div>
- 
-  <!-- Section C -->
-  <div class="section">
-    <div class="section-header">
-      <span class="section-code">C</span>
-      <span class="section-name">系統購買力分析（Dilution Analysis）</span>
-    </div>
-    <div class="tbl-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th>項目</th>
-          <th>單位</th>
-          <th>2026年1月</th>
-          <th>2026年2月</th>
-          <th>2026年3月</th>
-          <th>2026年4月</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>系統總鑽石供應量（points.deposited）</td>
-          <td style="font-family:var(--mono);font-size:11px;color:var(--dim);text-align:right;">Diamonds</td>
-          <td>2,308,940,553</td>
-          <td>2,272,224,214</td>
-          <td>2,312,473,994</td>
-          <td>2,228,329,648</td>
-        </tr>
-        <tr class="subtotal">
-          <td>稀釋率（Dilution Rate）</td>
-          <td style="font-family:var(--mono);font-size:11px;color:var(--dim);text-align:right;">%</td>
-          <td class="num-red">3.11%</td>
-          <td class="num-warn">2.20%</td>
-          <td class="num-warn">2.26%</td>
-          <td class="num-ok">1.94%</td>
-        </tr>
-        <tr class="subtotal">
-          <td>預估毛利侵蝕度（Margin Impact）</td>
-          <td style="font-family:var(--mono);font-size:11px;color:var(--dim);text-align:right;">bps</td>
-          <td class="bps-red">311</td>
-          <td class="bps" style="color:var(--amber);">220</td>
-          <td class="bps" style="color:var(--amber);">226</td>
-          <td class="bps-ok">194</td>
-        </tr>
-        <tr>
-          <td>Reward &amp; Compensation Cost Ratio</td>
-          <td style="font-family:var(--mono);font-size:11px;color:var(--dim);text-align:right;">%</td>
-          <td class="num-red">3.11%</td>
-          <td>1.88%</td>
-          <td>1.91%</td>
-          <td class="num-ok">1.62%</td>
-        </tr>
-      </tbody>
-    </table>
-    </div>
-  </div>
- 
-  <div class="note-box">
-    <strong>備註</strong><br>
-    <strong>2026/01</strong>：中國 referral 活動（cn_ref / cn__refer）造成活動 Campaign 鑽石大量釋出（37.4M），推高稀釋率至 311 bps，為觀測期內峰值。<br>
-    <strong>2026/02</strong>：BattlePass 免費獎勵改版（5.5M），為新增稀釋來源，此後每月穩定貢獻約 10M。<br>
-    <strong>稀釋率計算</strong>：OP_Reward_Diamond_Cost ÷ points.deposited 系統總供應量。有效匯率 = 賣收匯率 × (1 + Dilution Rate)。
-  </div>
- 
+<div class="wrap">
+
+<div class="hero">
+  <p class="kicker">VIP 2.0 · 任務體系提案</p>
+  <h1>直播間尋寶</h1>
+  <p class="lede">四個 Tier 玩的是<b>同一個遊戲</b>：進到有寶箱的直播間、看滿五分鐘、開箱、抽到星級、在那間房完成加成行為。<br>差別只在後台的參數——<b>寶箱長在哪些直播間</b>，以及<b>開箱後要做什麼</b>。</p>
 </div>
- 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-<script>
-const months = ['Jan', 'Feb', 'Mar', 'Apr'];
- 
-new Chart(document.getElementById('c1'), {
-  type: 'line',
-  data: {
-    labels: months,
-    datasets: [{
-      label: '稀釋率 %',
-      data: [3.11, 2.20, 2.26, 1.94],
-      borderColor: '#4fc3f7',
-      backgroundColor: 'rgba(79,195,247,0.08)',
-      borderWidth: 2,
-      pointBackgroundColor: ['#ef5350','#ffb74d','#ffb74d','#66bb6a'],
-      pointBorderColor: ['#ef5350','#ffb74d','#ffb74d','#66bb6a'],
-      pointRadius: 5,
-      tension: 0.3,
-      fill: true,
-    }]
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: { display: false },
-      tooltip: {
-        callbacks: { label: ctx => ' ' + ctx.parsed.y.toFixed(2) + '%' }
-      }
-    },
-    scales: {
-      x: { ticks: { color: '#6b7280', font: { family: "'DM Mono', monospace", size: 11 } }, grid: { color: 'rgba(255,255,255,0.04)' } },
-      y: {
-        ticks: { color: '#6b7280', font: { family: "'DM Mono', monospace", size: 11 }, callback: v => v + '%' },
-        grid: { color: 'rgba(255,255,255,0.04)' },
-        min: 1.5, max: 3.5
-      }
-    }
-  }
-});
- 
-new Chart(document.getElementById('c2'), {
-  type: 'doughnut',
-  data: {
-    labels: ['BattlePass', '活動 Campaign', '每日登入', '推薦人', '點數卡', '被推薦人'],
-    datasets: [{
-      data: [9716090, 10384105, 12975480, 1546500, 1060049, 279760],
-      backgroundColor: ['#4fc3f7','#ef5350','#66bb6a','#ffb74d','#9575cd','#4db6ac'],
-      borderColor: '#13161e',
-      borderWidth: 3,
-    }]
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    cutout: '62%',
-    plugins: {
-      legend: {
-        display: true,
-        position: 'right',
-        labels: {
-          color: '#6b7280',
-          font: { family: "'DM Mono', monospace", size: 10 },
-          boxWidth: 10,
-          padding: 10,
-          usePointStyle: true,
-        }
-      },
-      tooltip: {
-        callbacks: {
-          label: ctx => ' ' + (ctx.parsed / 35961984 * 100).toFixed(1) + '%'
-        }
-      }
-    }
-  }
-});
-</script>
+
+<div class="chests">
+  <div class="chest">
+    <svg width="112" height="96" viewBox="0 0 120 104" aria-label="青銅寶箱">
+      <ellipse cx="60" cy="94" rx="34" ry="5" fill="#000" opacity=".45"/>
+      <rect x="20" y="52" width="80" height="38" rx="3" fill="#8A5626"/>
+      <rect x="20" y="52" width="80" height="38" rx="3" fill="url(#g1)"/>
+      <rect x="18" y="38" width="84" height="15" rx="2.5" fill="#A76A31"/>
+      <rect x="18" y="38" width="84" height="15" rx="2.5" fill="url(#g1b)"/>
+      <rect x="18" y="50" width="84" height="4" fill="#5E3A19"/>
+      <rect x="53" y="38" width="14" height="52" fill="#6E4520"/>
+      <rect x="53" y="38" width="4" height="52" fill="#8F5C2A"/>
+      <rect x="50" y="58" width="20" height="13" rx="2" fill="#C98B3E"/>
+      <circle cx="60" cy="64.5" r="2.6" fill="#3A2410"/>
+      <rect x="22" y="80" width="6" height="6" rx="1" fill="#6E4520"/>
+      <rect x="92" y="80" width="6" height="6" rx="1" fill="#6E4520"/>
+      <path d="M18 39.5h84" stroke="#D19A5A" stroke-opacity=".55" stroke-width="1"/>
+      <defs>
+        <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#fff" stop-opacity=".1"/><stop offset="1" stop-color="#000" stop-opacity=".3"/>
+        </linearGradient>
+        <linearGradient id="g1b" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#fff" stop-opacity=".18"/><stop offset="1" stop-color="#000" stop-opacity=".2"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    <div class="tier">TIER 1</div>
+    <div class="cname t1c">青銅箱</div>
+    <div class="crole">冷門房，靠留言炒起來</div>
+  </div>
+
+  <div class="chest">
+    <svg width="112" height="96" viewBox="0 0 120 104" aria-label="白銀寶箱">
+      <ellipse cx="60" cy="94" rx="34" ry="5" fill="#000" opacity=".45"/>
+      <rect x="20" y="54" width="80" height="36" rx="3" fill="#8E979F"/>
+      <rect x="20" y="54" width="80" height="36" rx="3" fill="url(#g2)"/>
+      <path d="M19 55V44c0-11 18.4-17 41-17s41 6 41 17v11z" fill="#AAB4BD"/>
+      <path d="M19 55V44c0-11 18.4-17 41-17s41 6 41 17v11z" fill="url(#g2b)"/>
+      <rect x="19" y="52" width="82" height="4.5" fill="#5C646C"/>
+      <rect x="53" y="28" width="14" height="62" fill="#6B747C"/>
+      <rect x="53" y="28" width="4" height="62" fill="#9AA4AD"/>
+      <rect x="49" y="59" width="22" height="14" rx="2.5" fill="#D3DBE2"/>
+      <circle cx="60" cy="66" r="2.8" fill="#2C3238"/>
+      <path d="M24 33.5C31 30 44 27.6 60 27.6s29 2.4 36 5.9" stroke="#24E0D0" stroke-opacity=".7" stroke-width="1.4" fill="none"/>
+      <rect x="22" y="81" width="6" height="6" rx="1" fill="#6B747C"/>
+      <rect x="92" y="81" width="6" height="6" rx="1" fill="#6B747C"/>
+      <defs>
+        <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#fff" stop-opacity=".14"/><stop offset="1" stop-color="#000" stop-opacity=".32"/>
+        </linearGradient>
+        <linearGradient id="g2b" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#fff" stop-opacity=".26"/><stop offset="1" stop-color="#000" stop-opacity=".16"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    <div class="tier">TIER 2</div>
+    <div class="cname t2c">白銀箱</div>
+    <div class="crole">他自己耗鑽過的主播</div>
+  </div>
+
+  <div class="chest">
+    <svg width="112" height="96" viewBox="0 0 120 104" aria-label="黃金寶箱">
+      <ellipse cx="60" cy="94" rx="36" ry="6" fill="#000" opacity=".45"/>
+      <ellipse cx="60" cy="62" rx="52" ry="34" fill="url(#glow3)"/>
+      <rect x="20" y="54" width="80" height="36" rx="3" fill="#B27F14"/>
+      <rect x="20" y="54" width="80" height="36" rx="3" fill="url(#g3)"/>
+      <path d="M19 55V43c0-11.6 18.4-18 41-18s41 6.4 41 18v12z" fill="#E0A31C"/>
+      <path d="M19 55V43c0-11.6 18.4-18 41-18s41 6.4 41 18v12z" fill="url(#g3b)"/>
+      <rect x="19" y="52" width="82" height="5" fill="#7C5608"/>
+      <rect x="52" y="26" width="16" height="64" fill="#96690C"/>
+      <rect x="52" y="26" width="4.5" height="64" fill="#F0BE45"/>
+      <rect x="48" y="58" width="24" height="16" rx="3" fill="#F6D275"/>
+      <path d="M60 62l4 4-4 4-4-4z" fill="#FF2E76"/>
+      <path d="M23 32C31 27.6 44 25 60 25s29 2.6 37 7" stroke="#FFE29A" stroke-opacity=".8" stroke-width="1.5" fill="none"/>
+      <rect x="21" y="81" width="7" height="7" rx="1.2" fill="#F0BE45"/>
+      <rect x="92" y="81" width="7" height="7" rx="1.2" fill="#F0BE45"/>
+      <defs>
+        <radialGradient id="glow3"><stop offset="0" stop-color="#F0B429" stop-opacity=".3"/><stop offset="1" stop-color="#F0B429" stop-opacity="0"/></radialGradient>
+        <linearGradient id="g3" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#fff" stop-opacity=".14"/><stop offset="1" stop-color="#000" stop-opacity=".34"/>
+        </linearGradient>
+        <linearGradient id="g3b" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#fff" stop-opacity=".3"/><stop offset="1" stop-color="#000" stop-opacity=".14"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    <div class="tier">TIER 3</div>
+    <div class="cname t3c">黃金箱</div>
+    <div class="crole">新主播、推薦名單</div>
+  </div>
+
+  <div class="chest">
+    <svg width="112" height="96" viewBox="0 0 120 104" aria-label="稜晶寶箱">
+      <ellipse cx="60" cy="95" rx="34" ry="5" fill="#000" opacity=".5"/>
+      <ellipse cx="60" cy="58" rx="56" ry="38" fill="url(#glow4)"/>
+      <path d="M22 56h76v34H22z" fill="#171C22"/>
+      <path d="M22 56l38 8 38-8v34l-38 6-38-6z" fill="#1E252D"/>
+      <path d="M60 64v32" stroke="#0B0E12" stroke-width="1.4"/>
+      <path d="M20 57l14-22h52l14 22z" fill="#232B34"/>
+      <path d="M20 57l14-22h26l4 22z" fill="#2C3540"/>
+      <path d="M20 57h80" stroke="#24E0D0" stroke-opacity=".85" stroke-width="1.5"/>
+      <path d="M34 35h52" stroke="#FF2E76" stroke-opacity=".8" stroke-width="1.4"/>
+      <path d="M20 57l14-22M100 57L86 35" stroke="#24E0D0" stroke-opacity=".5" stroke-width="1.2"/>
+      <path d="M22 90h76" stroke="#24E0D0" stroke-opacity=".35" stroke-width="1.2"/>
+      <path d="M60 44l7 7-7 7-7-7z" fill="#24E0D0" fill-opacity=".9"/>
+      <path d="M60 47.5l3.5 3.5L60 54.5 56.5 51z" fill="#0B1416"/>
+      <path d="M12 44l3 5-3 5-3-5z" fill="#24E0D0" fill-opacity=".55"/>
+      <path d="M108 40l2.6 4.4-2.6 4.4-2.6-4.4z" fill="#FF2E76" fill-opacity=".55"/>
+      <path d="M104 66l2 3.4-2 3.4-2-3.4z" fill="#24E0D0" fill-opacity=".4"/>
+      <defs>
+        <radialGradient id="glow4"><stop offset="0" stop-color="#24E0D0" stop-opacity=".26"/><stop offset=".6" stop-color="#FF2E76" stop-opacity=".1"/><stop offset="1" stop-color="#24E0D0" stop-opacity="0"/></radialGradient>
+      </defs>
+    </svg>
+    <div class="tier">TIER 4</div>
+    <div class="cname t4c">稜晶箱</div>
+    <div class="crole">同 T3，權重不同</div>
+  </div>
+</div>
+
+<!-- ============ WHY ============ -->
+<section>
+  <h2>為什麼把任務清單整個換掉</h2>
+  <p class="sub">原本每個 Tier 都有自己一套任務。用戶升級的時候，任務會突然變成另一種東西；平台想調策略，就要重寫制度。</p>
+
+  <div class="swap">
+    <div>
+      <p class="tag">原本</p>
+      <h4>四套任務，四套規則</h4>
+      <ul>
+        <li>T1 看播、發言、評分、巡房</li>
+        <li>T2 對同一主播送禮 ≥3 天、私訊、超級留言</li>
+        <li>T3 互動 2 位非核心主播、至少 1 位耗鑽</li>
+        <li>T4 同 T3，權重更高，加上飄頻廣播</li>
+      </ul>
+      <p style="font-size:14px;color:var(--dim);margin:16px 0 0;max-width:none">升級＝換一套任務。想改導流方向，要改任務文案與判定邏輯。</p>
+    </div>
+    <div class="now">
+      <p class="tag">直播間尋寶</p>
+      <h4>一套機制，四組參數</h4>
+      <ul>
+        <li>所有人都在開寶箱，玩法只要學一次</li>
+        <li>想把誰導去哪裡，改「寶箱長在哪些房間」就好</li>
+        <li>換節慶、換活動只是換皮，不動制度</li>
+        <li>原本要獨立開發的「探索任務判定引擎」收斂成候選池的一個參數</li>
+      </ul>
+      <p style="font-size:14px;color:var(--text);margin:16px 0 0;max-width:none">平台的意志從「任務文案」搬到「寶箱位置」——這才是真正能控的槓桿。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SKELETON ============ -->
+<section>
+  <h2>機制骨架</h2>
+  <p class="sub">同一條流程跑在四個 Tier 上。</p>
+
+  <div class="flow">
+    <span class="step"><em>1</em>進到候選池裡的直播間</span><span class="arrow">→</span>
+    <span class="step"><em>2</em>累計看滿 5 分鐘</span><span class="arrow">→</span>
+    <span class="step"><em>3</em>寶箱生成</span><span class="arrow">→</span>
+    <span class="step"><em>4</em>開箱，抽出 1–6 星</span><span class="arrow">→</span>
+    <span class="step"><em>5</em>星級＝加成倍率</span><span class="arrow">→</span>
+    <span class="step"><em>6</em>在同一間房完成加成行為</span>
+  </div>
+  <p style="font-size:13.5px;color:var(--dim);margin:14px 0 0">開箱只揭曉星級與倍率；獎勵的主要部分要靠第 6 步才結算得到。</p>
+
+  <h3>四組參數</h3>
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr><th></th><th class="t1c">Tier 1</th><th class="t2c">Tier 2</th><th class="t3c">Tier 3</th><th class="t4c">Tier 4</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>寶箱造型</th>
+          <td>青銅箱</td><td>白銀箱</td><td>黃金箱</td><td>稜晶箱</td>
+        </tr>
+        <tr>
+          <th>寶箱長在哪</th>
+          <td>觀看人數低於門檻的冷門房</td>
+          <td>他自己耗鑽過的主播（打賞、影片解鎖、聊天），依當下是否開播排序</td>
+          <td>新主播、data team 推薦名單</td>
+          <td>同 T3，名單權重不同</td>
+        </tr>
+        <tr>
+          <th>這個池子要解的事</th>
+          <td>把冷房炒起來、擴大活躍母體</td>
+          <td>深化單一關係、完成商業轉換</td>
+          <td>破圈，建立第二支持池</td>
+          <td>破圈，把耗鑽轉成對新人的影響力</td>
+        </tr>
+        <tr>
+          <th>開箱後要做什麼</th>
+          <td><b>在該直播間留言</b></td>
+          <td colspan="3"><b>對該主播耗鑽</b>（打賞、指令、解鎖）——原本 1 鑽＝1 EXP，加成期間按星級倍率放大</td>
+        </tr>
+        <tr>
+          <th>加成給什麼</th>
+          <td>只給 EXP</td>
+          <td>EXP ＋ 福利點數</td>
+          <td>EXP ＋ 福利點數（點數比重提高）</td>
+          <td>以福利點數為主</td>
+        </tr>
+        <tr>
+          <th>沒有可推薦的房間時</th>
+          <td colspan="1">放寬人數門檻</td>
+          <td colspan="3">比照 T3／T4 邏輯，改推新主播與推薦名單</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:13.5px;color:var(--dim);margin:16px 0 0">T1 的加成刻意不給福利點數——點數的來源要始終掛在消費上，一條例外都不留。</p>
+</section>
+
+<!-- ============ IN-ROOM FLOW ============ -->
+<section>
+  <h2>直播間裡會看到什麼</h2>
+  <p class="sub">五個狀態。整套機制的體感都在這五格裡。</p>
+
+  <div class="screens">
+    <!-- S1 -->
+    <div class="screencell">
+      <div class="phone">
+        <div class="pbar"><div class="pav"></div><span>貝貝</span><div class="pdia">◈ 111,621</div><span class="px">✕</span></div>
+        <div class="pvid">
+          <div class="pwm">SWAG</div>
+          <div class="pill">
+            <svg width="30" height="26" viewBox="0 0 120 104"><g opacity=".4"><rect x="20" y="52" width="80" height="38" rx="3" fill="#8A5626"/><rect x="18" y="38" width="84" height="15" rx="2.5" fill="#A76A31"/><rect x="53" y="38" width="14" height="52" fill="#6E4520"/><rect x="50" y="58" width="20" height="13" rx="2" fill="#C98B3E"/></g></svg>
+            <div class="ptime">3:12</div>
+          </div>
+          <div class="pchat"><div class="pmsg w1"></div><div class="pmsg w2"></div><div class="pmsg w3"></div></div>
+        </div>
+        <div class="pfoot"><div class="pdot"></div><div class="pinput"></div><div class="pdot"></div></div>
+      </div>
+      <p class="cap"><b><i>01</i>計時中</b>右上角出現暗色寶箱與倒數。累計滿 5 分鐘才會生成，中途離開回來繼續累計。</p>
+    </div>
+
+    <!-- S2 -->
+    <div class="screencell">
+      <div class="phone">
+        <div class="pbar"><div class="pav"></div><span>貝貝</span><div class="pdia">◈ 111,621</div><span class="px">✕</span></div>
+        <div class="pvid">
+          <div class="pwm">SWAG</div>
+          <div class="pill live">
+            <svg width="30" height="26" viewBox="0 0 120 104"><rect x="20" y="52" width="80" height="38" rx="3" fill="#A76A31"/><rect x="18" y="38" width="84" height="15" rx="2.5" fill="#C98B3E"/><rect x="53" y="38" width="14" height="52" fill="#7E5024"/><rect x="50" y="58" width="20" height="13" rx="2" fill="#F0B429"/></svg>
+            <div class="plab">可開啟</div>
+            <div class="ptime">29:44</div>
+          </div>
+          <div class="pchat"><div class="pmsg w1"></div><div class="pmsg w2"></div><div class="pmsg w3"></div></div>
+        </div>
+        <div class="pfoot"><div class="pdot"></div><div class="pinput"></div><div class="pdot"></div></div>
+      </div>
+      <p class="cap"><b><i>02</i>寶箱生成</b>亮起並開始跑 30 分鐘倒數，從生成那一刻起算。過期就沒了，但不佔今天的額度。</p>
+    </div>
+
+    <!-- S3 -->
+    <div class="screencell">
+      <div class="phone">
+        <div class="pbar"><div class="pav"></div><span>貝貝</span><div class="pdia">◈ 111,621</div><span class="px">✕</span></div>
+        <div class="pvid">
+          <div class="pwm">SWAG</div>
+          <div class="ovl">
+            <svg width="86" height="74" viewBox="0 0 120 104">
+              <ellipse cx="60" cy="58" rx="52" ry="34" fill="url(#og)"/>
+              <rect x="20" y="54" width="80" height="36" rx="3" fill="#A76A31"/>
+              <path d="M18 52l10-22 64 4-8 18z" fill="#C98B3E"/>
+              <rect x="53" y="54" width="14" height="36" fill="#7E5024"/>
+              <path d="M46 50l6-14 4 14z" fill="#F0B429" opacity=".8"/>
+              <path d="M66 50l5-13 3 13z" fill="#F0B429" opacity=".6"/>
+              <defs><radialGradient id="og"><stop offset="0" stop-color="#F0B429" stop-opacity=".42"/><stop offset="1" stop-color="#F0B429" stop-opacity="0"/></radialGradient></defs>
+            </svg>
+            <div class="stars">★★★★<span>★★</span></div>
+            <div class="grade">4 星青銅箱</div>
+            <div class="mult">接下來 30 分鐘<br>留言的 EXP ×1.6</div>
+            <div class="cta">開始加成</div>
+          </div>
+        </div>
+        <div class="pfoot"><div class="pdot"></div><div class="pinput"></div><div class="pdot"></div></div>
+      </div>
+      <p class="cap"><b><i>03</i>開箱揭曉</b>抽出星級。星級不決定拿多少，決定接下來的<b>加成倍率</b>——驚喜留住了，但獎勵還沒到手。</p>
+    </div>
+
+    <!-- S4 -->
+    <div class="screencell">
+      <div class="phone">
+        <div class="pbar"><div class="pav"></div><span>貝貝</span><div class="pdia">◈ 111,621</div><span class="px">✕</span></div>
+        <div class="pvid">
+          <div class="pwm">SWAG</div>
+          <div class="bonusbar">
+            <div class="brow"><span class="bstar">4★</span><span>加成中 · 留言 1/3</span><span class="bmul">×1.6</span></div>
+            <div class="btrack"><i class="bfill"></i></div>
+            <div class="bnote">剩 28:41 · 只在這間直播間有效</div>
+          </div>
+        </div>
+        <div class="pfoot"><div class="pdot"></div><div class="pinput"></div><div class="pdot"></div></div>
+      </div>
+      <p class="cap"><b><i>04</i>加成中</b>條子壓在輸入框上方，逼著看到。T1 是留言，T2–4 是耗鑽——這一步才是行為真正發生的地方。</p>
+    </div>
+
+    <!-- S5 -->
+    <div class="screencell">
+      <div class="phone">
+        <div class="pbar"><div class="pav"></div><span>貝貝</span><div class="pdia">◈ 111,621</div><span class="px">✕</span></div>
+        <div class="pvid">
+          <div class="pwm">SWAG</div>
+          <div class="toast">
+            <div class="trow">加成結算 <span>＋EXP</span></div>
+            <div class="tnote">今日尋寶 2/3 · 連續 5 天<br>這間房 5 分鐘後生成下一個</div>
+          </div>
+          <div class="pchat"><div class="pmsg w1"></div><div class="pmsg w2"></div><div class="pmsg w3"></div></div>
+        </div>
+        <div class="pfoot"><div class="pdot"></div><div class="pinput"></div><div class="pdot"></div></div>
+      </div>
+      <p class="cap"><b><i>05</i>結算</b>結算完，同一間房重新開始計時。留下來就能再開，不必換房。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXPLORE ============ -->
+<section>
+  <h2>探索頁怎麼被看到</h2>
+  <p class="sub">寶箱是每個人各自生成的，房間之間不搶。所以文案是「這間可以開出寶箱」，不是「這間有寶箱」。</p>
+
+  <div class="cards">
+    <div class="card">
+      <div class="thumb">
+        <span class="tagl">新人</span>
+        <span class="tagr">免費直播中</span>
+        <span class="chesticon">
+          <svg width="26" height="23" viewBox="0 0 120 104"><ellipse cx="60" cy="62" rx="50" ry="32" fill="url(#cg)"/><rect x="20" y="54" width="80" height="36" rx="3" fill="#B27F14"/><path d="M19 55V43c0-11.6 18.4-18 41-18s41 6.4 41 18v12z" fill="#E0A31C"/><rect x="52" y="26" width="16" height="64" fill="#96690C"/><rect x="48" y="58" width="24" height="16" rx="3" fill="#F6D275"/><defs><radialGradient id="cg"><stop offset="0" stop-color="#F0B429" stop-opacity=".55"/><stop offset="1" stop-color="#F0B429" stop-opacity="0"/></radialGradient></defs></svg>
+        </span>
+        <span class="vcount">22</span>
+        <span class="rate">★ 4.6</span>
+      </div>
+      <div class="meta"><div class="ttl">快來陪我呀</div><div class="who">貝貝</div></div>
+    </div>
+    <div class="card">
+      <div class="thumb">
+        <span class="tagr">免費直播中</span>
+        <span class="vcount">6</span>
+        <span class="rate">★ 4.6</span>
+      </div>
+      <div class="meta"><div class="ttl">show</div><div class="who">miki</div></div>
+    </div>
+    <div class="card">
+      <div class="thumb">
+        <span class="tagr">免費直播中</span>
+        <span class="chesticon">
+          <svg width="26" height="23" viewBox="0 0 120 104"><ellipse cx="60" cy="62" rx="50" ry="32" fill="url(#cg2)"/><rect x="20" y="54" width="80" height="36" rx="3" fill="#B27F14"/><path d="M19 55V43c0-11.6 18.4-18 41-18s41 6.4 41 18v12z" fill="#E0A31C"/><rect x="52" y="26" width="16" height="64" fill="#96690C"/><rect x="48" y="58" width="24" height="16" rx="3" fill="#F6D275"/><defs><radialGradient id="cg2"><stop offset="0" stop-color="#F0B429" stop-opacity=".55"/><stop offset="1" stop-color="#F0B429" stop-opacity="0"/></radialGradient></defs></svg>
+        </span>
+        <span class="vcount">13</span>
+        <span class="rate">★ 4.9</span>
+      </div>
+      <div class="meta"><div class="ttl">只想色色</div><div class="who">馬鴨鴨</div></div>
+    </div>
+  </div>
+
+  <p class="cardcap"><b>icon 位置：</b>右上角、貼在「免費直播中」標籤下方。左上角要留給「新人」標籤——而新主播正是 T3／T4 的池子，一定會撞。<br><b>必須個人化：</b>只在你自己候選池的房間顯示。讓 T1 看到一個他開不了的寶箱，比不顯示更糟。</p>
+
+  <div class="chips">
+    <span class="chip">篩選</span>
+    <span class="chip">排序</span>
+    <span class="chip on">◆ 有我的寶箱</span>
+  </div>
+  <p class="cardcap">現成的篩選列加一個條件就好，不用新頁面。</p>
+</section>
+
+<!-- ============ VIP PANEL ============ -->
+<section>
+  <h2>VIP 面板</h2>
+  <p class="sub">設計還沒進場，這是建議的資訊架構。</p>
+
+  <div class="mockrow">
+    <div class="panelmock">
+      <div class="vp">
+        <div class="vphead">
+          <svg width="34" height="30" viewBox="0 0 120 104"><rect x="20" y="54" width="80" height="36" rx="3" fill="#8E979F"/><path d="M19 55V44c0-11 18.4-17 41-17s41 6 41 17v11z" fill="#AAB4BD"/><rect x="53" y="28" width="14" height="62" fill="#6B747C"/><rect x="49" y="59" width="22" height="14" rx="2.5" fill="#D3DBE2"/><path d="M24 33.5C31 30 44 27.6 60 27.6s29 2.4 36 5.9" stroke="#24E0D0" stroke-opacity=".7" stroke-width="1.4" fill="none"/></svg>
+          <div><div class="vplv">Lv.28</div><div class="vptier">Tier 2 · 白銀箱</div></div>
+        </div>
+        <div class="vptrack"><i class="vpfill"></i></div>
+        <div class="vpmeta">距 Lv.29 還差 — EXP</div>
+      </div>
+
+      <div class="vp">
+        <p class="vplab">今日尋寶</p>
+        <div class="slots">
+          <div class="slot done"><svg width="20" height="17" viewBox="0 0 120 104"><rect x="20" y="54" width="80" height="36" rx="3" fill="#8E979F"/><path d="M19 55V44c0-11 18.4-17 41-17s41 6 41 17v11z" fill="#AAB4BD"/><rect x="49" y="59" width="22" height="14" rx="2.5" fill="#F0B429"/></svg></div>
+          <div class="slot"></div>
+          <div class="slot"></div>
+        </div>
+        <div class="slotnote">已開 1／3 · 未開啟的不佔額度</div>
+      </div>
+
+      <div class="vp">
+        <p class="vplab">連續開箱</p>
+        <div class="streak"><span class="n">5</span><span class="u">天 · 中斷歸零</span></div>
+      </div>
+
+      <div class="vp">
+        <p class="vplab">可以開出寶箱的直播間</p>
+        <div class="rooms">
+          <div class="room"><div class="rav"></div><div><div class="rname">貝貝</div><div class="rmeta">開播中 · 22 人</div></div><span class="rgo">進入</span></div>
+          <div class="room"><div class="rav"></div><div><div class="rname">吵吵</div><div class="rmeta">開播中 · 20 人</div></div><span class="rgo">進入</span></div>
+          <div class="room"><div class="rav"></div><div><div class="rname">miki</div><div class="rmeta">開播中 · 6 人</div></div><span class="rgo">進入</span></div>
+          <div class="room"><div class="rav"></div><div><div class="rname">馬鴨鴨</div><div class="rmeta">開播中 · 13 人</div></div><span class="rgo">進入</span></div>
+          <div class="room"><div class="rav"></div><div><div class="rname">mona</div><div class="rmeta">未開播</div></div><span class="rgo off">未開播</span></div>
+        </div>
+        <div class="slotnote">候選 5 間，每天開 3 個——選哪幾間，就是尋寶本身</div>
+      </div>
+
+      <div class="vp">
+        <p class="vplab">星級機率</p>
+        <div class="oddsrow">
+          <span class="ol">Lv.28</span>
+          <span class="otrack">
+            <i style="width:26%;background:#4A5057"></i><i style="width:24%;background:#6B747C"></i><i style="width:20%;background:#9AA4AD"></i><i style="width:16%;background:#C9D2DA"></i><i style="width:10%;background:#F0B429"></i><i style="width:4%;background:#FF2E76"></i>
+          </span>
+        </div>
+        <div class="oddsrow">
+          <span class="ol">Lv.31</span>
+          <span class="otrack">
+            <i style="width:18%;background:#4A5057"></i><i style="width:21%;background:#6B747C"></i><i style="width:21%;background:#9AA4AD"></i><i style="width:20%;background:#C9D2DA"></i><i style="width:14%;background:#F0B429"></i><i style="width:6%;background:#FF2E76"></i>
+          </span>
+        </div>
+        <div class="oddsleg">1★ 到 6★ 由左至右。升到下一個級距，高星的比例就往上挪一段——升級動機不用寫文案，用戶自己看得到。</div>
+      </div>
+
+      <div class="vp">
+        <p class="vplab">福利點數</p>
+        <div class="ptsrow"><span class="n">—</span><span class="u">點 · 最近一筆 60 天後到期</span></div>
+        <div class="slotnote">每筆各自算 60 天，扣點時先扣快到期的</div>
+      </div>
+    </div>
+
+    <div class="mocknote">
+      <ol>
+        <li><b>候選數要大於每日額度。</b>給 5 間、每天開 3 個。如果剛好給 3 間，那就不是尋寶，是派工。</li>
+        <li><b>未開播的也留在清單裡。</b>T2 的池子是他自己耗鑽過的主播，看到「還沒開播」比整個消失更有意義——他會等。</li>
+        <li><b>機率對照是這一頁最重要的模組。</b>放置型遊戲的做法：把本級和下一級的機率並排。用戶盯著看的時候，升級動機是自己長出來的。</li>
+        <li><b>推播綁在生成節奏上。</b>候選池刷新時推「今天有 5 間可以開寶箱」。因為有 5 分鐘停留門檻，開箱是要挑時間做的事，通知決定他今天到底有沒有進來。</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STARS ============ -->
+<section>
+  <h2>星級與箱體：兩條動機線</h2>
+  <p class="sub">四款箱體 × 1–6 星疊加顯示。兩條線各管一段，不會互相打到。</p>
+
+  <div class="rules">
+    <div class="ruleitem">
+      <div class="rn">A</div>
+      <div>
+        <div class="rt">Tier 之內，機率隨等級往上爬</div>
+        <div class="rd">等級越高，開到高星的機率越高，1 星始終開得到。建議按每 5 級一個級距切——對得上福利點數現有的級距結構，技術和營運都好維護。每升一個級距，面板上的機率表就會動一次。</div>
+      </div>
+    </div>
+    <div class="ruleitem">
+      <div class="rn">B</div>
+      <div>
+        <div class="rt">Tier 之間，箱體價值跳一階</div>
+        <div class="rd">白銀箱的 1 星要大於青銅箱的 6 星。否則會出現一個陷阱：爬到 T1 頂端的人剛好是「6 星機率最高」的位置，升到 T2 換成新箱體、機率表重新從底部開始，體感是<b>升級之後變差了</b>。三道 Tier 邊界都會發生，而第一道剛好在首儲窗口的入口上。用絕對值階梯墊高，最差的結果也比升級前的最好結果好。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RULES ============ -->
+<section>
+  <h2>邊界規則</h2>
+  <p class="sub">這幾條是機制能不能站得住的關鍵，開發時要寫死。</p>
+
+  <div class="rules">
+    <div class="ruleitem"><div class="rn">1</div><div>
+      <div class="rt">寶箱只在候選池的房間生成</div>
+      <div class="rd">不是「任何直播間待 5 分鐘就有」。這條是整套導流的前提。</div>
+    </div></div>
+    <div class="ruleitem"><div class="rn">2</div><div>
+      <div class="rt">開箱與加成都必須在生成的那間房內完成</div>
+      <div class="rd">確保行為發生在我們指定的房間，而不是拿了倍率跑去別處用。</div>
+    </div></div>
+    <div class="ruleitem"><div class="rn">3</div><div>
+      <div class="rt">沒開的寶箱不佔今日額度，但那間房不會再生成新的</div>
+      <div class="rd">這條同時解掉「囤鑽等高星箱」——想跳過這一箱，代價是放棄整間房。等待在機制上不划算，所以不會有人為了等倍率而壓著不打賞。</div>
+    </div></div>
+    <div class="ruleitem"><div class="rn">4</div><div>
+      <div class="rt">生成後 30 分鐘內要開，從生成那一刻起算</div>
+      <div class="rd">推播必須在生成當下發出並顯示倒數，否則這 30 分鐘只會變成懲罰分心的人。</div>
+    </div></div>
+    <div class="ruleitem"><div class="rn">5</div><div>
+      <div class="rt">同一位主播可以重複生成，前一箱開了才開始算下一箱</div>
+      <div class="rd">留在同一間房就能連開，不強迫換房。T3／T4 想在同一位新主播房間待久一點，是我們要的結果。</div>
+    </div></div>
+    <div class="ruleitem"><div class="rn">6</div><div>
+      <div class="rt">多個加成同時有效時不疊加，取當下最高倍率</div>
+      <div class="rd">避免被找出算法漏洞。</div>
+    </div></div>
+    <div class="ruleitem"><div class="rn">7</div><div>
+      <div class="rt">連續開箱天數，中斷歸零</div>
+      <div class="rd">週任務被取消之後，「持續出現」需要有東西承載。這條讓集中在週末開 6 箱，跟連續 6 天每天開 1 箱，變成不一樣的事——後者才是留存。用戶感受到的仍然是同一套寶箱，沒有第二種任務。</div>
+    </div></div>
+    <div class="ruleitem"><div class="rn">8</div><div>
+      <div class="rt">福利點數：EXP 走升級曲線管，點數走月上限管，單箱不設限</div>
+      <div class="rd">寶箱取得的福利點數每月不超過該等級基本點數的一定比例，讓它永遠是加速器而不是替代路徑。點數每筆各自算 60 天，扣點時先扣快到期的。</div>
+    </div></div>
+  </div>
+</section>
+
+<!-- ============ OPEN ============ -->
+<section>
+  <h2>還沒拍的事</h2>
+  <p class="sub">這一版刻意不填數字。架構認同之後，數值規劃才有基準可以推。</p>
+
+  <div class="open">
+    <div>
+      <h4>需要決策</h4>
+      <p class="oh">會影響機制範圍</p>
+      <ul>
+        <li><b>月度任務鏈（D0 直達 20）要不要一起收進寶箱。</b>如果要，新用戶第一天就得開好幾箱，節奏要重新算。</li>
+        <li><b>機率是否對外揭露。</b>建議問法務。寶箱本身是免費取得的，但它會產出福利點數，而點數換得到實體福利。</li>
+        <li><b>候選池重疊怎麼分配。</b>冷房和新主播的重疊度會很高，新人本來就沒人。這其實是好事——T1 帶人氣、T3／T4 帶鑽，剛好互補；但要有意識地設計，不能讓它意外發生。</li>
+      </ul>
+    </div>
+    <div>
+      <h4>待 data team 回填</h4>
+      <p class="oh">數值規劃的輸入項</p>
+      <ul>
+        <li><b>VIP 2.0 的 Tier 等級區間與各層母體。</b>簡報 P2 的試算是舊制定義下算的，不能直接沿用。這一項要先有，其他才推得動。</li>
+        <li><b>免費天花板反推。</b>寶箱是新制唯一的免費 EXP 來源，所以每日 3 箱的期望值上限，要從「純免費用戶剛好卡在天花板」反算回來。</li>
+        <li>各級距 1–6 星機率表；四款箱體的基礎值階梯。</li>
+        <li>加成倍率區間。1 星的地板要夠高，讓「有箱子的時候耗鑽」明顯優於平常——這是整個機制成立的基礎。</li>
+        <li>寶箱福利點數的月上限比例。</li>
+        <li>候選池判定：冷房人數門檻、新主播定義、推薦名單來源與刷新頻率、候選數量。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="settled">
+    <h4>已經確認、不再討論</h4>
+    <ul>
+      <li>反作弊由經紀團隊與技術負責，但新主播的審核規則要在候選池定義之前確認。</li>
+      <li>實體福利用福利點數的價格控制稀缺性，不靠額外的庫存機制。</li>
+      <li>福利點數效期採 60 天，寶箱點數繼承同一套規則。</li>
+      <li>累計 5 分鐘，中途離開回來繼續算，但必須在同一間有寶箱的直播間內。</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  取代原簡報 P3 的四階層任務規劃。升級曲線、EXP 耗鑽 1:1、福利點數的基本點數 × 消費倍率、60 天效期、終身制不降等，這些都不動——寶箱是接在它們上面的一層。
+</footer>
+
+</div>
 </body>
 </html>
