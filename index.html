@@ -6,245 +6,204 @@
 <title>直播間尋寶｜VIP 2.0 任務體系提案</title>
 <style>
 :root{
-  --ink:#0A0B0D;
-  --panel:#14171B;
-  --panel2:#1B1F25;
-  --line:#282D35;
-  --line2:#363D47;
-  --text:#EDEFF2;
-  --muted:#8B929C;
-  --dim:#5D646E;
-  --cyan:#24E0D0;
-  --cyan-d:#0E9C92;
-  --gold:#F0B429;
-  --magenta:#FF2E76;
-  --copper:#B87333;
-  --silver:#B9C2CC;
+  --ink:#08090B;--panel:#13161A;--line:#262B32;--line2:#353C45;
+  --text:#EDEFF2;--muted:#8B929C;--dim:#5C636D;
+  --cyan:#24E0D0;--cyan-d:#0E9C92;--gold:#F5C542;--magenta:#FF2E76;
+  --copper:#D99B4E;--silver:#C6D0D9;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{
-  margin:0;background:var(--ink);color:var(--text);
+body{margin:0;background:var(--ink);color:var(--text);
   font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei","Hiragino Sans TC",sans-serif;
-  font-size:16px;line-height:1.75;
-  font-feature-settings:"tnum" 1;
-  -webkit-font-smoothing:antialiased;
-}
+  font-size:16px;line-height:1.75;font-feature-settings:"tnum" 1;-webkit-font-smoothing:antialiased}
 .wrap{max-width:1080px;margin:0 auto;padding:0 28px 140px}
 
-/* ---------- hero ---------- */
 .hero{padding:84px 0 0}
 .kicker{color:var(--cyan);font-size:13px;letter-spacing:.14em;margin:0 0 22px}
-h1{
-  font-size:clamp(46px,8vw,84px);line-height:.94;letter-spacing:-.03em;
-  font-weight:800;margin:0 0 26px;
-}
+h1{font-size:clamp(46px,8vw,84px);line-height:.94;letter-spacing:-.03em;font-weight:800;margin:0 0 26px}
 .lede{font-size:19px;line-height:1.7;color:var(--muted);max-width:34em;margin:0}
 .lede b{color:var(--text);font-weight:600}
+.payload{display:flex;gap:9px;flex-wrap:wrap;margin:30px 0 0}
+.pchip{border:1px solid var(--line2);border-radius:2px;padding:8px 15px;font-size:14px;background:var(--panel)}
+.pchip b{font-weight:700}
+.pchip.exp{border-color:rgba(36,224,208,.5)}
+.pchip.exp b{color:var(--cyan)}
+.pchip.pts{border-color:rgba(245,197,66,.5)}
+.pchip.pts b{color:var(--gold)}
 
-/* ---------- chest row ---------- */
-.chests{
-  display:grid;grid-template-columns:repeat(4,1fr);gap:0;
-  margin:64px 0 0;border:1px solid var(--line);border-radius:3px;overflow:hidden;
-  background:linear-gradient(180deg,#101317,#0C0E11);
-}
-.chest{padding:30px 18px 22px;text-align:center;border-right:1px solid var(--line)}
+.chests{display:grid;grid-template-columns:repeat(4,1fr);margin:56px 0 0;
+  border:1px solid var(--line);border-radius:3px;overflow:hidden;
+  background:radial-gradient(120% 130% at 50% 0%,#171B21 0%,#0B0D10 70%)}
+.chest{padding:22px 14px 24px;text-align:center;border-right:1px solid var(--line)}
 .chest:last-child{border-right:0}
 .chest svg{display:block;margin:0 auto}
-.chest .tier{font-size:12px;color:var(--dim);margin:16px 0 3px;letter-spacing:.1em}
-.chest .cname{font-size:17px;font-weight:700;letter-spacing:.02em}
-.chest .crole{font-size:12.5px;color:var(--muted);margin-top:5px;line-height:1.5}
+.chest .tier{font-size:11.5px;color:var(--dim);margin:8px 0 3px;letter-spacing:.12em}
+.chest .cname{font-size:18px;font-weight:750}
+.chest .crole{font-size:12.5px;color:var(--muted);margin-top:6px;line-height:1.55}
 
-/* ---------- sections ---------- */
 section{margin-top:112px}
-h2{
-  font-size:clamp(27px,3.4vw,36px);line-height:1.2;letter-spacing:-.02em;
-  font-weight:750;margin:0 0 10px;
-}
+h2{font-size:clamp(27px,3.4vw,36px);line-height:1.2;letter-spacing:-.02em;font-weight:750;margin:0 0 10px}
 .sub{color:var(--muted);font-size:16px;margin:0 0 34px;max-width:40em}
-h3{font-size:17px;font-weight:700;margin:44px 0 12px;letter-spacing:.01em}
+h3{font-size:17px;font-weight:700;margin:46px 0 12px}
 p{max-width:40em}
-.rule{height:1px;background:var(--line);border:0;margin:0}
 
-/* ---------- why: two columns ---------- */
 .swap{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:3px;overflow:hidden}
 .swap>div{background:var(--panel);padding:26px 24px}
 .swap .tag{font-size:12px;letter-spacing:.1em;margin:0 0 14px;color:var(--dim)}
 .swap .now .tag{color:var(--cyan)}
+.swap h4{margin:0 0 10px;font-size:16.5px;font-weight:700}
 .swap ul{margin:0;padding-left:1.1em;color:var(--muted);font-size:14.5px;line-height:1.85}
 .swap .now ul{color:var(--text)}
-.swap h4{margin:0 0 10px;font-size:16.5px;font-weight:700}
+.swap .foot{font-size:14px;color:var(--dim);margin:16px 0 0;max-width:none}
+.swap .now .foot{color:var(--text)}
 
-/* ---------- flow strip ---------- */
-.flow{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 8px;align-items:center}
-.step{
-  border:1px solid var(--line2);border-radius:2px;padding:9px 14px;font-size:14px;
-  background:var(--panel);white-space:nowrap;
-}
+.flow{display:flex;flex-wrap:wrap;gap:9px;align-items:center}
+.step{border:1px solid var(--line2);border-radius:2px;padding:9px 14px;font-size:14px;background:var(--panel);white-space:nowrap}
 .step em{font-style:normal;color:var(--cyan);font-weight:700;margin-right:7px;font-size:12px}
 .arrow{color:var(--dim);font-size:13px}
 
-/* ---------- param table ---------- */
 .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:3px;margin-top:8px}
-table{border-collapse:collapse;width:100%;min-width:820px;font-size:14px}
+table{border-collapse:collapse;width:100%;min-width:840px;font-size:14px}
 th,td{text-align:left;padding:15px 18px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.6}
-thead th{background:#101317;font-weight:700;font-size:13px;color:var(--muted);letter-spacing:.06em;white-space:nowrap}
-tbody th{font-weight:600;color:var(--muted);font-size:13.5px;white-space:nowrap;background:#101317;width:150px}
+thead th{background:#0F1216;font-weight:700;font-size:13px;color:var(--muted);letter-spacing:.06em;white-space:nowrap}
+tbody th{font-weight:600;color:var(--muted);font-size:13.5px;white-space:nowrap;background:#0F1216;width:152px}
 tr:last-child td,tr:last-child th{border-bottom:0}
-td b{font-weight:650}
 .t1c{color:var(--copper)}.t2c{color:var(--silver)}.t3c{color:var(--gold)}.t4c{color:var(--cyan)}
 
-/* ---------- phones ---------- */
-.screens{display:flex;gap:20px;overflow-x:auto;padding:6px 2px 22px;scroll-snap-type:x proximity}
-.screencell{flex:0 0 auto;width:236px;scroll-snap-align:start}
-.screencell .cap{font-size:13px;color:var(--muted);margin:14px 0 0;line-height:1.6}
+.grades{display:flex;gap:26px;overflow-x:auto;padding:4px 2px 20px;align-items:flex-end}
+.grade{flex:0 0 auto;text-align:center;width:196px}
+.grade .gl{font-size:13px;color:var(--muted);margin-top:4px}
+.grade .gl b{display:block;color:var(--text);font-size:15px;font-weight:700;margin-bottom:2px}
+
+.screens{display:flex;gap:20px;overflow-x:auto;padding:6px 2px 22px}
+.screencell{flex:0 0 auto;width:236px}
+.screencell .cap{font-size:13px;color:var(--muted);margin:14px 0 0;line-height:1.65}
 .screencell .cap b{color:var(--text);display:block;font-size:14px;font-weight:700;margin-bottom:3px}
 .screencell .cap b i{font-style:normal;color:var(--cyan);font-size:11.5px;margin-right:6px}
-
-.phone{
-  width:236px;height:470px;border:1px solid var(--line2);border-radius:16px;
-  background:#0D0F12;position:relative;overflow:hidden;display:flex;flex-direction:column;
-}
-.pbar{display:flex;align-items:center;gap:6px;padding:9px 10px 7px;font-size:9.5px;color:var(--text)}
+.phone{width:236px;height:474px;border:1px solid var(--line2);border-radius:16px;background:#0C0E11;position:relative;overflow:hidden;display:flex;flex-direction:column}
+.pbar{display:flex;align-items:center;gap:6px;padding:9px 10px 7px;font-size:9.5px}
 .pav{width:17px;height:17px;border-radius:50%;background:linear-gradient(140deg,#3A4048,#22262C);flex:0 0 auto}
-.pdia{margin-left:auto;display:flex;align-items:center;gap:3px;background:#1D2126;border-radius:9px;padding:2px 7px;font-size:9px;color:var(--cyan)}
+.pdia{margin-left:auto;display:flex;align-items:center;gap:3px;background:#1B1F24;border-radius:9px;padding:2px 7px;font-size:9px;color:var(--cyan)}
 .px{color:var(--dim);font-size:11px}
-.pvid{
-  flex:1;position:relative;margin:0 8px;border-radius:6px;
-  background:
-    radial-gradient(120% 80% at 30% 20%,#252A31 0%,#171A1F 55%,#101317 100%);
-  overflow:hidden;
-}
-.pwm{position:absolute;top:14px;left:12px;font-size:11px;font-weight:800;color:rgba(36,224,208,.34);letter-spacing:.02em}
+.pvid{flex:1;position:relative;margin:0 8px;border-radius:6px;overflow:hidden;
+  background:radial-gradient(120% 80% at 30% 20%,#242931 0%,#171A1F 55%,#0F1216 100%)}
+.pwm{position:absolute;top:13px;left:12px;font-size:11px;font-weight:800;color:rgba(36,224,208,.3)}
 .pchat{position:absolute;left:8px;right:8px;bottom:8px;display:flex;flex-direction:column;gap:4px}
-.pmsg{height:13px;border-radius:7px;background:rgba(255,255,255,.09)}
-.pmsg.w1{width:78%}.pmsg.w2{width:62%}.pmsg.w3{width:70%}
+.pmsg{height:13px;border-radius:7px;background:rgba(255,255,255,.085)}
+.w1{width:78%}.w2{width:62%}.w3{width:70%}
 .pfoot{display:flex;align-items:center;gap:5px;padding:8px 10px 10px}
-.pinput{flex:1;height:22px;border-radius:11px;background:#1B1F25;border:1px solid #262B32}
-.pdot{width:20px;height:20px;border-radius:50%;background:#1B1F25;flex:0 0 auto}
+.pinput{flex:1;height:22px;border-radius:11px;background:#1A1E23;border:1px solid #262B32}
+.pdot{width:20px;height:20px;border-radius:50%;background:#1A1E23;flex:0 0 auto}
 
-/* floating chest pill in room */
-.pill{
-  position:absolute;right:8px;top:76px;width:46px;border-radius:10px;
-  background:rgba(12,14,17,.86);border:1px solid var(--line2);
-  padding:6px 4px 5px;text-align:center;
-}
-.pill.live{border-color:var(--gold);box-shadow:0 0 0 1px rgba(240,180,41,.22),0 0 22px rgba(240,180,41,.3)}
-.pill .ptime{font-size:9px;color:var(--muted);margin-top:2px;letter-spacing:.02em}
+.pill{position:absolute;right:8px;top:72px;width:50px;border-radius:10px;
+  background:rgba(10,12,15,.86);border:1px solid var(--line2);padding:5px 3px;text-align:center}
+.pill.live{border-color:rgba(245,197,66,.85);box-shadow:0 0 20px rgba(245,197,66,.28)}
+.pill .ptime{font-size:9px;color:var(--muted);margin-top:1px}
 .pill.live .ptime{color:var(--gold)}
-.pill .plab{font-size:8.5px;color:var(--gold);margin-top:2px;font-weight:700}
+.pill .plab{font-size:8.5px;color:var(--gold);font-weight:700;margin-top:1px}
 
-/* open overlay */
-.ovl{
-  position:absolute;inset:0;background:rgba(6,7,9,.82);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:0 16px;
-}
-.ovl .stars{font-size:14px;letter-spacing:2px;color:var(--gold);margin-top:8px}
-.ovl .stars span{color:#3A3F47}
-.ovl .grade{font-size:14px;font-weight:800;margin-top:5px}
-.ovl .mult{font-size:10.5px;color:var(--muted);margin-top:3px;text-align:center;line-height:1.55}
-.ovl .cta{
-  margin-top:12px;font-size:10.5px;font-weight:700;color:#06211F;
-  background:var(--cyan);border-radius:12px;padding:6px 16px;
-}
+.ovl{position:absolute;inset:0;background:rgba(5,6,8,.86);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 14px}
+.ovl .gname{font-size:13.5px;font-weight:800;margin-top:2px}
+.rwd{display:flex;flex-direction:column;gap:4px;width:100%;margin-top:11px}
+.rwdrow{display:flex;align-items:center;gap:6px;border:1px solid var(--line2);border-radius:5px;padding:5px 8px;font-size:9.5px;background:rgba(20,23,27,.9)}
+.rwdrow.exp{border-color:rgba(36,224,208,.45)}
+.rwdrow.pts{border-color:rgba(245,197,66,.45)}
+.rwdrow .rk{color:var(--muted)}
+.rwdrow .rv{margin-left:auto;font-weight:800}
+.rwdrow.exp .rv{color:var(--cyan)}
+.rwdrow.pts .rv{color:var(--gold)}
+.ovl .cta{margin-top:12px;font-size:10.5px;font-weight:700;color:#04211E;background:var(--cyan);border-radius:12px;padding:6px 18px}
+.rwdformula{font-size:8.5px;color:var(--cyan);margin:1px 0 3px;padding-left:3px}
+.prog{font-size:8.5px;color:var(--muted);margin-top:7px;line-height:1.55;text-align:center}
+.prog b{color:var(--gold);font-weight:800}
+.dims{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:3px;overflow:hidden;margin-top:8px}
+.dim{background:var(--panel);padding:22px 20px}
+.dim .dk{font-size:12px;color:var(--dim);letter-spacing:.1em;margin:0 0 8px}
+.dim .dt{font-size:17px;font-weight:750;margin-bottom:7px}
+.dim .dd{font-size:13.5px;color:var(--muted);line-height:1.7;max-width:none}
+.dim.a .dt{color:var(--cyan)}.dim.b .dt{color:var(--gold)}.dim.c .dt{color:var(--silver)}
 
-/* bonus bar */
-.bonusbar{
-  position:absolute;left:8px;right:8px;bottom:8px;
-  border:1px solid rgba(240,180,41,.45);border-radius:7px;background:rgba(14,12,8,.92);
-  padding:7px 9px;
-}
-.bonusbar .brow{display:flex;align-items:center;gap:5px;font-size:9.5px}
-.bonusbar .bstar{color:var(--gold);font-weight:800}
-.bonusbar .bmul{color:var(--gold);font-weight:800;margin-left:auto}
-.bonusbar .btrack{height:3px;border-radius:2px;background:#2A2620;margin-top:6px;overflow:hidden}
-.bonusbar .bfill{height:100%;width:44%;background:var(--gold)}
-.bonusbar .bnote{font-size:8.5px;color:var(--muted);margin-top:5px}
+.bonusbar{position:absolute;left:8px;right:8px;bottom:8px;border:1px solid rgba(245,197,66,.45);border-radius:7px;background:rgba(15,13,9,.94);padding:7px 9px}
+.brow{display:flex;align-items:center;gap:5px;font-size:9.5px}
+.bstar{color:var(--gold);font-weight:800}
+.bmul{margin-left:auto;font-weight:800;color:var(--gold)}
+.btrack{height:3px;border-radius:2px;background:#2A2620;margin-top:6px;overflow:hidden}
+.bfill{display:block;height:100%;background:var(--gold)}
+.bnote{font-size:8.5px;color:var(--muted);margin-top:5px;line-height:1.55}
+.bcues{display:flex;gap:4px;margin-top:7px;overflow:hidden}
+.bcue{border:1px solid rgba(36,224,208,.4);color:var(--cyan);border-radius:9px;padding:2px 7px;font-size:8px;white-space:nowrap;background:rgba(36,224,208,.07)}
 
-/* toast */
-.toast{
-  position:absolute;left:8px;right:8px;top:76px;
-  border:1px solid var(--line2);border-radius:7px;background:rgba(12,14,17,.94);padding:8px 10px;
-}
-.toast .trow{font-size:10px;font-weight:700}
-.toast .trow span{color:var(--cyan)}
-.toast .tnote{font-size:8.5px;color:var(--muted);margin-top:4px}
+.toast{position:absolute;left:8px;right:8px;top:72px;border:1px solid var(--line2);border-radius:7px;background:rgba(10,12,15,.95);padding:8px 10px}
+.trow{font-size:10px;font-weight:700;display:flex;gap:6px}
+.trow .tc{color:var(--cyan)}.trow .tg{color:var(--gold)}
+.tnote{font-size:8.5px;color:var(--muted);margin-top:5px;line-height:1.6}
 
-/* ---------- explore cards ---------- */
-.cards{display:flex;gap:14px;overflow-x:auto;padding:6px 2px 20px}
-.card{
-  flex:0 0 auto;width:210px;border:1px solid var(--line);border-radius:5px;overflow:hidden;background:var(--panel);
-}
-.card .thumb{
-  height:132px;position:relative;
-  background:radial-gradient(110% 80% at 35% 25%,#262B32 0%,#181B20 60%,#101317 100%);
-}
-.card .tagr{position:absolute;top:7px;right:7px;background:rgba(255,255,255,.9);color:#111;font-size:8.5px;border-radius:3px;padding:2px 5px;font-weight:700}
-.card .tagl{position:absolute;top:7px;left:7px;background:rgba(255,255,255,.9);color:#111;font-size:8.5px;border-radius:3px;padding:2px 5px;font-weight:700}
-.card .chesticon{position:absolute;top:32px;right:7px}
-.card .vcount{position:absolute;bottom:7px;left:7px;font-size:9px;color:#fff}
-.card .rate{position:absolute;bottom:7px;right:7px;font-size:9px;color:#fff;background:rgba(0,0,0,.5);border-radius:3px;padding:1px 5px}
+.cards{display:flex;gap:14px;overflow-x:auto;padding:6px 2px 18px}
+.card{flex:0 0 auto;width:210px;border:1px solid var(--line);border-radius:5px;overflow:hidden;background:var(--panel)}
+.card .thumb{height:132px;position:relative;background:radial-gradient(110% 80% at 35% 25%,#252A31 0%,#181B20 60%,#0F1216 100%)}
+.tagr{position:absolute;top:7px;right:7px;background:rgba(255,255,255,.9);color:#111;font-size:8.5px;border-radius:3px;padding:2px 5px;font-weight:700}
+.tagl{position:absolute;top:7px;left:7px;background:rgba(255,255,255,.9);color:#111;font-size:8.5px;border-radius:3px;padding:2px 5px;font-weight:700}
+.chesticon{position:absolute;top:30px;right:6px}
+.vcount{position:absolute;bottom:7px;left:7px;font-size:9px}
+.rate{position:absolute;bottom:7px;right:7px;font-size:9px;background:rgba(0,0,0,.5);border-radius:3px;padding:1px 5px}
 .card .meta{padding:8px 9px 10px}
 .card .ttl{font-size:11.5px;font-weight:600}
 .card .who{font-size:10px;color:var(--muted);margin-top:2px}
-.cardcap{font-size:13px;color:var(--muted);margin-top:10px;line-height:1.6}
+.cardcap{font-size:14px;color:var(--muted);margin-top:12px;line-height:1.7}
 .cardcap b{color:var(--text);font-weight:700}
-
-.chips{display:flex;gap:7px;flex-wrap:wrap;margin:22px 0 0}
+.chips{display:flex;gap:7px;flex-wrap:wrap;margin:24px 0 0}
 .chip{border:1px solid var(--line2);border-radius:13px;padding:5px 13px;font-size:12.5px;color:var(--muted);background:var(--panel)}
 .chip.on{border-color:var(--gold);color:var(--gold)}
 
-/* ---------- vip panel mock ---------- */
-.panelmock{
-  width:300px;border:1px solid var(--line2);border-radius:16px;background:#0D0F12;overflow:hidden;flex:0 0 auto;
-}
+.mockrow{display:flex;gap:26px;align-items:flex-start;overflow-x:auto;padding:6px 2px 20px}
+.panelmock{width:300px;border:1px solid var(--line2);border-radius:16px;background:#0C0E11;overflow:hidden;flex:0 0 auto}
 .vp{padding:13px 14px}
 .vp+.vp{border-top:1px solid var(--line)}
-.vphead{display:flex;align-items:center;gap:11px}
-.vplv{font-size:21px;font-weight:800;letter-spacing:-.01em}
+.vphead{display:flex;align-items:center;gap:10px}
+.vplv{font-size:21px;font-weight:800}
 .vptier{font-size:10px;color:var(--silver);margin-top:1px}
-.vptrack{height:4px;border-radius:2px;background:#20242A;margin-top:10px;overflow:hidden}
-.vpfill{height:100%;width:58%;background:var(--cyan)}
+.vptrack{height:4px;border-radius:2px;background:#1E2228;margin-top:10px;overflow:hidden}
+.vpfill{display:block;height:100%;width:58%;background:var(--cyan)}
 .vpmeta{font-size:9.5px;color:var(--muted);margin-top:6px}
-.vplab{font-size:10.5px;color:var(--muted);margin:0 0 9px;letter-spacing:.06em}
+.vplab{font-size:10.5px;color:var(--muted);margin:0 0 9px;letter-spacing:.06em;display:flex;align-items:center;gap:5px}
+.info{width:12px;height:12px;border-radius:50%;border:1px solid var(--dim);color:var(--dim);font-size:8px;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto}
+.vplab .rf{margin-left:auto;color:var(--cyan);font-size:9.5px}
 .slots{display:flex;gap:6px}
-.slot{flex:1;height:38px;border:1px solid var(--line);border-radius:5px;display:flex;align-items:center;justify-content:center;background:#12151A}
-.slot.done{border-color:var(--gold);background:rgba(240,180,41,.08)}
-.slotnote{font-size:9.5px;color:var(--muted);margin-top:7px}
-.streak{display:flex;align-items:baseline;gap:6px}
-.streak .n{font-size:19px;font-weight:800;color:var(--gold)}
-.streak .u{font-size:10px;color:var(--muted)}
+.slot{flex:1;height:40px;border:1px solid var(--line);border-radius:5px;display:flex;align-items:center;justify-content:center;background:#111418}
+.slot.done{border-color:rgba(245,197,66,.6);background:rgba(245,197,66,.07)}
+.slotnote{font-size:9.5px;color:var(--muted);margin-top:7px;line-height:1.6}
+.harvest{display:flex;gap:6px}
+.hcell{flex:1;border:1px solid var(--line);border-radius:5px;padding:8px 9px;background:#111418}
+.hcell.exp{border-color:rgba(36,224,208,.35)}
+.hcell.pts{border-color:rgba(245,197,66,.35)}
+.hcell .hk{font-size:9px;color:var(--muted)}
+.hcell .hv{font-size:17px;font-weight:800;margin-top:1px}
+.hcell.exp .hv{color:var(--cyan)}
+.hcell.pts .hv{color:var(--gold)}
 .rooms{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:5px;overflow:hidden}
-.room{display:flex;align-items:center;gap:8px;background:#12151A;padding:8px 9px}
+.room{display:flex;align-items:center;gap:8px;background:#111418;padding:8px 9px}
 .rav{width:20px;height:20px;border-radius:50%;background:linear-gradient(140deg,#343A42,#20242A);flex:0 0 auto}
 .rname{font-size:10.5px;font-weight:600}
 .rmeta{font-size:9px;color:var(--muted);margin-top:1px}
-.rgo{margin-left:auto;font-size:9.5px;font-weight:700;color:#06211F;background:var(--cyan);border-radius:10px;padding:3px 10px}
-.rgo.off{background:#22262C;color:var(--dim)}
-.oddsrow{display:flex;align-items:center;gap:7px;margin-top:7px;font-size:9.5px}
-.oddsrow .ol{width:34px;color:var(--muted);flex:0 0 auto}
-.otrack{flex:1;height:6px;border-radius:3px;background:#20242A;overflow:hidden;display:flex}
-.otrack i{display:block;height:100%}
-.oddsleg{font-size:9px;color:var(--dim);margin-top:8px;line-height:1.6}
+.rgo{margin-left:auto;font-size:9.5px;font-weight:700;color:#04211E;background:var(--cyan);border-radius:10px;padding:3px 11px}
+.pager{display:flex;align-items:center;justify-content:center;gap:9px;margin-top:9px;font-size:9.5px;color:var(--muted)}
+.pager span{border:1px solid var(--line2);border-radius:3px;padding:2px 7px}
 .ptsrow{display:flex;align-items:baseline;gap:6px}
 .ptsrow .n{font-size:19px;font-weight:800}
 .ptsrow .u{font-size:10px;color:var(--muted)}
-
-.mockrow{display:flex;gap:26px;align-items:flex-start;overflow-x:auto;padding:6px 2px 20px}
 .mocknote{font-size:14px;color:var(--muted);max-width:26em;line-height:1.8}
 .mocknote b{color:var(--text);font-weight:700}
 .mocknote ol{padding-left:1.2em;margin:0}
-.mocknote li{margin-bottom:14px}
+.mocknote li{margin-bottom:15px}
 
-/* ---------- rules ---------- */
 .rules{border:1px solid var(--line);border-radius:3px;overflow:hidden}
 .ruleitem{display:flex;gap:16px;padding:18px 20px;border-bottom:1px solid var(--line);background:var(--panel)}
 .ruleitem:last-child{border-bottom:0}
 .ruleitem .rn{font-size:12px;color:var(--cyan);font-weight:700;flex:0 0 20px;padding-top:4px}
 .ruleitem .rt{font-size:15.5px;font-weight:650;margin-bottom:5px}
 .ruleitem .rd{font-size:14px;color:var(--muted);line-height:1.7;max-width:44em}
+.ruleitem .rd b{color:var(--text);font-weight:650}
 
-/* ---------- open items ---------- */
 .open{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:3px;overflow:hidden}
 .open>div{background:var(--panel);padding:24px 22px}
 .open h4{margin:0 0 4px;font-size:16.5px;font-weight:700}
@@ -255,12 +214,10 @@ td b{font-weight:650}
 .settled{margin-top:26px;border:1px solid var(--line);border-left:2px solid var(--cyan-d);border-radius:3px;padding:20px 22px;background:var(--panel)}
 .settled h4{margin:0 0 12px;font-size:15.5px;font-weight:700}
 .settled ul{margin:0;padding-left:1.15em;font-size:14px;color:var(--muted);line-height:1.8}
-
 footer{margin-top:96px;padding-top:26px;border-top:1px solid var(--line);font-size:13px;color:var(--dim);line-height:1.8}
 
 @media(max-width:760px){
-  .wrap{padding:0 20px 100px}
-  .hero{padding:56px 0 0}
+  .wrap{padding:0 20px 100px}.hero{padding:56px 0 0}
   .chests{grid-template-columns:repeat(2,1fr)}
   .chest:nth-child(2){border-right:0}
   .chest:nth-child(1),.chest:nth-child(2){border-bottom:1px solid var(--line)}
@@ -271,38 +228,63 @@ footer{margin-top:96px;padding-top:26px;border-top:1px solid var(--line);font-si
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <path id="star" d="M0,-11 L3.2,-4 L10.8,-3.4 L4.9,1.5 L6.7,8.9 L0,5.1 L-6.7,8.9 L-4.9,1.5 L-10.8,-3.4 L-3.2,-4 Z"/>
+  <linearGradient id="c1top" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F0BE7A"/><stop offset="1" stop-color="#C98B4A"/></linearGradient>
+  <linearGradient id="c1fr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C6873F"/><stop offset="1" stop-color="#8C5A24"/></linearGradient>
+  <linearGradient id="c1sd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8A5A28"/><stop offset="1" stop-color="#5E3C17"/></linearGradient>
+  <linearGradient id="c1pn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7A4E20"/><stop offset="1" stop-color="#4E3113"/></linearGradient>
+  <linearGradient id="c2top" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EEF3F7"/><stop offset="1" stop-color="#B9C4CE"/></linearGradient>
+  <linearGradient id="c2fr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B2BDC7"/><stop offset="1" stop-color="#7B868F"/></linearGradient>
+  <linearGradient id="c2sd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7C878F"/><stop offset="1" stop-color="#535B62"/></linearGradient>
+  <linearGradient id="c2pn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5A656F"/><stop offset="1" stop-color="#39424A"/></linearGradient>
+  <linearGradient id="c3top" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE9A8"/><stop offset="1" stop-color="#F0BE45"/></linearGradient>
+  <linearGradient id="c3fr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EFB92F"/><stop offset="1" stop-color="#B07E0C"/></linearGradient>
+  <linearGradient id="c3sd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B58210"/><stop offset="1" stop-color="#7C5605"/></linearGradient>
+  <linearGradient id="c3pn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7F1F45"/><stop offset="1" stop-color="#4C0F28"/></linearGradient>
+  <linearGradient id="c4top" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#63788C"/><stop offset="1" stop-color="#3B4756"/></linearGradient>
+  <linearGradient id="c4fr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3E4B5A"/><stop offset="1" stop-color="#222A34"/></linearGradient>
+  <linearGradient id="c4sd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#28313C"/><stop offset="1" stop-color="#161C23"/></linearGradient>
+  <linearGradient id="c4pn" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#24E0D0"/><stop offset=".55" stop-color="#7C5BD6"/><stop offset="1" stop-color="#FF2E76"/></linearGradient>
+  <radialGradient id="glowG"><stop offset="0" stop-color="#F5C542" stop-opacity=".42"/><stop offset="1" stop-color="#F5C542" stop-opacity="0"/></radialGradient>
+  <radialGradient id="glowP"><stop offset="0" stop-color="#24E0D0" stop-opacity=".36"/><stop offset=".55" stop-color="#FF2E76" stop-opacity=".14"/><stop offset="1" stop-color="#FF2E76" stop-opacity="0"/></radialGradient>
+  <radialGradient id="glowB"><stop offset="0" stop-color="#FFF3C4" stop-opacity=".9"/><stop offset=".4" stop-color="#F5C542" stop-opacity=".45"/><stop offset="1" stop-color="#F5C542" stop-opacity="0"/></radialGradient>
+</defs></svg>
+
 <div class="wrap">
 
 <div class="hero">
   <p class="kicker">VIP 2.0 · 任務體系提案</p>
   <h1>直播間尋寶</h1>
-  <p class="lede">四個 Tier 玩的是<b>同一個遊戲</b>：進到有寶箱的直播間、看滿五分鐘、開箱、抽到星級、在那間房完成加成行為。<br>差別只在後台的參數——<b>寶箱長在哪些直播間</b>，以及<b>開箱後要做什麼</b>。</p>
+  <p class="lede">VIP 2.0 只有一個任務：<b>開寶箱</b>。四個 Tier 玩的是同一個遊戲，差別只在後台的參數——寶箱長在哪些直播間，以及開箱後要做什麼。</p>
+  <div class="payload">
+    <span class="pchip exp">星級 1★–6★ 決定 <b>EXP 加成倍率</b></span>
+    <span class="pchip pts">箱體決定可得的 <b>福利點數</b></span>
+    <span class="pchip">兩者都要<b>完成行為</b>才入帳</span>
+  </div>
 </div>
 
 <div class="chests">
   <div class="chest">
-    <svg width="112" height="96" viewBox="0 0 120 104" aria-label="青銅寶箱">
-      <ellipse cx="60" cy="94" rx="34" ry="5" fill="#000" opacity=".45"/>
-      <rect x="20" y="52" width="80" height="38" rx="3" fill="#8A5626"/>
-      <rect x="20" y="52" width="80" height="38" rx="3" fill="url(#g1)"/>
-      <rect x="18" y="38" width="84" height="15" rx="2.5" fill="#A76A31"/>
-      <rect x="18" y="38" width="84" height="15" rx="2.5" fill="url(#g1b)"/>
-      <rect x="18" y="50" width="84" height="4" fill="#5E3A19"/>
-      <rect x="53" y="38" width="14" height="52" fill="#6E4520"/>
-      <rect x="53" y="38" width="4" height="52" fill="#8F5C2A"/>
-      <rect x="50" y="58" width="20" height="13" rx="2" fill="#C98B3E"/>
-      <circle cx="60" cy="64.5" r="2.6" fill="#3A2410"/>
-      <rect x="22" y="80" width="6" height="6" rx="1" fill="#6E4520"/>
-      <rect x="92" y="80" width="6" height="6" rx="1" fill="#6E4520"/>
-      <path d="M18 39.5h84" stroke="#D19A5A" stroke-opacity=".55" stroke-width="1"/>
-      <defs>
-        <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#fff" stop-opacity=".1"/><stop offset="1" stop-color="#000" stop-opacity=".3"/>
-        </linearGradient>
-        <linearGradient id="g1b" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#fff" stop-opacity=".18"/><stop offset="1" stop-color="#000" stop-opacity=".2"/>
-        </linearGradient>
-      </defs>
+    <svg width="128" height="120" viewBox="0 0 170 158" aria-label="青銅寶箱">
+      <ellipse cx="85" cy="146" rx="46" ry="7" fill="#000" opacity=".5"/>
+      <path d="M112 80l26-18v52l-26 20z" fill="url(#c1sd)"/>
+      <path d="M32 80h80v52H32z" fill="url(#c1fr)"/>
+      <path d="M46 92h52v28H46z" fill="url(#c1pn)"/>
+      <path d="M32 80h80v52H32z" fill="none" stroke="#4E3113" stroke-width="2"/>
+      <path d="M112 52l26-18v32l-26 18z" fill="url(#c1sd)"/>
+      <path d="M28 52h84v32H28z" fill="url(#c1fr)"/>
+      <path d="M28 52h84l26-18H54z" fill="url(#c1top)"/>
+      <path d="M28 52h84v32H28z" fill="none" stroke="#4E3113" stroke-width="2"/>
+      <path d="M28 74h84v10H28z" fill="#8C5A24"/>
+      <path d="M28 74h84v10H28z" fill="none" stroke="#4E3113" stroke-width="1.6"/>
+      <path d="M32 80h11v52H32zM101 80h11v52h-11z" fill="#D99B4E"/>
+      <path d="M28 52h11v32H28zM101 52h11v32h-11z" fill="#D99B4E"/>
+      <rect x="60" y="70" width="26" height="28" rx="3" fill="#E8B063"/>
+      <rect x="60" y="70" width="26" height="28" rx="3" fill="none" stroke="#5E3C17" stroke-width="1.6"/>
+      <path d="M73 78l6 6-6 6-6-6z" fill="#4E3113"/>
+      <path d="M54 34h84" stroke="#F7D49B" stroke-opacity=".7" stroke-width="1.6"/>
+      <path d="M32 126h80" stroke="#D99B4E" stroke-opacity=".5" stroke-width="1.4"/>
     </svg>
     <div class="tier">TIER 1</div>
     <div class="cname t1c">青銅箱</div>
@@ -310,28 +292,26 @@ footer{margin-top:96px;padding-top:26px;border-top:1px solid var(--line);font-si
   </div>
 
   <div class="chest">
-    <svg width="112" height="96" viewBox="0 0 120 104" aria-label="白銀寶箱">
-      <ellipse cx="60" cy="94" rx="34" ry="5" fill="#000" opacity=".45"/>
-      <rect x="20" y="54" width="80" height="36" rx="3" fill="#8E979F"/>
-      <rect x="20" y="54" width="80" height="36" rx="3" fill="url(#g2)"/>
-      <path d="M19 55V44c0-11 18.4-17 41-17s41 6 41 17v11z" fill="#AAB4BD"/>
-      <path d="M19 55V44c0-11 18.4-17 41-17s41 6 41 17v11z" fill="url(#g2b)"/>
-      <rect x="19" y="52" width="82" height="4.5" fill="#5C646C"/>
-      <rect x="53" y="28" width="14" height="62" fill="#6B747C"/>
-      <rect x="53" y="28" width="4" height="62" fill="#9AA4AD"/>
-      <rect x="49" y="59" width="22" height="14" rx="2.5" fill="#D3DBE2"/>
-      <circle cx="60" cy="66" r="2.8" fill="#2C3238"/>
-      <path d="M24 33.5C31 30 44 27.6 60 27.6s29 2.4 36 5.9" stroke="#24E0D0" stroke-opacity=".7" stroke-width="1.4" fill="none"/>
-      <rect x="22" y="81" width="6" height="6" rx="1" fill="#6B747C"/>
-      <rect x="92" y="81" width="6" height="6" rx="1" fill="#6B747C"/>
-      <defs>
-        <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#fff" stop-opacity=".14"/><stop offset="1" stop-color="#000" stop-opacity=".32"/>
-        </linearGradient>
-        <linearGradient id="g2b" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#fff" stop-opacity=".26"/><stop offset="1" stop-color="#000" stop-opacity=".16"/>
-        </linearGradient>
-      </defs>
+    <svg width="128" height="120" viewBox="0 0 170 158" aria-label="白銀寶箱">
+      <ellipse cx="85" cy="146" rx="46" ry="7" fill="#000" opacity=".5"/>
+      <path d="M112 80l26-18v52l-26 20z" fill="url(#c2sd)"/>
+      <path d="M32 80h80v52H32z" fill="url(#c2fr)"/>
+      <path d="M46 92h52v28H46z" fill="url(#c2pn)"/>
+      <path d="M32 80h80v52H32z" fill="none" stroke="#39424A" stroke-width="2"/>
+      <path d="M112 50l26-18v34l-26 18z" fill="url(#c2sd)"/>
+      <path d="M28 50h84v34H28z" fill="url(#c2fr)"/>
+      <path d="M28 50h84l26-18H54z" fill="url(#c2top)"/>
+      <path d="M28 50h84v34H28z" fill="none" stroke="#39424A" stroke-width="2"/>
+      <path d="M28 74h84v10H28z" fill="#7B868F"/>
+      <path d="M28 74h84v10H28z" fill="none" stroke="#39424A" stroke-width="1.6"/>
+      <path d="M32 80h11v52H32zM101 80h11v52h-11z" fill="#D3DCE4"/>
+      <path d="M28 50h11v34H28zM101 50h11v34h-11z" fill="#D3DCE4"/>
+      <rect x="59" y="68" width="28" height="30" rx="3" fill="#EDF2F6"/>
+      <rect x="59" y="68" width="28" height="30" rx="3" fill="none" stroke="#39424A" stroke-width="1.6"/>
+      <path d="M73 76l7 7-7 7-7-7z" fill="#24E0D0"/>
+      <path d="M54 32h84" stroke="#24E0D0" stroke-opacity=".85" stroke-width="1.8"/>
+      <path d="M32 126h80" stroke="#24E0D0" stroke-opacity=".4" stroke-width="1.4"/>
+      <path d="M39 58h62" stroke="#EDF2F6" stroke-opacity=".45" stroke-width="1.2"/>
     </svg>
     <div class="tier">TIER 2</div>
     <div class="cname t2c">白銀箱</div>
@@ -339,30 +319,29 @@ footer{margin-top:96px;padding-top:26px;border-top:1px solid var(--line);font-si
   </div>
 
   <div class="chest">
-    <svg width="112" height="96" viewBox="0 0 120 104" aria-label="黃金寶箱">
-      <ellipse cx="60" cy="94" rx="36" ry="6" fill="#000" opacity=".45"/>
-      <ellipse cx="60" cy="62" rx="52" ry="34" fill="url(#glow3)"/>
-      <rect x="20" y="54" width="80" height="36" rx="3" fill="#B27F14"/>
-      <rect x="20" y="54" width="80" height="36" rx="3" fill="url(#g3)"/>
-      <path d="M19 55V43c0-11.6 18.4-18 41-18s41 6.4 41 18v12z" fill="#E0A31C"/>
-      <path d="M19 55V43c0-11.6 18.4-18 41-18s41 6.4 41 18v12z" fill="url(#g3b)"/>
-      <rect x="19" y="52" width="82" height="5" fill="#7C5608"/>
-      <rect x="52" y="26" width="16" height="64" fill="#96690C"/>
-      <rect x="52" y="26" width="4.5" height="64" fill="#F0BE45"/>
-      <rect x="48" y="58" width="24" height="16" rx="3" fill="#F6D275"/>
-      <path d="M60 62l4 4-4 4-4-4z" fill="#FF2E76"/>
-      <path d="M23 32C31 27.6 44 25 60 25s29 2.6 37 7" stroke="#FFE29A" stroke-opacity=".8" stroke-width="1.5" fill="none"/>
-      <rect x="21" y="81" width="7" height="7" rx="1.2" fill="#F0BE45"/>
-      <rect x="92" y="81" width="7" height="7" rx="1.2" fill="#F0BE45"/>
-      <defs>
-        <radialGradient id="glow3"><stop offset="0" stop-color="#F0B429" stop-opacity=".3"/><stop offset="1" stop-color="#F0B429" stop-opacity="0"/></radialGradient>
-        <linearGradient id="g3" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#fff" stop-opacity=".14"/><stop offset="1" stop-color="#000" stop-opacity=".34"/>
-        </linearGradient>
-        <linearGradient id="g3b" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#fff" stop-opacity=".3"/><stop offset="1" stop-color="#000" stop-opacity=".14"/>
-        </linearGradient>
-      </defs>
+    <svg width="128" height="120" viewBox="0 0 170 158" aria-label="黃金寶箱">
+      <ellipse cx="85" cy="90" rx="76" ry="58" fill="url(#glowG)"/>
+      <ellipse cx="85" cy="146" rx="46" ry="7" fill="#000" opacity=".5"/>
+      <path d="M112 80l26-18v52l-26 20z" fill="url(#c3sd)"/>
+      <path d="M32 80h80v52H32z" fill="url(#c3fr)"/>
+      <path d="M46 92h52v28H46z" fill="url(#c3pn)"/>
+      <path d="M32 80h80v52H32z" fill="none" stroke="#6B4A04" stroke-width="2"/>
+      <path d="M112 48l26-18v36l-26 18z" fill="url(#c3sd)"/>
+      <path d="M28 48h84v36H28z" fill="url(#c3fr)"/>
+      <path d="M28 48h84l26-18H54z" fill="url(#c3top)"/>
+      <path d="M28 48h84v36H28z" fill="none" stroke="#6B4A04" stroke-width="2"/>
+      <path d="M28 74h84v10H28z" fill="#B07E0C"/>
+      <path d="M28 74h84v10H28z" fill="none" stroke="#6B4A04" stroke-width="1.6"/>
+      <path d="M32 80h12v52H32zM100 80h12v52h-12z" fill="#FFD873"/>
+      <path d="M28 48h12v36H28zM100 48h12v36h-12z" fill="#FFD873"/>
+      <path d="M36 54l4 4-4 4-4-4zM106 54l4 4-4 4-4-4z" fill="#FF2E76"/>
+      <path d="M36 118l4 4-4 4-4-4zM106 118l4 4-4 4-4-4z" fill="#FF2E76"/>
+      <rect x="58" y="66" width="30" height="32" rx="3.5" fill="#FFE9A8"/>
+      <rect x="58" y="66" width="30" height="32" rx="3.5" fill="none" stroke="#6B4A04" stroke-width="1.8"/>
+      <path d="M73 74l8 8-8 8-8-8z" fill="#FF2E76"/>
+      <path d="M73 78l4 4-4 4-4-4z" fill="#FF7FA8"/>
+      <path d="M54 30h84" stroke="#FFF4CF" stroke-opacity=".85" stroke-width="1.8"/>
+      <path d="M39 56h62" stroke="#FFF4CF" stroke-opacity=".4" stroke-width="1.2"/>
     </svg>
     <div class="tier">TIER 3</div>
     <div class="cname t3c">黃金箱</div>
@@ -370,26 +349,34 @@ footer{margin-top:96px;padding-top:26px;border-top:1px solid var(--line);font-si
   </div>
 
   <div class="chest">
-    <svg width="112" height="96" viewBox="0 0 120 104" aria-label="稜晶寶箱">
-      <ellipse cx="60" cy="95" rx="34" ry="5" fill="#000" opacity=".5"/>
-      <ellipse cx="60" cy="58" rx="56" ry="38" fill="url(#glow4)"/>
-      <path d="M22 56h76v34H22z" fill="#171C22"/>
-      <path d="M22 56l38 8 38-8v34l-38 6-38-6z" fill="#1E252D"/>
-      <path d="M60 64v32" stroke="#0B0E12" stroke-width="1.4"/>
-      <path d="M20 57l14-22h52l14 22z" fill="#232B34"/>
-      <path d="M20 57l14-22h26l4 22z" fill="#2C3540"/>
-      <path d="M20 57h80" stroke="#24E0D0" stroke-opacity=".85" stroke-width="1.5"/>
-      <path d="M34 35h52" stroke="#FF2E76" stroke-opacity=".8" stroke-width="1.4"/>
-      <path d="M20 57l14-22M100 57L86 35" stroke="#24E0D0" stroke-opacity=".5" stroke-width="1.2"/>
-      <path d="M22 90h76" stroke="#24E0D0" stroke-opacity=".35" stroke-width="1.2"/>
-      <path d="M60 44l7 7-7 7-7-7z" fill="#24E0D0" fill-opacity=".9"/>
-      <path d="M60 47.5l3.5 3.5L60 54.5 56.5 51z" fill="#0B1416"/>
-      <path d="M12 44l3 5-3 5-3-5z" fill="#24E0D0" fill-opacity=".55"/>
-      <path d="M108 40l2.6 4.4-2.6 4.4-2.6-4.4z" fill="#FF2E76" fill-opacity=".55"/>
-      <path d="M104 66l2 3.4-2 3.4-2-3.4z" fill="#24E0D0" fill-opacity=".4"/>
-      <defs>
-        <radialGradient id="glow4"><stop offset="0" stop-color="#24E0D0" stop-opacity=".26"/><stop offset=".6" stop-color="#FF2E76" stop-opacity=".1"/><stop offset="1" stop-color="#24E0D0" stop-opacity="0"/></radialGradient>
-      </defs>
+    <svg width="128" height="120" viewBox="0 0 170 158" aria-label="稜晶寶箱">
+      <ellipse cx="85" cy="88" rx="82" ry="62" fill="url(#glowP)"/>
+      <ellipse cx="85" cy="148" rx="44" ry="6" fill="#000" opacity=".55"/>
+      <path d="M112 80l26-18v52l-26 20z" fill="url(#c4sd)"/>
+      <path d="M32 80h80v52H32z" fill="url(#c4fr)"/>
+      <path d="M46 92h52v28H46z" fill="url(#c4pn)" opacity=".85"/>
+      <path d="M32 80h80v52H32z" fill="none" stroke="#0E1319" stroke-width="2"/>
+      <path d="M112 46l26-18v38l-26 18z" fill="url(#c4sd)"/>
+      <path d="M28 46h84v38H28z" fill="url(#c4fr)"/>
+      <path d="M28 46h84l26-18H54z" fill="url(#c4top)"/>
+      <path d="M28 46h84v38H28z" fill="none" stroke="#0E1319" stroke-width="2"/>
+      <path d="M28 74h84v10H28z" fill="#222A34"/>
+      <path d="M28 74h84v10H28z" fill="none" stroke="#0E1319" stroke-width="1.6"/>
+      <path d="M32 80h12v52H32zM100 80h12v52h-12z" fill="#3E4B5A"/>
+      <path d="M28 46h12v38H28zM100 46h12v38h-12z" fill="#3E4B5A"/>
+      <path d="M28 46h84" stroke="#24E0D0" stroke-width="2"/>
+      <path d="M32 80h80" stroke="#24E0D0" stroke-opacity=".7" stroke-width="1.6"/>
+      <path d="M54 28h84" stroke="#FF2E76" stroke-opacity=".9" stroke-width="1.8"/>
+      <path d="M112 46l26-18M112 80l26-18" stroke="#24E0D0" stroke-opacity=".45" stroke-width="1.2"/>
+      <path d="M32 130h80" stroke="#FF2E76" stroke-opacity=".45" stroke-width="1.4"/>
+      <path d="M58 64h30v34H58z" fill="#151B22"/>
+      <path d="M58 64h30v34H58z" fill="none" stroke="#24E0D0" stroke-width="1.6"/>
+      <path d="M73 72l9 9-9 9-9-9z" fill="url(#c4pn)"/>
+      <path d="M73 77l4 4-4 4-4-4z" fill="#0B1015"/>
+      <path d="M14 62l3.6 6-3.6 6-3.6-6z" fill="#24E0D0" fill-opacity=".6"/>
+      <path d="M152 52l3 5-3 5-3-5z" fill="#FF2E76" fill-opacity=".6"/>
+      <path d="M148 96l2.6 4.4-2.6 4.4-2.6-4.4z" fill="#24E0D0" fill-opacity=".45"/>
+      <path d="M20 108l2.4 4-2.4 4-2.4-4z" fill="#FF2E76" fill-opacity=".4"/>
     </svg>
     <div class="tier">TIER 4</div>
     <div class="cname t4c">稜晶箱</div>
@@ -397,11 +384,9 @@ footer{margin-top:96px;padding-top:26px;border-top:1px solid var(--line);font-si
   </div>
 </div>
 
-<!-- ============ WHY ============ -->
 <section>
   <h2>為什麼把任務清單整個換掉</h2>
   <p class="sub">原本每個 Tier 都有自己一套任務。用戶升級的時候，任務會突然變成另一種東西；平台想調策略，就要重寫制度。</p>
-
   <div class="swap">
     <div>
       <p class="tag">原本</p>
@@ -412,7 +397,7 @@ footer{margin-top:96px;padding-top:26px;border-top:1px solid var(--line);font-si
         <li>T3 互動 2 位非核心主播、至少 1 位耗鑽</li>
         <li>T4 同 T3，權重更高，加上飄頻廣播</li>
       </ul>
-      <p style="font-size:14px;color:var(--dim);margin:16px 0 0;max-width:none">升級＝換一套任務。想改導流方向，要改任務文案與判定邏輯。</p>
+      <p class="foot">升級＝換一套任務。想改導流方向，要改任務文案與判定邏輯。</p>
     </div>
     <div class="now">
       <p class="tag">直播間尋寶</p>
@@ -423,237 +408,329 @@ footer{margin-top:96px;padding-top:26px;border-top:1px solid var(--line);font-si
         <li>換節慶、換活動只是換皮，不動制度</li>
         <li>原本要獨立開發的「探索任務判定引擎」收斂成候選池的一個參數</li>
       </ul>
-      <p style="font-size:14px;color:var(--text);margin:16px 0 0;max-width:none">平台的意志從「任務文案」搬到「寶箱位置」——這才是真正能控的槓桿。</p>
+      <p class="foot">平台的意志從「任務文案」搬到「寶箱位置」——這才是真正能控的槓桿。</p>
     </div>
   </div>
 </section>
 
-<!-- ============ SKELETON ============ -->
 <section>
   <h2>機制骨架</h2>
   <p class="sub">同一條流程跑在四個 Tier 上。</p>
-
   <div class="flow">
     <span class="step"><em>1</em>進到候選池裡的直播間</span><span class="arrow">→</span>
     <span class="step"><em>2</em>累計看滿 5 分鐘</span><span class="arrow">→</span>
     <span class="step"><em>3</em>寶箱生成</span><span class="arrow">→</span>
-    <span class="step"><em>4</em>開箱，抽出 1–6 星</span><span class="arrow">→</span>
+    <span class="step"><em>4</em>開箱，抽出 1★–6★</span><span class="arrow">→</span>
     <span class="step"><em>5</em>星級＝加成倍率</span><span class="arrow">→</span>
     <span class="step"><em>6</em>在同一間房完成加成行為</span>
   </div>
-  <p style="font-size:13.5px;color:var(--dim);margin:14px 0 0">開箱只揭曉星級與倍率；獎勵的主要部分要靠第 6 步才結算得到。</p>
+  <p style="font-size:13.5px;color:var(--dim);margin:14px 0 0">開箱只揭曉星級、倍率與可得點數。EXP 和福利點數都要靠第 6 步完成行為才結算入帳——開箱本身不發任何獎勵。</p>
 
   <h3>四組參數</h3>
   <div class="tablewrap">
     <table>
-      <thead>
-        <tr><th></th><th class="t1c">Tier 1</th><th class="t2c">Tier 2</th><th class="t3c">Tier 3</th><th class="t4c">Tier 4</th></tr>
-      </thead>
+      <thead><tr><th></th><th class="t1c">Tier 1</th><th class="t2c">Tier 2</th><th class="t3c">Tier 3</th><th class="t4c">Tier 4</th></tr></thead>
       <tbody>
-        <tr>
-          <th>寶箱造型</th>
-          <td>青銅箱</td><td>白銀箱</td><td>黃金箱</td><td>稜晶箱</td>
-        </tr>
-        <tr>
-          <th>寶箱長在哪</th>
+        <tr><th>寶箱造型</th><td>青銅箱</td><td>白銀箱</td><td>黃金箱</td><td>稜晶箱</td></tr>
+        <tr><th>寶箱長在哪</th>
           <td>觀看人數低於門檻的冷門房</td>
-          <td>他自己耗鑽過的主播（打賞、影片解鎖、聊天），依當下是否開播排序</td>
+          <td>他自己耗鑽過的主播（打賞、影片解鎖、聊天），只列當下開播的</td>
           <td>新主播、data team 推薦名單</td>
-          <td>同 T3，名單權重不同</td>
-        </tr>
-        <tr>
-          <th>這個池子要解的事</th>
+          <td>同 T3，名單權重不同</td></tr>
+        <tr><th>這個池子要解的事</th>
           <td>把冷房炒起來、擴大活躍母體</td>
           <td>深化單一關係、完成商業轉換</td>
           <td>破圈，建立第二支持池</td>
-          <td>破圈，把耗鑽轉成對新人的影響力</td>
-        </tr>
-        <tr>
-          <th>開箱後要做什麼</th>
-          <td><b>在該直播間留言</b></td>
-          <td colspan="3"><b>對該主播耗鑽</b>（打賞、指令、解鎖）——原本 1 鑽＝1 EXP，加成期間按星級倍率放大</td>
-        </tr>
-        <tr>
-          <th>加成給什麼</th>
-          <td>只給 EXP</td>
-          <td>EXP ＋ 福利點數</td>
-          <td>EXP ＋ 福利點數（點數比重提高）</td>
-          <td>以福利點數為主</td>
-        </tr>
-        <tr>
-          <th>沒有可推薦的房間時</th>
-          <td colspan="1">放寬人數門檻</td>
-          <td colspan="3">比照 T3／T4 邏輯，改推新主播與推薦名單</td>
-        </tr>
+          <td>破圈，把耗鑽轉成對新人的影響力</td></tr>
+        <tr><th>開箱後要做什麼</th>
+          <td><b>在該直播間留言</b>（附引導詞條）</td>
+          <td colspan="3"><b>對該主播耗鑽</b>（打賞、指令、解鎖）——原本 1 鑽＝1 EXP，加成期間按星級倍率放大</td></tr>
+        <tr><th>EXP 加成倍率</th>
+          <td colspan="4">由<b>星級</b>決定，1★–6★ 六檔，四個 Tier 共用同一組區間（建議 ×1.2 – ×2.0）</td></tr>
+        <tr><th>完成後可得點數</th>
+          <td>最低，只夠摸到價目表最底層</td>
+          <td>遞增</td>
+          <td>遞增</td>
+          <td>最高</td></tr>
+        <tr><th>加成窗口長度</th>
+          <td colspan="4">Tier 參數 · 待填（T1 短、T4 長）</td></tr>
+        <tr><th>加成的適用範圍</th>
+          <td>留言 N 則 · 待填</td>
+          <td colspan="3">窗口內前 N 顆鑽適用加成 · 待填</td></tr>
+        <tr><th>沒有可推薦的房間時</th>
+          <td>放寬人數門檻</td>
+          <td colspan="3">比照 T3／T4 邏輯，改推新主播與推薦名單</td></tr>
       </tbody>
     </table>
   </div>
-  <p style="font-size:13.5px;color:var(--dim);margin:16px 0 0">T1 的加成刻意不給福利點數——點數的來源要始終掛在消費上，一條例外都不留。</p>
+  <h3>三個維度各管一件事</h3>
+  <p class="sub" style="margin-bottom:0">四款箱體 × 六個星級＝ 24 檔價值差異。如果全部用倍率表達，T4 的 6★ 會被迫拉到 ×5、×10——一鑽變十 EXP，升級曲線會被壓爛，數字看起來也假。所以差異拆到三個維度上。</p>
+  <div class="dims">
+    <div class="dim a">
+      <p class="dk">星級</p>
+      <div class="dt">EXP 加成倍率</div>
+      <div class="dd">只承載 1★–6★ 這六檔。區間可以維持在 ×1.2 – ×2.0，不需要膨脹。</div>
+    </div>
+    <div class="dim b">
+      <p class="dk">箱體</p>
+      <div class="dt">福利點數</div>
+      <div class="dd">跨 Tier 的價值差異全部由它承載。點數是絕對值，T1 給很少、T4 給很多，看起來完全合理。</div>
+    </div>
+    <div class="dim c">
+      <p class="dk">Tier 參數</p>
+      <div class="dt">加成的適用範圍</div>
+      <div class="dd">窗口多長、窗口內多少顆鑽適用。同一個倍率，適用範圍不同，實際價值就差很多。</div>
+    </div>
+  </div>
 </section>
 
-<!-- ============ IN-ROOM FLOW ============ -->
+<section>
+  <h2>星級疊在箱體上</h2>
+  <p class="sub">四款箱體，每款都能開出 1★ 到 6★。星星浮在箱體上方、跟箱體本身分開——所以用戶一眼就分得出「哪一款箱子」和「這次開得好不好」。</p>
+
+  <div class="grades">
+    <div class="grade">
+      <svg width="196" height="150" viewBox="0 0 200 158" aria-label="白銀箱 1 星">
+        <g fill="#2A3138"><use href="#star" transform="translate(48,34)"/><use href="#star" transform="translate(69,25)"/><use href="#star" transform="translate(90,21)"/><use href="#star" transform="translate(111,21)"/><use href="#star" transform="translate(132,25)"/><use href="#star" transform="translate(153,34)"/></g>
+        <g fill="#F5C542"><use href="#star" transform="translate(48,34)"/></g>
+        <g transform="translate(15,10) scale(.94)">
+          <ellipse cx="85" cy="146" rx="46" ry="7" fill="#000" opacity=".5"/>
+          <path d="M112 80l26-18v52l-26 20z" fill="url(#c2sd)"/><path d="M32 80h80v52H32z" fill="url(#c2fr)"/>
+          <path d="M46 92h52v28H46z" fill="url(#c2pn)"/><path d="M32 80h80v52H32z" fill="none" stroke="#39424A" stroke-width="2"/>
+          <path d="M112 50l26-18v34l-26 18z" fill="url(#c2sd)"/><path d="M28 50h84v34H28z" fill="url(#c2fr)"/>
+          <path d="M28 50h84l26-18H54z" fill="url(#c2top)"/><path d="M28 50h84v34H28z" fill="none" stroke="#39424A" stroke-width="2"/>
+          <path d="M28 74h84v10H28z" fill="#7B868F"/><path d="M28 74h84v10H28z" fill="none" stroke="#39424A" stroke-width="1.6"/>
+          <path d="M32 80h11v52H32zM101 80h11v52h-11z" fill="#D3DCE4"/><path d="M28 50h11v34H28zM101 50h11v34h-11z" fill="#D3DCE4"/>
+          <rect x="59" y="68" width="28" height="30" rx="3" fill="#EDF2F6"/><rect x="59" y="68" width="28" height="30" rx="3" fill="none" stroke="#39424A" stroke-width="1.6"/>
+          <path d="M73 76l7 7-7 7-7-7z" fill="#24E0D0"/><path d="M54 32h84" stroke="#24E0D0" stroke-opacity=".85" stroke-width="1.8"/>
+        </g>
+      </svg>
+      <div class="gl"><b>1★ 白銀箱</b>地板。任何箱子都比沒箱子好</div>
+    </div>
+
+    <div class="grade">
+      <svg width="196" height="150" viewBox="0 0 200 158" aria-label="白銀箱 4 星">
+        <g fill="#2A3138"><use href="#star" transform="translate(48,34)"/><use href="#star" transform="translate(69,25)"/><use href="#star" transform="translate(90,21)"/><use href="#star" transform="translate(111,21)"/><use href="#star" transform="translate(132,25)"/><use href="#star" transform="translate(153,34)"/></g>
+        <g fill="#F5C542"><use href="#star" transform="translate(48,34)"/><use href="#star" transform="translate(69,25)"/><use href="#star" transform="translate(90,21)"/><use href="#star" transform="translate(111,21)"/></g>
+        <g transform="translate(15,10) scale(.94)">
+          <ellipse cx="85" cy="146" rx="46" ry="7" fill="#000" opacity=".5"/>
+          <path d="M112 80l26-18v52l-26 20z" fill="url(#c2sd)"/><path d="M32 80h80v52H32z" fill="url(#c2fr)"/>
+          <path d="M46 92h52v28H46z" fill="url(#c2pn)"/><path d="M32 80h80v52H32z" fill="none" stroke="#39424A" stroke-width="2"/>
+          <path d="M112 50l26-18v34l-26 18z" fill="url(#c2sd)"/><path d="M28 50h84v34H28z" fill="url(#c2fr)"/>
+          <path d="M28 50h84l26-18H54z" fill="url(#c2top)"/><path d="M28 50h84v34H28z" fill="none" stroke="#39424A" stroke-width="2"/>
+          <path d="M28 74h84v10H28z" fill="#7B868F"/><path d="M28 74h84v10H28z" fill="none" stroke="#39424A" stroke-width="1.6"/>
+          <path d="M32 80h11v52H32zM101 80h11v52h-11z" fill="#D3DCE4"/><path d="M28 50h11v34H28zM101 50h11v34h-11z" fill="#D3DCE4"/>
+          <rect x="59" y="68" width="28" height="30" rx="3" fill="#EDF2F6"/><rect x="59" y="68" width="28" height="30" rx="3" fill="none" stroke="#39424A" stroke-width="1.6"/>
+          <path d="M73 76l7 7-7 7-7-7z" fill="#24E0D0"/><path d="M54 32h84" stroke="#24E0D0" stroke-opacity=".85" stroke-width="1.8"/>
+        </g>
+      </svg>
+      <div class="gl"><b>4★ 白銀箱</b>中段。倍率明顯有感</div>
+    </div>
+
+    <div class="grade">
+      <svg width="196" height="150" viewBox="0 0 200 158" aria-label="白銀箱 6 星">
+        <ellipse cx="100" cy="86" rx="90" ry="66" fill="url(#glowG)"/>
+        <g fill="#F5C542"><use href="#star" transform="translate(48,34)"/><use href="#star" transform="translate(69,25)"/><use href="#star" transform="translate(90,21)"/><use href="#star" transform="translate(111,21)"/><use href="#star" transform="translate(132,25)"/><use href="#star" transform="translate(153,34)"/></g>
+        <g transform="translate(15,10) scale(.94)">
+          <ellipse cx="85" cy="146" rx="46" ry="7" fill="#000" opacity=".5"/>
+          <path d="M112 80l26-18v52l-26 20z" fill="url(#c2sd)"/><path d="M32 80h80v52H32z" fill="url(#c2fr)"/>
+          <path d="M46 92h52v28H46z" fill="url(#c2pn)"/><path d="M32 80h80v52H32z" fill="none" stroke="#39424A" stroke-width="2"/>
+          <path d="M112 50l26-18v34l-26 18z" fill="url(#c2sd)"/><path d="M28 50h84v34H28z" fill="url(#c2fr)"/>
+          <path d="M28 50h84l26-18H54z" fill="url(#c2top)"/><path d="M28 50h84v34H28z" fill="none" stroke="#39424A" stroke-width="2"/>
+          <path d="M28 74h84v10H28z" fill="#7B868F"/><path d="M28 74h84v10H28z" fill="none" stroke="#39424A" stroke-width="1.6"/>
+          <path d="M32 80h11v52H32zM101 80h11v52h-11z" fill="#EDF2F6"/><path d="M28 50h11v34H28zM101 50h11v34h-11z" fill="#EDF2F6"/>
+          <rect x="59" y="68" width="28" height="30" rx="3" fill="#FFF"/><rect x="59" y="68" width="28" height="30" rx="3" fill="none" stroke="#39424A" stroke-width="1.6"/>
+          <path d="M73 76l7 7-7 7-7-7z" fill="#24E0D0"/><path d="M54 32h84" stroke="#24E0D0" stroke-width="2"/>
+          <path d="M36 56l4 4-4 4-4-4zM104 56l4 4-4 4-4-4z" fill="#24E0D0"/>
+        </g>
+      </svg>
+      <div class="gl"><b>6★ 白銀箱</b>頂端。箱體本身也亮起來</div>
+    </div>
+  </div>
+
+  <h3>兩條動機線，各管一段</h3>
+  <div class="rules">
+    <div class="ruleitem"><div class="rn">A</div><div>
+      <div class="rt">Tier 之內：等級越高，開到高星的機率越高</div>
+      <div class="rd">1★ 始終開得到。建議按每 5 級一個級距切，對得上福利點數現有的級距結構，技術和營運都好維護。機率細節收在面板的說明裡，不佔主畫面。</div>
+    </div></div>
+    <div class="ruleitem"><div class="rn">B</div><div>
+      <div class="rt">Tier 之間：箱體價值跳一階</div>
+      <div class="rd">白銀箱的 1★ 要大於青銅箱的 6★。否則會有一個陷阱：爬到 T1 頂端的人剛好在「6★ 機率最高」的位置，升上 T2 換了箱體、機率表重新從底部開始，體感是<b>升級之後變差了</b>。三道 Tier 邊界都會發生，而第一道剛好在首儲窗口的入口上。用絕對值階梯墊高，最差的結果也比升級前的最好結果好。</div>
+    </div></div>
+  </div>
+</section>
+
 <section>
   <h2>直播間裡會看到什麼</h2>
-  <p class="sub">五個狀態。整套機制的體感都在這五格裡。</p>
+  <p class="sub">六格看完整套機制。主線示範 Tier 2 的白銀箱，加成行為是耗鑽。</p>
 
   <div class="screens">
-    <!-- S1 -->
     <div class="screencell">
       <div class="phone">
         <div class="pbar"><div class="pav"></div><span>貝貝</span><div class="pdia">◈ 111,621</div><span class="px">✕</span></div>
-        <div class="pvid">
-          <div class="pwm">SWAG</div>
+        <div class="pvid"><div class="pwm">SWAG</div>
           <div class="pill">
-            <svg width="30" height="26" viewBox="0 0 120 104"><g opacity=".4"><rect x="20" y="52" width="80" height="38" rx="3" fill="#8A5626"/><rect x="18" y="38" width="84" height="15" rx="2.5" fill="#A76A31"/><rect x="53" y="38" width="14" height="52" fill="#6E4520"/><rect x="50" y="58" width="20" height="13" rx="2" fill="#C98B3E"/></g></svg>
+            <svg width="34" height="30" viewBox="0 0 170 158" opacity=".42"><path d="M112 80l26-18v52l-26 20z" fill="#535B62"/><path d="M32 80h80v52H32z" fill="#7B868F"/><path d="M112 50l26-18v34l-26 18z" fill="#535B62"/><path d="M28 50h84v34H28z" fill="#8E99A2"/><path d="M28 50h84l26-18H54z" fill="#B9C4CE"/><path d="M28 74h84v10H28z" fill="#5A656F"/><rect x="59" y="68" width="28" height="30" rx="3" fill="#B9C4CE"/></svg>
             <div class="ptime">3:12</div>
           </div>
           <div class="pchat"><div class="pmsg w1"></div><div class="pmsg w2"></div><div class="pmsg w3"></div></div>
         </div>
         <div class="pfoot"><div class="pdot"></div><div class="pinput"></div><div class="pdot"></div></div>
       </div>
-      <p class="cap"><b><i>01</i>計時中</b>右上角出現暗色寶箱與倒數。累計滿 5 分鐘才會生成，中途離開回來繼續累計。</p>
+      <p class="cap"><b><i>01</i>計時中</b>右上角出現暗色寶箱與倒數。累計滿 5 分鐘才生成，中途離開回來繼續累計。</p>
     </div>
 
-    <!-- S2 -->
     <div class="screencell">
       <div class="phone">
         <div class="pbar"><div class="pav"></div><span>貝貝</span><div class="pdia">◈ 111,621</div><span class="px">✕</span></div>
-        <div class="pvid">
-          <div class="pwm">SWAG</div>
+        <div class="pvid"><div class="pwm">SWAG</div>
           <div class="pill live">
-            <svg width="30" height="26" viewBox="0 0 120 104"><rect x="20" y="52" width="80" height="38" rx="3" fill="#A76A31"/><rect x="18" y="38" width="84" height="15" rx="2.5" fill="#C98B3E"/><rect x="53" y="38" width="14" height="52" fill="#7E5024"/><rect x="50" y="58" width="20" height="13" rx="2" fill="#F0B429"/></svg>
-            <div class="plab">可開啟</div>
-            <div class="ptime">29:44</div>
+            <svg width="34" height="30" viewBox="0 0 170 158"><ellipse cx="85" cy="88" rx="80" ry="62" fill="url(#glowG)"/><path d="M112 80l26-18v52l-26 20z" fill="url(#c2sd)"/><path d="M32 80h80v52H32z" fill="url(#c2fr)"/><path d="M112 50l26-18v34l-26 18z" fill="url(#c2sd)"/><path d="M28 50h84v34H28z" fill="url(#c2fr)"/><path d="M28 50h84l26-18H54z" fill="url(#c2top)"/><path d="M28 74h84v10H28z" fill="#7B868F"/><rect x="59" y="68" width="28" height="30" rx="3" fill="#EDF2F6"/><path d="M73 76l7 7-7 7-7-7z" fill="#24E0D0"/></svg>
+            <div class="plab">可開啟</div><div class="ptime">29:44</div>
           </div>
           <div class="pchat"><div class="pmsg w1"></div><div class="pmsg w2"></div><div class="pmsg w3"></div></div>
         </div>
         <div class="pfoot"><div class="pdot"></div><div class="pinput"></div><div class="pdot"></div></div>
       </div>
-      <p class="cap"><b><i>02</i>寶箱生成</b>亮起並開始跑 30 分鐘倒數，從生成那一刻起算。過期就沒了，但不佔今天的額度。</p>
+      <p class="cap"><b><i>02</i>寶箱生成</b>亮起、開始跑 30 分鐘倒數，從生成那一刻起算。過期就沒了，但不佔今天的額度。</p>
     </div>
 
-    <!-- S3 -->
     <div class="screencell">
       <div class="phone">
         <div class="pbar"><div class="pav"></div><span>貝貝</span><div class="pdia">◈ 111,621</div><span class="px">✕</span></div>
-        <div class="pvid">
-          <div class="pwm">SWAG</div>
+        <div class="pvid"><div class="pwm">SWAG</div>
           <div class="ovl">
-            <svg width="86" height="74" viewBox="0 0 120 104">
-              <ellipse cx="60" cy="58" rx="52" ry="34" fill="url(#og)"/>
-              <rect x="20" y="54" width="80" height="36" rx="3" fill="#A76A31"/>
-              <path d="M18 52l10-22 64 4-8 18z" fill="#C98B3E"/>
-              <rect x="53" y="54" width="14" height="36" fill="#7E5024"/>
-              <path d="M46 50l6-14 4 14z" fill="#F0B429" opacity=".8"/>
-              <path d="M66 50l5-13 3 13z" fill="#F0B429" opacity=".6"/>
-              <defs><radialGradient id="og"><stop offset="0" stop-color="#F0B429" stop-opacity=".42"/><stop offset="1" stop-color="#F0B429" stop-opacity="0"/></radialGradient></defs>
+            <svg width="188" height="132" viewBox="0 0 200 150" aria-label="開出 4 星白銀箱">
+              <ellipse cx="100" cy="80" rx="96" ry="70" fill="url(#glowB)"/>
+              <g fill="#2A3138"><use href="#star" transform="translate(48,30) scale(.92)"/><use href="#star" transform="translate(69,21) scale(.92)"/><use href="#star" transform="translate(90,17) scale(.92)"/><use href="#star" transform="translate(111,17) scale(.92)"/><use href="#star" transform="translate(132,21) scale(.92)"/><use href="#star" transform="translate(153,30) scale(.92)"/></g>
+              <g fill="#F5C542"><use href="#star" transform="translate(48,30) scale(.92)"/><use href="#star" transform="translate(69,21) scale(.92)"/><use href="#star" transform="translate(90,17) scale(.92)"/><use href="#star" transform="translate(111,17) scale(.92)"/></g>
+              <g transform="translate(16,6) scale(.86)">
+                <path d="M112 80l26-18v52l-26 20z" fill="url(#c2sd)"/><path d="M32 80h80v52H32z" fill="url(#c2fr)"/>
+                <path d="M46 92h52v28H46z" fill="url(#c2pn)"/><path d="M32 80h80v52H32z" fill="none" stroke="#39424A" stroke-width="2"/>
+                <path d="M42 78h60l-6-26H48z" fill="#FFF3C4" fill-opacity=".55"/>
+                <g transform="rotate(-22 32 52)">
+                  <path d="M112 50l26-18v34l-26 18z" fill="url(#c2sd)"/><path d="M28 50h84v34H28z" fill="url(#c2fr)"/>
+                  <path d="M28 50h84l26-18H54z" fill="url(#c2top)"/><path d="M28 50h84v34H28z" fill="none" stroke="#39424A" stroke-width="2"/>
+                  <path d="M54 32h84" stroke="#24E0D0" stroke-width="1.8"/>
+                </g>
+                <path d="M32 80h11v52H32zM101 80h11v52h-11z" fill="#D3DCE4"/>
+              </g>
             </svg>
-            <div class="stars">★★★★<span>★★</span></div>
-            <div class="grade">4 星青銅箱</div>
-            <div class="mult">接下來 30 分鐘<br>留言的 EXP ×1.6</div>
-            <div class="cta">開始加成</div>
+            <div class="gname">4★ 白銀箱</div>
+            <div class="rwd">
+              <div class="rwdrow exp"><span class="rk">EXP 加成</span><span class="rv">×1.6</span></div>
+              <div class="rwdformula">在這間房送禮，1 鑽 = 1.6 EXP</div>
+              <div class="rwdrow pts"><span class="rk">完成後可得</span><span class="rv">＋— 點</span></div>
+              <div class="prog">本月 EXP 進度 62% → <b>4x 點數</b><br>再 8% 就升到 5x</div>
+            </div>
+            <div class="cta">送禮拿 1.6 倍 EXP</div>
           </div>
         </div>
         <div class="pfoot"><div class="pdot"></div><div class="pinput"></div><div class="pdot"></div></div>
       </div>
-      <p class="cap"><b><i>03</i>開箱揭曉</b>抽出星級。星級不決定拿多少，決定接下來的<b>加成倍率</b>——驚喜留住了，但獎勵還沒到手。</p>
+      <p class="cap"><b><i>03</i>開箱揭曉</b>星星弧亮起、箱蓋掀開。用「1 鑽 = 1.6 EXP」這種具體公式講加成，不寫「可獲得加成」；點數寫「完成後可得」；當月進度和下一個倍率放在同一張卡上，EXP 的用途當場就成立。</p>
     </div>
 
-    <!-- S4 -->
     <div class="screencell">
       <div class="phone">
         <div class="pbar"><div class="pav"></div><span>貝貝</span><div class="pdia">◈ 111,621</div><span class="px">✕</span></div>
-        <div class="pvid">
-          <div class="pwm">SWAG</div>
+        <div class="pvid"><div class="pwm">SWAG</div>
           <div class="bonusbar">
-            <div class="brow"><span class="bstar">4★</span><span>加成中 · 留言 1/3</span><span class="bmul">×1.6</span></div>
-            <div class="btrack"><i class="bfill"></i></div>
-            <div class="bnote">剩 28:41 · 只在這間直播間有效</div>
+            <div class="brow"><span class="bstar">4★</span><span>1 鑽 = 1.6 EXP</span><span class="bmul">＋— 點</span></div>
+            <div class="btrack"><i class="bfill" style="width:44%"></i></div>
+            <div class="bnote">剩 28:41 · 只在這間直播間有效<br>送禮後 EXP 與點數一起入帳</div>
           </div>
         </div>
         <div class="pfoot"><div class="pdot"></div><div class="pinput"></div><div class="pdot"></div></div>
       </div>
-      <p class="cap"><b><i>04</i>加成中</b>條子壓在輸入框上方，逼著看到。T1 是留言，T2–4 是耗鑽——這一步才是行為真正發生的地方。</p>
+      <p class="cap"><b><i>04</i>加成中 · Tier 2–4</b>條子壓在輸入框上方，逼著看到。這段時間內對這位主播耗鑽，EXP 和福利點數一起放大。</p>
     </div>
 
-    <!-- S5 -->
+    <div class="screencell">
+      <div class="phone">
+        <div class="pbar"><div class="pav"></div><span>miki</span><div class="pdia">◈ 111,621</div><span class="px">✕</span></div>
+        <div class="pvid"><div class="pwm">SWAG</div>
+          <div class="bonusbar" style="border-color:rgba(36,224,208,.45);background:rgba(9,16,18,.94)">
+            <div class="brow"><span class="bstar" style="color:var(--cyan)">3★</span><span>留言 1/3 · 每則 ×1.4</span><span class="bmul" style="color:var(--cyan)">＋— 點</span></div>
+            <div class="btrack" style="background:#1B2427"><i class="bfill" style="width:33%;background:var(--cyan)"></i></div>
+            <div class="bcues"><span class="bcue">跟她打招呼</span><span class="bcue">問一個問題</span><span class="bcue">回應她在講的事</span></div>
+            <div class="bnote">點一下帶進輸入框，改成你自己的話再送出</div>
+          </div>
+        </div>
+        <div class="pfoot"><div class="pdot"></div><div class="pinput"></div><div class="pdot"></div></div>
+      </div>
+      <p class="cap"><b><i>05</i>加成中 · Tier 1</b>加成行為是留言，所以直接給引導詞條——冷房最難的是「不知道要說什麼」。點數同樣要留言完成才入帳，不然會變成「進冷房待 5 分鐘領點數就走」，一個字都沒被炒熱。</p>
+    </div>
+
     <div class="screencell">
       <div class="phone">
         <div class="pbar"><div class="pav"></div><span>貝貝</span><div class="pdia">◈ 111,621</div><span class="px">✕</span></div>
-        <div class="pvid">
-          <div class="pwm">SWAG</div>
+        <div class="pvid"><div class="pwm">SWAG</div>
           <div class="toast">
-            <div class="trow">加成結算 <span>＋EXP</span></div>
+            <div class="trow"><span>加成結算</span><span class="tc">＋EXP</span><span class="tg">＋福利點數</span></div>
             <div class="tnote">今日尋寶 2/3 · 連續 5 天<br>這間房 5 分鐘後生成下一個</div>
           </div>
           <div class="pchat"><div class="pmsg w1"></div><div class="pmsg w2"></div><div class="pmsg w3"></div></div>
         </div>
         <div class="pfoot"><div class="pdot"></div><div class="pinput"></div><div class="pdot"></div></div>
       </div>
-      <p class="cap"><b><i>05</i>結算</b>結算完，同一間房重新開始計時。留下來就能再開，不必換房。</p>
+      <p class="cap"><b><i>06</i>結算</b>結算完，同一間房重新開始計時。留下來就能再開，不必換房。</p>
     </div>
+  </div>
+
+  <h3>留言引導的三個設計要求</h3>
+  <div class="rules">
+    <div class="ruleitem"><div class="rn">1</div><div>
+      <div class="rt">只帶進輸入框，不直接送出</div>
+      <div class="rd">如果四句話能一鍵送出，幾萬名 T1 用戶會把同樣的句子灌進冷房，主播一天內就會發現這是機器人。帶入之後讓用戶自己改、自己按送出，這一步的摩擦是刻意保留的。</div></div></div>
+    <div class="ruleitem"><div class="rn">2</div><div>
+      <div class="rt">詞條要跟情境有關，不能只有四句固定</div>
+      <div class="rd">「跟她打招呼」適合剛進房，「回應她在講的事」適合待了一會兒。建議準備一個池子輪播、依停留時間切換，而不是永遠顯示同四句。</div></div></div>
+    <div class="ruleitem"><div class="rn">3</div><div>
+      <div class="rt">要求數則不同的留言，不是同一句貼三次</div>
+      <div class="rd">留言是為了炒熱氣氛，複製貼上達不到目的。判定上要擋重複內容，這條在開發時要寫進驗收條件。</div></div></div>
   </div>
 </section>
 
-<!-- ============ EXPLORE ============ -->
 <section>
   <h2>探索頁怎麼被看到</h2>
   <p class="sub">寶箱是每個人各自生成的，房間之間不搶。所以文案是「這間可以開出寶箱」，不是「這間有寶箱」。</p>
-
   <div class="cards">
-    <div class="card">
-      <div class="thumb">
-        <span class="tagl">新人</span>
-        <span class="tagr">免費直播中</span>
-        <span class="chesticon">
-          <svg width="26" height="23" viewBox="0 0 120 104"><ellipse cx="60" cy="62" rx="50" ry="32" fill="url(#cg)"/><rect x="20" y="54" width="80" height="36" rx="3" fill="#B27F14"/><path d="M19 55V43c0-11.6 18.4-18 41-18s41 6.4 41 18v12z" fill="#E0A31C"/><rect x="52" y="26" width="16" height="64" fill="#96690C"/><rect x="48" y="58" width="24" height="16" rx="3" fill="#F6D275"/><defs><radialGradient id="cg"><stop offset="0" stop-color="#F0B429" stop-opacity=".55"/><stop offset="1" stop-color="#F0B429" stop-opacity="0"/></radialGradient></defs></svg>
-        </span>
-        <span class="vcount">22</span>
-        <span class="rate">★ 4.6</span>
-      </div>
-      <div class="meta"><div class="ttl">快來陪我呀</div><div class="who">貝貝</div></div>
-    </div>
-    <div class="card">
-      <div class="thumb">
-        <span class="tagr">免費直播中</span>
-        <span class="vcount">6</span>
-        <span class="rate">★ 4.6</span>
-      </div>
-      <div class="meta"><div class="ttl">show</div><div class="who">miki</div></div>
-    </div>
-    <div class="card">
-      <div class="thumb">
-        <span class="tagr">免費直播中</span>
-        <span class="chesticon">
-          <svg width="26" height="23" viewBox="0 0 120 104"><ellipse cx="60" cy="62" rx="50" ry="32" fill="url(#cg2)"/><rect x="20" y="54" width="80" height="36" rx="3" fill="#B27F14"/><path d="M19 55V43c0-11.6 18.4-18 41-18s41 6.4 41 18v12z" fill="#E0A31C"/><rect x="52" y="26" width="16" height="64" fill="#96690C"/><rect x="48" y="58" width="24" height="16" rx="3" fill="#F6D275"/><defs><radialGradient id="cg2"><stop offset="0" stop-color="#F0B429" stop-opacity=".55"/><stop offset="1" stop-color="#F0B429" stop-opacity="0"/></radialGradient></defs></svg>
-        </span>
-        <span class="vcount">13</span>
-        <span class="rate">★ 4.9</span>
-      </div>
-      <div class="meta"><div class="ttl">只想色色</div><div class="who">馬鴨鴨</div></div>
-    </div>
+    <div class="card"><div class="thumb">
+      <span class="tagl">新人</span><span class="tagr">免費直播中</span>
+      <span class="chesticon"><svg width="30" height="27" viewBox="0 0 170 158"><ellipse cx="85" cy="88" rx="82" ry="64" fill="url(#glowG)"/><path d="M112 80l26-18v52l-26 20z" fill="url(#c3sd)"/><path d="M32 80h80v52H32z" fill="url(#c3fr)"/><path d="M112 48l26-18v36l-26 18z" fill="url(#c3sd)"/><path d="M28 48h84v36H28z" fill="url(#c3fr)"/><path d="M28 48h84l26-18H54z" fill="url(#c3top)"/><path d="M28 74h84v10H28z" fill="#B07E0C"/><rect x="58" y="66" width="30" height="32" rx="3.5" fill="#FFE9A8"/><path d="M73 74l8 8-8 8-8-8z" fill="#FF2E76"/></svg></span>
+      <span class="vcount">22</span><span class="rate">★ 4.6</span>
+    </div><div class="meta"><div class="ttl">快來陪我呀</div><div class="who">貝貝</div></div></div>
+
+    <div class="card"><div class="thumb">
+      <span class="tagr">免費直播中</span><span class="vcount">6</span><span class="rate">★ 4.6</span>
+    </div><div class="meta"><div class="ttl">show</div><div class="who">miki</div></div></div>
+
+    <div class="card"><div class="thumb">
+      <span class="tagr">免費直播中</span>
+      <span class="chesticon"><svg width="30" height="27" viewBox="0 0 170 158"><ellipse cx="85" cy="88" rx="82" ry="64" fill="url(#glowG)"/><path d="M112 80l26-18v52l-26 20z" fill="url(#c3sd)"/><path d="M32 80h80v52H32z" fill="url(#c3fr)"/><path d="M112 48l26-18v36l-26 18z" fill="url(#c3sd)"/><path d="M28 48h84v36H28z" fill="url(#c3fr)"/><path d="M28 48h84l26-18H54z" fill="url(#c3top)"/><path d="M28 74h84v10H28z" fill="#B07E0C"/><rect x="58" y="66" width="30" height="32" rx="3.5" fill="#FFE9A8"/><path d="M73 74l8 8-8 8-8-8z" fill="#FF2E76"/></svg></span>
+      <span class="vcount">13</span><span class="rate">★ 4.9</span>
+    </div><div class="meta"><div class="ttl">只想色色</div><div class="who">馬鴨鴨</div></div></div>
   </div>
 
   <p class="cardcap"><b>icon 位置：</b>右上角、貼在「免費直播中」標籤下方。左上角要留給「新人」標籤——而新主播正是 T3／T4 的池子，一定會撞。<br><b>必須個人化：</b>只在你自己候選池的房間顯示。讓 T1 看到一個他開不了的寶箱，比不顯示更糟。</p>
 
   <div class="chips">
-    <span class="chip">篩選</span>
-    <span class="chip">排序</span>
-    <span class="chip on">◆ 有我的寶箱</span>
+    <span class="chip">篩選</span><span class="chip">排序</span><span class="chip on">◆ 有我的寶箱</span>
   </div>
-  <p class="cardcap">現成的篩選列加一個條件就好，不用新頁面。</p>
+  <p class="cardcap">現成的篩選列加一個條件就好，不用開新頁面。</p>
 </section>
 
-<!-- ============ VIP PANEL ============ -->
 <section>
   <h2>VIP 面板</h2>
-  <p class="sub">設計還沒進場，這是建議的資訊架構。</p>
+  <p class="sub">設計還沒進場，這是建議的資訊架構。主畫面只放三件事：今天還能開幾個、從寶箱拿到了什麼、現在能去哪裡開。</p>
 
   <div class="mockrow">
     <div class="panelmock">
       <div class="vp">
         <div class="vphead">
-          <svg width="34" height="30" viewBox="0 0 120 104"><rect x="20" y="54" width="80" height="36" rx="3" fill="#8E979F"/><path d="M19 55V44c0-11 18.4-17 41-17s41 6 41 17v11z" fill="#AAB4BD"/><rect x="53" y="28" width="14" height="62" fill="#6B747C"/><rect x="49" y="59" width="22" height="14" rx="2.5" fill="#D3DBE2"/><path d="M24 33.5C31 30 44 27.6 60 27.6s29 2.4 36 5.9" stroke="#24E0D0" stroke-opacity=".7" stroke-width="1.4" fill="none"/></svg>
+          <svg width="40" height="36" viewBox="0 0 170 158"><path d="M112 80l26-18v52l-26 20z" fill="url(#c2sd)"/><path d="M32 80h80v52H32z" fill="url(#c2fr)"/><path d="M46 92h52v28H46z" fill="url(#c2pn)"/><path d="M112 50l26-18v34l-26 18z" fill="url(#c2sd)"/><path d="M28 50h84v34H28z" fill="url(#c2fr)"/><path d="M28 50h84l26-18H54z" fill="url(#c2top)"/><path d="M28 74h84v10H28z" fill="#7B868F"/><path d="M32 80h11v52H32zM101 80h11v52h-11z" fill="#D3DCE4"/><rect x="59" y="68" width="28" height="30" rx="3" fill="#EDF2F6"/><path d="M73 76l7 7-7 7-7-7z" fill="#24E0D0"/><path d="M54 32h84" stroke="#24E0D0" stroke-width="1.8"/></svg>
           <div><div class="vplv">Lv.28</div><div class="vptier">Tier 2 · 白銀箱</div></div>
         </div>
         <div class="vptrack"><i class="vpfill"></i></div>
@@ -661,47 +738,34 @@ footer{margin-top:96px;padding-top:26px;border-top:1px solid var(--line);font-si
       </div>
 
       <div class="vp">
-        <p class="vplab">今日尋寶</p>
+        <p class="vplab">今日尋寶 <span class="info">i</span></p>
         <div class="slots">
-          <div class="slot done"><svg width="20" height="17" viewBox="0 0 120 104"><rect x="20" y="54" width="80" height="36" rx="3" fill="#8E979F"/><path d="M19 55V44c0-11 18.4-17 41-17s41 6 41 17v11z" fill="#AAB4BD"/><rect x="49" y="59" width="22" height="14" rx="2.5" fill="#F0B429"/></svg></div>
-          <div class="slot"></div>
-          <div class="slot"></div>
+          <div class="slot done"><svg width="24" height="21" viewBox="0 0 170 158"><path d="M112 80l26-18v52l-26 20z" fill="url(#c2sd)"/><path d="M32 80h80v52H32z" fill="url(#c2fr)"/><path d="M28 50h84v34H28z" fill="url(#c2fr)"/><path d="M28 50h84l26-18H54z" fill="url(#c2top)"/><path d="M28 74h84v10H28z" fill="#7B868F"/><rect x="59" y="68" width="28" height="30" rx="3" fill="#F5C542"/></svg></div>
+          <div class="slot"></div><div class="slot"></div>
         </div>
-        <div class="slotnote">已開 1／3 · 未開啟的不佔額度</div>
+        <div class="slotnote">已開 1／3 · 未開啟的不佔額度 · 機率說明在 [i]</div>
       </div>
 
       <div class="vp">
-        <p class="vplab">連續開箱</p>
-        <div class="streak"><span class="n">5</span><span class="u">天 · 中斷歸零</span></div>
+        <p class="vplab">本月從寶箱拿到</p>
+        <div class="harvest">
+          <div class="hcell exp"><div class="hk">EXP</div><div class="hv">—</div></div>
+          <div class="hcell pts"><div class="hk">福利點數</div><div class="hv">—</div></div>
+        </div>
+        <div class="slotnote">連續開箱 5 天 · 中斷歸零</div>
       </div>
 
       <div class="vp">
-        <p class="vplab">可以開出寶箱的直播間</p>
+        <p class="vplab">現在可以開出寶箱 <span class="rf">↻ 重新整理</span></p>
         <div class="rooms">
-          <div class="room"><div class="rav"></div><div><div class="rname">貝貝</div><div class="rmeta">開播中 · 22 人</div></div><span class="rgo">進入</span></div>
-          <div class="room"><div class="rav"></div><div><div class="rname">吵吵</div><div class="rmeta">開播中 · 20 人</div></div><span class="rgo">進入</span></div>
-          <div class="room"><div class="rav"></div><div><div class="rname">miki</div><div class="rmeta">開播中 · 6 人</div></div><span class="rgo">進入</span></div>
-          <div class="room"><div class="rav"></div><div><div class="rname">馬鴨鴨</div><div class="rmeta">開播中 · 13 人</div></div><span class="rgo">進入</span></div>
-          <div class="room"><div class="rav"></div><div><div class="rname">mona</div><div class="rmeta">未開播</div></div><span class="rgo off">未開播</span></div>
+          <div class="room"><div class="rav"></div><div><div class="rname">貝貝</div><div class="rmeta">22 人</div></div><span class="rgo">進入</span></div>
+          <div class="room"><div class="rav"></div><div><div class="rname">吵吵</div><div class="rmeta">20 人</div></div><span class="rgo">進入</span></div>
+          <div class="room"><div class="rav"></div><div><div class="rname">miki</div><div class="rmeta">6 人</div></div><span class="rgo">進入</span></div>
+          <div class="room"><div class="rav"></div><div><div class="rname">馬鴨鴨</div><div class="rmeta">13 人</div></div><span class="rgo">進入</span></div>
+          <div class="room"><div class="rav"></div><div><div class="rname">mona</div><div class="rmeta">9 人</div></div><span class="rgo">進入</span></div>
+          <div class="room"><div class="rav"></div><div><div class="rname">doris</div><div class="rmeta">31 人</div></div><span class="rgo">進入</span></div>
         </div>
-        <div class="slotnote">候選 5 間，每天開 3 個——選哪幾間，就是尋寶本身</div>
-      </div>
-
-      <div class="vp">
-        <p class="vplab">星級機率</p>
-        <div class="oddsrow">
-          <span class="ol">Lv.28</span>
-          <span class="otrack">
-            <i style="width:26%;background:#4A5057"></i><i style="width:24%;background:#6B747C"></i><i style="width:20%;background:#9AA4AD"></i><i style="width:16%;background:#C9D2DA"></i><i style="width:10%;background:#F0B429"></i><i style="width:4%;background:#FF2E76"></i>
-          </span>
-        </div>
-        <div class="oddsrow">
-          <span class="ol">Lv.31</span>
-          <span class="otrack">
-            <i style="width:18%;background:#4A5057"></i><i style="width:21%;background:#6B747C"></i><i style="width:21%;background:#9AA4AD"></i><i style="width:20%;background:#C9D2DA"></i><i style="width:14%;background:#F0B429"></i><i style="width:6%;background:#FF2E76"></i>
-          </span>
-        </div>
-        <div class="oddsleg">1★ 到 6★ 由左至右。升到下一個級距，高星的比例就往上挪一段——升級動機不用寫文案，用戶自己看得到。</div>
+        <div class="pager"><span>‹</span>1 / 4<span>›</span></div>
       </div>
 
       <div class="vp">
@@ -713,84 +777,80 @@ footer{margin-top:96px;padding-top:26px;border-top:1px solid var(--line);font-si
 
     <div class="mocknote">
       <ol>
-        <li><b>候選數要大於每日額度。</b>給 5 間、每天開 3 個。如果剛好給 3 間，那就不是尋寶，是派工。</li>
-        <li><b>未開播的也留在清單裡。</b>T2 的池子是他自己耗鑽過的主播，看到「還沒開播」比整個消失更有意義——他會等。</li>
-        <li><b>機率對照是這一頁最重要的模組。</b>放置型遊戲的做法：把本級和下一級的機率並排。用戶盯著看的時候，升級動機是自己長出來的。</li>
-        <li><b>推播綁在生成節奏上。</b>候選池刷新時推「今天有 5 間可以開寶箱」。因為有 5 分鐘停留門檻，開箱是要挑時間做的事，通知決定他今天到底有沒有進來。</li>
+        <li><b>清單只列當下符合條件的房間，全部列進去。</b>不預先挑幾間、不留未開播的。數量多就分頁，隨時可以重新整理——主播上下線很頻繁，這份清單本來就該是即時的。</li>
+        <li><b>「本月從寶箱拿到」是這一頁的主角。</b>寶箱是 VIP 2.0 唯一的任務，那用戶最該看到的就是它到底給了自己什麼。EXP 和福利點數並排，兩種幣別都在。</li>
+        <li><b>星級機率不放主畫面。</b>收在「今日尋寶」旁邊的 [i] 裡，想看的人才點開。主畫面留給「今天還能開幾個」和「現在去哪裡開」。</li>
+        <li><b>推播綁在候選池刷新上。</b>有 5 分鐘停留門檻，開箱是要挑時間做的事——通知決定他今天到底有沒有進來。</li>
       </ol>
     </div>
   </div>
 </section>
 
-<!-- ============ STARS ============ -->
 <section>
-  <h2>星級與箱體：兩條動機線</h2>
-  <p class="sub">四款箱體 × 1–6 星疊加顯示。兩條線各管一段，不會互相打到。</p>
+  <h2>一併要改的：福利點數的分母</h2>
+  <p class="sub">這是決策 3 的實質變更，不是介面調整。原本 P4 的倍率是看「當月<b>耗鑽</b>進度」，現在改成看「當月 <b>EXP</b> 進度」。級距表那一欄的「月耗鑽基準」要改成「月 EXP 基準」。</p>
 
   <div class="rules">
-    <div class="ruleitem">
-      <div class="rn">A</div>
-      <div>
-        <div class="rt">Tier 之內，機率隨等級往上爬</div>
-        <div class="rd">等級越高，開到高星的機率越高，1 星始終開得到。建議按每 5 級一個級距切——對得上福利點數現有的級距結構，技術和營運都好維護。每升一個級距，面板上的機率表就會動一次。</div>
-      </div>
-    </div>
-    <div class="ruleitem">
-      <div class="rn">B</div>
-      <div>
-        <div class="rt">Tier 之間，箱體價值跳一階</div>
-        <div class="rd">白銀箱的 1 星要大於青銅箱的 6 星。否則會出現一個陷阱：爬到 T1 頂端的人剛好是「6 星機率最高」的位置，升到 T2 換成新箱體、機率表重新從底部開始，體感是<b>升級之後變差了</b>。三道 Tier 邊界都會發生，而第一道剛好在首儲窗口的入口上。用絕對值階梯墊高，最差的結果也比升級前的最好結果好。</div>
-      </div>
-    </div>
+    <div class="ruleitem"><div class="rn">✓</div><div>
+      <div class="rt">改完之後，高等級用戶重新在乎 EXP</div>
+      <div class="rd">終身制不降等已定案，Lv.100 單級要 1,700 萬 EXP——原本對 T3／T4 來說 EXP 幾乎沒有效用，寶箱的「BONUS EXP」對他們不會亮。分母換成 EXP 之後，他們必須累積當月 EXP 才拿得到點數倍率，EXP 對每一層都有用了。</div>
+    </div></div>
+    <div class="ruleitem"><div class="rn">✓</div><div>
+      <div class="rt">整套變成單一貨幣鏈</div>
+      <div class="rd">寶箱 → EXP 加成 → 完成行為 → EXP → 當月進度 → 倍率 → 福利點數。一條鏈、沒有旁支，用戶理解成本和開發成本都低。</div>
+    </div></div>
+    <div class="ruleitem"><div class="rn">!</div><div>
+      <div class="rt">「點數掛消費」正式變成「點數掛行為」</div>
+      <div class="rd">T1 的行為是留言，所以<b>純免費用戶每個月會拿到福利點數</b>——量體大約落在附錄價目表最底層那一兩項（禮包券、煙火券）。這不是漏洞，是這個設計的必然結果：他付出的是留言與停留。但這條原則變了，寫在這裡而不是藏在參數表裡。</div>
+    </div></div>
+    <div class="ruleitem"><div class="rn">!</div><div>
+      <div class="rt">T1 的點數量體要壓到很低</div>
+      <div class="rd">T1 是人數最多的一層，乘起來的總發放量會是全站最大一塊，而它完全不對應營收。這個上限請 data team 特別留意。</div>
+    </div></div>
+    <div class="ruleitem"><div class="rn">!</div><div>
+      <div class="rt">級距基準數字要重推，不能只換標籤</div>
+      <div class="rd">原本那些數字（Lv.1-5 的 55,000、Lv.96-100 的 16,000,000）是用 18 萬用戶的實測消費中位數推的，單位是鑽石。現在分子多了兩個免費來源（寶箱本體、加成放大的部分），同一個門檻代表的營收變少，所以要重新推導。</div>
+    </div></div>
   </div>
 </section>
 
-<!-- ============ RULES ============ -->
 <section>
   <h2>邊界規則</h2>
   <p class="sub">這幾條是機制能不能站得住的關鍵，開發時要寫死。</p>
-
   <div class="rules">
     <div class="ruleitem"><div class="rn">1</div><div>
       <div class="rt">寶箱只在候選池的房間生成</div>
-      <div class="rd">不是「任何直播間待 5 分鐘就有」。這條是整套導流的前提。</div>
-    </div></div>
+      <div class="rd">不是「任何直播間待 5 分鐘就有」。這條是整套導流的前提。</div></div></div>
     <div class="ruleitem"><div class="rn">2</div><div>
       <div class="rt">開箱與加成都必須在生成的那間房內完成</div>
-      <div class="rd">確保行為發生在我們指定的房間，而不是拿了倍率跑去別處用。</div>
-    </div></div>
+      <div class="rd">確保行為發生在我們指定的房間，而不是拿了倍率跑去別處用。</div></div></div>
     <div class="ruleitem"><div class="rn">3</div><div>
       <div class="rt">沒開的寶箱不佔今日額度，但那間房不會再生成新的</div>
-      <div class="rd">這條同時解掉「囤鑽等高星箱」——想跳過這一箱，代價是放棄整間房。等待在機制上不划算，所以不會有人為了等倍率而壓著不打賞。</div>
-    </div></div>
+      <div class="rd">這條同時解掉「囤鑽等高星箱」——想跳過這一箱，代價是放棄整間房。等待在機制上不划算，所以不會有人為了等倍率而壓著不打賞。</div></div></div>
     <div class="ruleitem"><div class="rn">4</div><div>
       <div class="rt">生成後 30 分鐘內要開，從生成那一刻起算</div>
-      <div class="rd">推播必須在生成當下發出並顯示倒數，否則這 30 分鐘只會變成懲罰分心的人。</div>
-    </div></div>
+      <div class="rd">推播必須在生成當下發出並顯示倒數，否則這 30 分鐘只會變成懲罰分心的人。</div></div></div>
     <div class="ruleitem"><div class="rn">5</div><div>
       <div class="rt">同一位主播可以重複生成，前一箱開了才開始算下一箱</div>
-      <div class="rd">留在同一間房就能連開，不強迫換房。T3／T4 想在同一位新主播房間待久一點，是我們要的結果。</div>
-    </div></div>
+      <div class="rd">留在同一間房就能連開，不強迫換房。T3／T4 想在同一位新主播房間待久一點，是我們要的結果；而候選池每天都會換，一個月下來自然會認識夠多新主播。</div></div></div>
     <div class="ruleitem"><div class="rn">6</div><div>
       <div class="rt">多個加成同時有效時不疊加，取當下最高倍率</div>
-      <div class="rd">避免被找出算法漏洞。</div>
-    </div></div>
+      <div class="rd">避免被找出算法漏洞。</div></div></div>
     <div class="ruleitem"><div class="rn">7</div><div>
       <div class="rt">連續開箱天數，中斷歸零</div>
-      <div class="rd">週任務被取消之後，「持續出現」需要有東西承載。這條讓集中在週末開 6 箱，跟連續 6 天每天開 1 箱，變成不一樣的事——後者才是留存。用戶感受到的仍然是同一套寶箱，沒有第二種任務。</div>
-    </div></div>
+      <div class="rd">週任務被取消之後，「持續出現」需要有東西承載。這條讓集中在週末開 6 箱，跟連續 6 天每天開 1 箱，變成不一樣的事——後者才是留存。用戶感受到的仍然是同一套寶箱，沒有第二種任務。</div></div></div>
     <div class="ruleitem"><div class="rn">8</div><div>
-      <div class="rt">福利點數：EXP 走升級曲線管，點數走月上限管，單箱不設限</div>
-      <div class="rd">寶箱取得的福利點數每月不超過該等級基本點數的一定比例，讓它永遠是加速器而不是替代路徑。點數每筆各自算 60 天，扣點時先扣快到期的。</div>
-    </div></div>
+      <div class="rt">EXP 走升級曲線管，福利點數走月上限管，單箱不設限</div>
+      <div class="rd">寶箱取得的福利點數每月不超過該等級基本點數的一定比例，讓它永遠是加速器而不是替代路徑。分母改成 EXP 之後，這個月上限是唯一的閘門，比原本更關鍵。點數每筆各自算 60 天，扣點時先扣快到期的。</div></div></div>
+    <div class="ruleitem"><div class="rn">9</div><div>
+      <div class="rt">開箱本身不發任何獎勵，EXP 和點數都要完成行為才入帳</div>
+      <div class="rd">這條對 T3／T4 尤其關鍵。他們在意點數、不太在意 EXP，如果點數在開箱那一刻就到手，理性選擇是進新主播房、待 5 分鐘、領點數、離開——破圈只完成了「看」，沒完成「支持」，而耗鑽才是重點。點數綁在行為後面，行為就回到必經之路上。</div></div></div>
   </div>
 </section>
 
-<!-- ============ OPEN ============ -->
 <section>
   <h2>還沒拍的事</h2>
   <p class="sub">這一版刻意不填數字。架構認同之後，數值規劃才有基準可以推。</p>
-
   <div class="open">
     <div>
       <h4>需要決策</h4>
@@ -807,10 +867,13 @@ footer{margin-top:96px;padding-top:26px;border-top:1px solid var(--line);font-si
       <ul>
         <li><b>VIP 2.0 的 Tier 等級區間與各層母體。</b>簡報 P2 的試算是舊制定義下算的，不能直接沿用。這一項要先有，其他才推得動。</li>
         <li><b>免費天花板反推。</b>寶箱是新制唯一的免費 EXP 來源，所以每日 3 箱的期望值上限，要從「純免費用戶剛好卡在天花板」反算回來。</li>
-        <li>各級距 1–6 星機率表；四款箱體的基礎值階梯。</li>
-        <li>加成倍率區間。1 星的地板要夠高，讓「有箱子的時候耗鑽」明顯優於平常——這是整個機制成立的基礎。</li>
-        <li>寶箱福利點數的月上限比例。</li>
-        <li>候選池判定：冷房人數門檻、新主播定義、推薦名單來源與刷新頻率、候選數量。</li>
+        <li><b>級距基準改成 EXP 之後的重推。</b>「月耗鑽基準」那一欄要重新算，因為分子多了免費來源。</li>
+        <li>各級距 1★–6★ 機率表。</li>
+        <li>加成倍率區間（建議 ×1.2 – ×2.0）。1★ 的地板要夠高，讓「有箱子的時候耗鑽」明顯優於平常——這是整個機制成立的基礎。</li>
+        <li>四款箱體的可得點數階梯，以及 T1 的點數上限。</li>
+        <li>加成窗口長度、窗口內適用的鑽石顆數（T1 是留言則數）。</li>
+        <li>寶箱福利點數的月上限比例——分母改成 EXP 後，這是唯一的閘門。</li>
+        <li>候選池判定：冷房人數門檻、新主播定義、推薦名單來源與刷新頻率。</li>
       </ul>
     </div>
   </div>
@@ -822,12 +885,15 @@ footer{margin-top:96px;padding-top:26px;border-top:1px solid var(--line);font-si
       <li>實體福利用福利點數的價格控制稀缺性，不靠額外的庫存機制。</li>
       <li>福利點數效期採 60 天，寶箱點數繼承同一套規則。</li>
       <li>累計 5 分鐘，中途離開回來繼續算，但必須在同一間有寶箱的直播間內。</li>
+      <li>每日 3 箱，四個 Tier 相同。</li>
+      <li>福利點數倍率的分母從耗鑽改成 EXP。</li>
+      <li>開箱不發獎勵，EXP 與點數都在完成行為後結算。</li>
     </ul>
   </div>
 </section>
 
 <footer>
-  取代原簡報 P3 的四階層任務規劃。升級曲線、EXP 耗鑽 1:1、福利點數的基本點數 × 消費倍率、60 天效期、終身制不降等，這些都不動——寶箱是接在它們上面的一層。
+  取代原簡報 P3 的四階層任務規劃，並變更決策 3 的倍率分母（耗鑽 → EXP）。升級曲線、EXP 耗鑽 1:1、點數 60 天效期、終身制不降等不動——寶箱是接在它們上面的一層。
 </footer>
 
 </div>
