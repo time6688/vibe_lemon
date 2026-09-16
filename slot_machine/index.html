@@ -3,210 +3,147 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SWAG 老虎機小遊戲｜商業規格書 v0.1</title>
+<title>SWAG 老虎機下注遊戲｜商業規格書 v0.3</title>
 <style>
 :root{
-  --primary:#00D2BE;
-  --surface:#191919;
-  --container:#232323;
-  --outline:#474747;
-  --text-1:#FFFFFF;
-  --text-2:#C8C8C8;
-  --text-3:#8A8A8A;
-  --gold:#FFA500;
-  --pink:#F6418D;
-  --warn:#FF7200;
+  --primary:#00D2BE;--surface:#191919;--container:#232323;--outline:#474747;
+  --text-1:#FFFFFF;--text-2:#C8C8C8;--text-3:#8A8A8A;
+  --gold:#FFA500;--pink:#F6418D;--warn:#FF7200;--red:#CF0404;
 }
 *{box-sizing:border-box;}
-body{
-  margin:0;
-  background:var(--surface);
-  color:var(--text-1);
+body{margin:0;background:var(--surface);color:var(--text-1);
   font-family:'PingFang TC','Noto Sans TC',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-  font-size:16px;
-  line-height:1.75;
-  -webkit-font-smoothing:antialiased;
-}
+  font-size:16px;line-height:1.75;-webkit-font-smoothing:antialiased;}
 .wrap{max-width:860px;margin:0 auto;padding:48px 20px 96px;}
 
 header{border-bottom:1px solid var(--outline);padding-bottom:28px;margin-bottom:40px;}
-.eyebrow{
-  display:inline-block;font-size:12px;letter-spacing:.18em;color:var(--primary);
-  border:1px solid var(--primary);border-radius:999px;padding:3px 12px;margin-bottom:18px;
-}
+.eyebrow{display:inline-block;font-size:12px;letter-spacing:.18em;color:var(--primary);
+  border:1px solid var(--primary);border-radius:999px;padding:3px 12px;margin-bottom:18px;}
 h1{font-size:34px;line-height:1.3;margin:0 0 12px;font-weight:600;}
 .meta{color:var(--text-3);font-size:13px;margin:0;}
-.lede{
-  margin-top:24px;padding:18px 20px;background:var(--container);
-  border-left:3px solid var(--primary);border-radius:0 8px 8px 0;
-  color:var(--text-2);font-size:17px;
-}
+.lede{margin-top:24px;padding:18px 20px;background:var(--container);
+  border-left:3px solid var(--primary);border-radius:0 8px 8px 0;color:var(--text-2);font-size:17px;}
 
-h2{
-  font-size:22px;margin:52px 0 16px;font-weight:600;
-  padding-bottom:10px;border-bottom:1px solid var(--outline);
-}
+h2{font-size:22px;margin:52px 0 16px;font-weight:600;padding-bottom:10px;border-bottom:1px solid var(--outline);}
 h2 .num{color:var(--primary);font-size:15px;margin-right:10px;vertical-align:2px;}
-h3{font-size:17px;margin:32px 0 10px;font-weight:600;color:var(--text-1);}
+h3{font-size:17px;margin:32px 0 10px;font-weight:600;}
 p{margin:0 0 14px;color:var(--text-2);}
 ul,ol{margin:0 0 16px;padding-left:22px;color:var(--text-2);}
 li{margin-bottom:7px;}
 strong{color:var(--text-1);font-weight:600;}
+code{background:var(--container);padding:2px 7px;border-radius:4px;font-size:14px;color:var(--primary);}
 
 .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 0 18px;}
-table{border-collapse:collapse;width:100%;min-width:480px;font-size:14px;}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:14px;}
 th,td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--outline);vertical-align:top;}
 th{background:var(--container);color:var(--text-1);font-weight:600;white-space:nowrap;}
 td{color:var(--text-2);}
 td.c,th.c{text-align:center;}
+td.r,th.r{text-align:right;}
+tr.total td{background:rgba(0,210,190,.07);color:var(--text-1);font-weight:600;border-top:1px solid var(--primary);}
 
 .flow{list-style:none;padding:0;counter-reset:s;}
-.flow li{
-  counter-increment:s;position:relative;padding:14px 0 14px 52px;
-  border-bottom:1px solid var(--outline);margin:0;
-}
+.flow li{counter-increment:s;position:relative;padding:14px 0 14px 52px;border-bottom:1px solid var(--outline);margin:0;}
 .flow li:last-child{border-bottom:none;}
-.flow li::before{
-  content:counter(s);position:absolute;left:0;top:14px;
-  width:30px;height:30px;border-radius:50%;
-  background:var(--primary);color:#0d0d0d;
-  font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;
-}
+.flow li::before{content:counter(s);position:absolute;left:0;top:14px;width:30px;height:30px;border-radius:50%;
+  background:var(--primary);color:#0d0d0d;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;}
 .flow b{display:block;color:var(--text-1);margin-bottom:2px;}
 
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-bottom:18px;}
 .card{background:var(--container);border:1px solid var(--outline);border-radius:12px;padding:18px;}
 .card h4{margin:0 0 6px;font-size:16px;color:var(--primary);font-weight:600;}
 .card p{margin:0;font-size:14px;line-height:1.65;}
-.tag{
-  display:inline-block;font-size:11px;padding:2px 9px;border-radius:4px;
-  margin-bottom:8px;font-weight:600;letter-spacing:.04em;
-}
-.tag.rec{background:rgba(0,210,190,.15);color:var(--primary);}
-.tag.mid{background:rgba(255,165,0,.15);color:var(--gold);}
-.tag.hard{background:rgba(255,114,0,.15);color:var(--warn);}
 
-.note{
-  background:var(--container);border:1px solid var(--outline);
-  border-radius:10px;padding:16px 18px;margin:18px 0;font-size:14.5px;
-}
+.note{background:var(--container);border:1px solid var(--outline);border-radius:10px;padding:16px 18px;margin:18px 0;font-size:14.5px;}
 .note.alert{border-color:var(--warn);}
-.note .label{
-  display:block;font-size:12px;letter-spacing:.1em;color:var(--warn);
-  font-weight:700;margin-bottom:6px;
-}
-.note.alert p:last-child,.note p:last-child{margin-bottom:0;}
+.note.stop{border-color:var(--red);background:rgba(207,4,4,.07);}
+.note .label{display:block;font-size:12px;letter-spacing:.1em;font-weight:700;margin-bottom:6px;color:var(--warn);}
+.note.stop .label{color:#ff5c5c;}
+.note p:last-child{margin-bottom:0;}
 
 .decide{list-style:none;padding:0;}
-.decide li{
-  display:flex;gap:12px;padding:13px 0;border-bottom:1px solid var(--outline);margin:0;
-}
+.decide li{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid var(--outline);margin:0;}
 .decide li:last-child{border-bottom:none;}
-.box{
-  flex:0 0 18px;height:18px;margin-top:5px;
-  border:2px solid var(--primary);border-radius:4px;
-}
+.box{flex:0 0 18px;height:18px;margin-top:5px;border:2px solid var(--primary);border-radius:4px;}
 .decide b{display:block;color:var(--text-1);}
 .decide span{font-size:14px;color:var(--text-3);}
-
 .pill{display:inline-block;padding:1px 8px;border-radius:4px;font-size:12px;background:rgba(255,255,255,.08);color:var(--text-2);}
 
-/* ───────── 視覺原型：老虎機 ───────── */
-.demo-hint{
-  display:flex;gap:10px;align-items:flex-start;
-  background:rgba(0,210,190,.07);border:1px solid rgba(0,210,190,.35);
-  border-radius:10px;padding:13px 16px;margin:0 0 20px;font-size:14px;color:var(--text-2);
-}
+/* ───────── 視覺原型 ───────── */
+.demo-hint{display:flex;gap:10px;align-items:flex-start;background:rgba(0,210,190,.07);
+  border:1px solid rgba(0,210,190,.35);border-radius:10px;padding:13px 16px;margin:0 0 20px;font-size:14px;color:var(--text-2);}
 .demo-hint b{color:var(--primary);}
 
-.stage{
-  position:relative;display:flex;justify-content:center;align-items:flex-start;
-  padding:34px 0 18px;margin-bottom:18px;overflow:hidden;
-  border-radius:16px;border:1px solid var(--outline);
-  background:radial-gradient(ellipse at 50% 25%,#2e2e2e 0%,#1b1b1b 55%,#101010 100%);
-}
+.stage{position:relative;display:flex;justify-content:center;align-items:flex-start;
+  padding:34px 0 18px;margin-bottom:16px;overflow:hidden;border-radius:16px;border:1px solid var(--outline);
+  background:radial-gradient(ellipse at 50% 25%,#2e2e2e 0%,#1b1b1b 55%,#101010 100%);}
 .stage.shake{animation:shk .55s cubic-bezier(.36,.07,.19,.97);}
-@keyframes shk{
-  10%,90%{transform:translateX(-2px)}20%,80%{transform:translateX(4px)}
-  30%,50%,70%{transform:translateX(-7px)}40%,60%{transform:translateX(7px)}
-}
+@keyframes shk{10%,90%{transform:translateX(-2px)}20%,80%{transform:translateX(4px)}
+  30%,50%,70%{transform:translateX(-7px)}40%,60%{transform:translateX(7px)}}
 
-.rays{
-  position:absolute;left:50%;top:38%;width:820px;height:820px;margin:-410px 0 0 -410px;
+.rays{position:absolute;left:50%;top:38%;width:820px;height:820px;margin:-410px 0 0 -410px;
   opacity:0;transition:opacity .45s;pointer-events:none;
   background:repeating-conic-gradient(from 0deg,rgba(255,196,60,.20) 0deg 9deg,rgba(255,196,60,0) 9deg 18deg);
-  animation:rot 14s linear infinite;
-}
+  animation:rot 14s linear infinite;}
 .rays.on{opacity:1;}
 @keyframes rot{to{transform:rotate(360deg)}}
 
-.machine{
-  position:relative;width:296px;padding-bottom:16px;z-index:2;
-  border-radius:20px 20px 12px 12px;
+.machine{position:relative;width:296px;padding-bottom:16px;z-index:2;border-radius:20px 20px 12px 12px;
   background:linear-gradient(180deg,#f2f5f8 0%,#c4ccd5 16%,#9aa4b0 46%,#d3dae1 78%,#7f8a96 100%);
-  box-shadow:0 20px 44px rgba(0,0,0,.65),inset 0 2px 0 rgba(255,255,255,.85),inset 0 -2px 0 rgba(0,0,0,.25);
-}
-.bulb{
-  position:absolute;top:-13px;left:50%;transform:translateX(-50%);
-  width:30px;height:24px;border-radius:15px 15px 4px 4px;
-  background:radial-gradient(circle at 40% 30%,#ff7d7d,#c40d0d 70%);
-  box-shadow:0 0 0 3px #8d8d8d,0 0 16px rgba(255,60,60,.5);
-}
+  box-shadow:0 20px 44px rgba(0,0,0,.65),inset 0 2px 0 rgba(255,255,255,.85),inset 0 -2px 0 rgba(0,0,0,.25);}
+.bulb{position:absolute;top:-13px;left:50%;transform:translateX(-50%);width:30px;height:24px;
+  border-radius:15px 15px 4px 4px;background:radial-gradient(circle at 40% 30%,#ff7d7d,#c40d0d 70%);
+  box-shadow:0 0 0 3px #8d8d8d,0 0 16px rgba(255,60,60,.5);}
 .bulb.flash{animation:bf .28s steps(1) infinite;}
 @keyframes bf{50%{background:radial-gradient(circle at 40% 30%,#fff3b0,#ffb300 70%);box-shadow:0 0 0 3px #8d8d8d,0 0 28px rgba(255,200,0,.95)}}
 
 .topper{margin:14px 12px 0;padding:12px 8px 14px;border-radius:12px 12px 6px 6px;
-  background:linear-gradient(180deg,#123a6b,#061c38);border:2px solid #d9c07a;
-  box-shadow:inset 0 0 18px rgba(0,0,0,.6);}
-.marquee{
-  text-align:center;font-weight:800;letter-spacing:.10em;line-height:1.1;
-  font-size:26px;color:#ffd75e;
-  text-shadow:0 0 10px rgba(255,200,60,.65),0 2px 0 #7a4b00;
-}
+  background:linear-gradient(180deg,#123a6b,#061c38);border:2px solid #d9c07a;box-shadow:inset 0 0 18px rgba(0,0,0,.6);}
+.marquee{text-align:center;font-weight:800;letter-spacing:.10em;line-height:1.1;font-size:26px;color:#ffd75e;
+  text-shadow:0 0 10px rgba(255,200,60,.65),0 2px 0 #7a4b00;}
 .marquee small{display:block;font-size:10px;letter-spacing:.34em;color:#9fd8ff;margin-top:4px;text-shadow:none;font-weight:600;}
 .marquee.blink{animation:mb .22s steps(1) infinite;}
 @keyframes mb{50%{color:#fff;text-shadow:0 0 22px #fff,0 0 40px #ffd75e}}
 
-.paytable{display:flex;justify-content:center;gap:5px;margin:8px 12px 0;padding:6px 4px;
+.paytable{display:flex;justify-content:center;gap:4px;margin:8px 12px 0;padding:6px 3px;
   border-radius:6px;background:#f3f4f6;border:1px solid #9aa4b0;}
-.paytable span{font-size:9px;font-weight:800;color:#b00;letter-spacing:.04em;
-  padding:2px 5px;border-right:1px solid #ccd;line-height:1.4;text-align:center;}
+.paytable span{font-size:9px;font-weight:800;color:#b00;letter-spacing:.02em;padding:2px 4px;
+  border-right:1px solid #ccd;line-height:1.35;text-align:center;}
 .paytable span:last-child{border-right:none;}
 .paytable span i{display:block;font-style:normal;color:#123a6b;font-size:8px;}
 
-.window{
-  position:relative;margin:12px 12px 0;padding:7px;border-radius:8px;
-  background:linear-gradient(180deg,#5c6672,#2f3741);
-  box-shadow:inset 0 3px 10px rgba(0,0,0,.75);
-}
+.window{position:relative;margin:12px 12px 0;padding:7px;border-radius:8px;
+  background:linear-gradient(180deg,#5c6672,#2f3741);box-shadow:inset 0 3px 10px rgba(0,0,0,.75);}
 .window.win{box-shadow:inset 0 3px 10px rgba(0,0,0,.75),0 0 0 2px var(--glow,#00D2BE),0 0 26px var(--glow,#00D2BE);}
 .reels{display:flex;gap:5px;justify-content:center;}
-.reel{
-  position:relative;width:84px;height:96px;overflow:hidden;border-radius:5px;
+.reel{position:relative;width:84px;height:96px;overflow:hidden;border-radius:5px;
   background:linear-gradient(180deg,#8f96a0 0%,#fbfbfb 22%,#ffffff 50%,#fbfbfb 78%,#8f96a0 100%);
-  box-shadow:inset 0 0 8px rgba(0,0,0,.35);
-}
+  box-shadow:inset 0 0 8px rgba(0,0,0,.35);}
 .reel.lit{box-shadow:inset 0 0 8px rgba(0,0,0,.35),0 0 0 2px var(--glow,#00D2BE),0 0 18px var(--glow,#00D2BE);}
 .reel .strip{will-change:transform;}
 .reel .tile{height:84px;display:flex;align-items:center;justify-content:center;}
 .reel svg{width:62px;height:62px;display:block;}
-.payline{position:absolute;left:3px;right:3px;top:50%;height:2px;margin-top:-1px;
-  background:rgba(207,4,4,.55);pointer-events:none;}
+.payline{position:absolute;left:3px;right:3px;top:50%;height:2px;margin-top:-1px;background:rgba(207,4,4,.55);pointer-events:none;}
 
-.belly{margin:12px 12px 0;padding:14px 10px;border-radius:8px;text-align:center;
+.creditbar{display:flex;justify-content:space-between;margin:10px 12px 0;padding:7px 10px;border-radius:6px;
+  background:#0d0d0d;border:1px solid #3a4049;font-size:11px;}
+.creditbar div{text-align:center;flex:1;}
+.creditbar .k{display:block;color:#7b8794;font-size:9px;letter-spacing:.12em;}
+.creditbar .v{display:block;color:#ffd75e;font-size:15px;font-weight:800;font-family:'DIN Alternate',Menlo,monospace;}
+.creditbar .v.pay{color:#00ff9d;}
+
+.belly{margin:10px 12px 0;padding:12px 10px;border-radius:8px;text-align:center;
   background:linear-gradient(180deg,#13417a,#061f3d);border:2px solid #d9c07a;}
-.belly b{display:block;font-size:13px;letter-spacing:.06em;color:#ffd75e;text-shadow:0 1px 0 #6d4200;}
-.belly em{display:block;font-style:normal;font-size:22px;font-weight:800;color:#e8232a;
-  letter-spacing:.14em;margin-top:5px;text-shadow:0 0 8px rgba(232,35,42,.55);}
-.tray{margin:12px 12px 0;height:22px;border-radius:5px;background:#0d0d0d;
-  box-shadow:inset 0 3px 8px rgba(0,0,0,.9);}
+.belly b{display:block;font-size:12px;letter-spacing:.06em;color:#ffd75e;text-shadow:0 1px 0 #6d4200;}
+.belly em{display:block;font-style:normal;font-size:20px;font-weight:800;color:#e8232a;letter-spacing:.14em;margin-top:4px;
+  text-shadow:0 0 8px rgba(232,35,42,.55);}
+.tray{margin:10px 12px 0;height:20px;border-radius:5px;background:#0d0d0d;box-shadow:inset 0 3px 8px rgba(0,0,0,.9);}
 
-.lever{position:absolute;right:-30px;top:120px;width:30px;height:120px;}
-.lever .rod{position:absolute;left:11px;top:22px;width:8px;height:88px;transform-origin:50% 100%;
-  border-radius:4px;background:linear-gradient(90deg,#9aa4b0,#f0f3f6,#7d8894);transition:transform .18s;}
+.lever{position:absolute;right:-30px;top:150px;width:30px;height:120px;cursor:pointer;}
+.lever .rod{position:absolute;left:11px;top:22px;width:8px;height:88px;transform-origin:50% 100%;border-radius:4px;
+  background:linear-gradient(90deg,#9aa4b0,#f0f3f6,#7d8894);transition:transform .18s;}
 .lever .ball{position:absolute;left:0;top:0;width:30px;height:30px;border-radius:50%;
-  background:radial-gradient(circle at 34% 28%,#ff8080,#b40b0b 72%);
-  box-shadow:0 3px 8px rgba(0,0,0,.6);transition:transform .18s;}
+  background:radial-gradient(circle at 34% 28%,#ff8080,#b40b0b 72%);box-shadow:0 3px 8px rgba(0,0,0,.6);transition:transform .18s;}
 .lever.pull .rod{transform:rotate(26deg);}
 .lever.pull .ball{transform:translate(16px,34px);}
 
@@ -214,53 +151,51 @@ td.c,th.c{text-align:center;}
 .fx i{position:absolute;top:-24px;display:block;}
 .fx i.cf{width:8px;height:14px;border-radius:2px;animation:fall 2.1s ease-in forwards;}
 .fx i.cn{width:20px;height:20px;border-radius:50%;animation:fall 2.3s ease-in forwards;
-  background:radial-gradient(circle at 34% 30%,#fff3b8,#ffb300 58%,#b57400 100%);
-  box-shadow:0 0 10px rgba(255,190,60,.7);}
-@keyframes fall{
-  0%{transform:translate(0,0) rotate(0deg);opacity:0}
-  12%{opacity:1}
-  100%{transform:translate(var(--x,0),440px) rotate(var(--r,520deg));opacity:0}
-}
+  background:radial-gradient(circle at 34% 30%,#fff3b8,#ffb300 58%,#b57400 100%);box-shadow:0 0 10px rgba(255,190,60,.7);}
+@keyframes fall{0%{transform:translate(0,0) rotate(0deg);opacity:0}12%{opacity:1}
+  100%{transform:translate(var(--x,0),460px) rotate(var(--r,520deg));opacity:0}}
 
-.prize{
-  position:absolute;inset:0;z-index:8;display:none;
-  align-items:center;justify-content:center;background:rgba(10,10,10,.82);backdrop-filter:blur(2px);
-}
+.prize{position:absolute;inset:0;z-index:8;display:none;align-items:center;justify-content:center;
+  background:rgba(10,10,10,.82);backdrop-filter:blur(2px);}
 .prize.on{display:flex;}
-.prize .box{
-  width:252px;padding:24px 20px;border-radius:16px;text-align:center;
+.prize .box2{width:258px;padding:24px 20px;border-radius:16px;text-align:center;
   background:linear-gradient(180deg,#242424,#161616);border:1px solid var(--pc,#00D2BE);
-  box-shadow:0 0 36px var(--pc,#00D2BE);animation:pop .42s cubic-bezier(.2,1.5,.4,1);
-}
+  box-shadow:0 0 36px var(--pc,#00D2BE);animation:pop .42s cubic-bezier(.2,1.5,.4,1);}
 @keyframes pop{0%{transform:scale(.6);opacity:0}100%{transform:scale(1);opacity:1}}
 .prize .lv{font-size:12px;letter-spacing:.22em;color:var(--pc,#00D2BE);font-weight:700;}
-.prize .nm{font-size:24px;font-weight:700;margin:8px 0 6px;color:#fff;}
+.prize .mx{font-size:40px;font-weight:800;margin:6px 0 2px;color:var(--pc,#00D2BE);line-height:1;}
+.prize .nm{font-size:23px;font-weight:700;margin:6px 0 4px;color:#fff;}
 .prize .ds{font-size:13px;color:var(--text-3);margin-bottom:16px;}
-.prize button{
-  width:100%;padding:11px;border:none;border-radius:8px;cursor:pointer;
-  background:var(--pc,#00D2BE);color:#0d0d0d;font-weight:700;font-size:15px;font-family:inherit;
-}
+.prize button{width:100%;padding:11px;border:none;border-radius:8px;cursor:pointer;
+  background:var(--pc,#00D2BE);color:#0d0d0d;font-weight:700;font-size:15px;font-family:inherit;}
+
+.betbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px;}
+.betbar .lbl{font-size:13px;color:var(--text-3);}
+.chip{padding:8px 15px;border-radius:999px;cursor:pointer;font-family:inherit;font-size:14px;font-weight:600;
+  background:var(--container);color:var(--text-2);border:1px solid var(--outline);transition:.15s;}
+.chip:hover{border-color:var(--primary);color:var(--primary);}
+.chip.on{background:var(--primary);color:#0d0d0d;border-color:var(--primary);}
+.betbar input{width:110px;padding:8px 12px;border-radius:8px;font-family:inherit;font-size:14px;
+  background:var(--container);color:var(--text-1);border:1px solid var(--outline);}
+.betbar input:focus{outline:none;border-color:var(--primary);}
 
 .controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px;}
 .controls .lbl{font-size:13px;color:var(--text-3);margin-left:4px;}
-.btn{
-  padding:9px 16px;border-radius:8px;cursor:pointer;font-family:inherit;font-size:14px;
-  background:var(--container);color:var(--text-2);border:1px solid var(--outline);transition:.15s;
-}
+.btn{padding:9px 16px;border-radius:8px;cursor:pointer;font-family:inherit;font-size:14px;
+  background:var(--container);color:var(--text-2);border:1px solid var(--outline);transition:.15s;}
 .btn:hover{border-color:var(--primary);color:var(--primary);}
 .btn.main{background:var(--primary);color:#0d0d0d;border-color:var(--primary);font-weight:700;padding:9px 26px;}
-.btn.main:hover{background:#2ce6d3;color:#0d0d0d;}
+.btn.main:hover{background:#2ce6d3;}
 .btn:disabled{opacity:.4;cursor:not-allowed;}
-.status{font-size:13px;color:var(--text-3);margin:0 0 26px;min-height:20px;}
+.status{font-size:13px;color:var(--text-3);margin:0 0 26px;min-height:22px;}
 .status b{color:var(--primary);}
+.status b.up{color:#00ff9d;}
+.status b.dn{color:#ff6b6b;}
 
 footer{margin-top:64px;padding-top:22px;border-top:1px solid var(--outline);color:var(--text-3);font-size:13px;}
-
 @media (max-width:600px){
-  .wrap{padding:32px 16px 64px;}
-  h1{font-size:26px;}
-  h2{font-size:19px;margin-top:40px;}
-  body{font-size:15px;}
+  .wrap{padding:32px 16px 64px;}h1{font-size:26px;}h2{font-size:19px;margin-top:40px;}body{font-size:15px;}
+  .lever{display:none;}
 }
 </style>
 </head>
@@ -269,71 +204,69 @@ footer{margin-top:64px;padding-top:22px;border-top:1px solid var(--outline);colo
 
 <header>
   <span class="eyebrow">商業版規格書 · 草案</span>
-  <h1>SWAG 老虎機小遊戲</h1>
-  <p class="meta">版本 v0.1　·　狀態：待商業團隊確認　·　本文件不含技術細節</p>
+  <h1>SWAG 老虎機下注遊戲</h1>
+  <p class="meta">版本 v0.3　·　狀態：待商業團隊與法務確認　·　本文件不含技術細節</p>
   <div class="lede">
-    用戶在 SWAG 站內拉一次拉霸，三個轉軸停下後依照圖示組合決定獎勵。<strong>核心目的不是做一個遊戲，而是給用戶一個「每天回來」與「多花一點」的理由。</strong>
+    用戶自由選擇本次要押多少鑽石，拉一次拉霸，依照三軸圖示組合<strong>以押注金額的倍數派彩</strong>。押得多、賠得多；777 頭獎派回押注的 100 倍。
   </div>
 </header>
 
-<h2><span class="num">01</span>為什麼要做</h2>
-<p>這個小遊戲想同時解三件事，優先順序建議如下：</p>
-<div class="cards">
-  <div class="card">
-    <h4>提高回訪</h4>
-    <p>每日免費一抽，製造一個低門檻的「今天要打開 App」的理由。</p>
-  </div>
-  <div class="card">
-    <h4>拉高消費頻次</h4>
-    <p>把抽獎次數綁在儲值或消費上，讓原本會買一次的人多買一次。</p>
-  </div>
-  <div class="card">
-    <h4>導流到內容</h4>
-    <p>獎品不只給鑽石，也給觀看通行證，把獎勵直接轉成內容消費。</p>
-  </div>
+<div class="note stop">
+  <span class="label">⚠ 這份改版改變了產品性質，請先讀這段</span>
+  <p>v0.2 的設計是「活動抽獎」——用固定次數換取固定獎品。加入<strong>自由押注</strong>與<strong>倍率派彩</strong>之後，這台機器在玩法定義上已經是<strong>下注遊戲</strong>：投入金額由用戶決定、回報是投入金額的倍數、結果純由機率決定。三個要件同時成立。</p>
+  <p>這不代表不能做，但它會連動兩件事：<strong>法務必須在設計定案前介入</strong>（見第 09 章），以及<strong>需要平台端提供扣除鑽石的能力，目前確認沒有</strong>（見第 06 章）。這兩件事沒解決之前，這份規格不能進入開發。</p>
 </div>
-<p>成效怎麼看，建議追蹤：<span class="pill">每日參與人數</span> <span class="pill">人均抽獎次數</span> <span class="pill">參與者 vs 未參與者的當週消費差</span> <span class="pill">獎勵發出後 7 日內的使用率</span></p>
+
+<h2><span class="num">01</span>為什麼要做</h2>
+<p>改為下注制之後，這個產品的定位從「留存工具」轉為<strong>營收工具</strong>，三個目的的優先順序跟著變：</p>
+<div class="cards">
+  <div class="card"><h4>鑽石消耗</h4><p>建立一個沒有內容成本的鑽石去處，加速既有鑽石庫存的循環與再儲值。</p></div>
+  <div class="card"><h4>客單提升</h4><p>自由押注讓高消費用戶可以一次投入大額，天花板由用戶自己決定而非我們設定。</p></div>
+  <div class="card"><h4>停留時長</h4><p>單局 3 秒、可連續進行，是站內少數能產生長時間連續互動的模組。</p></div>
+</div>
+<p>成效追蹤指標也跟著換：<span class="pill">每日總押注量</span> <span class="pill">實際回收率</span> <span class="pill">人均單局押注額</span> <span class="pill">遊戲後 7 日再儲值率</span> <span class="pill">派彩鑽石的後續使用率</span></p>
 
 <h2><span class="num">02</span>用戶玩起來是什麼樣子</h2>
 <ol class="flow">
-  <li><b>進入活動頁</b>從站內活動入口或站內通知點進拉霸機頁面，身分自動帶入，不需要登入。</li>
-  <li><b>看到自己還有幾次</b>畫面上方明確顯示「今日剩餘抽獎次數」與取得更多次數的方式。</li>
-  <li><b>拉一次</b>按下拉桿，三個轉軸依序停下，約 2～3 秒。沒有次數時按鈕改為引導取得次數。</li>
-  <li><b>看到結果</b>中獎跳出獎項彈窗；沒中也給明確回饋與再試一次的引導，不要只是安靜停住。</li>
-  <li><b>獎勵入帳</b>鑽石／通行證直接進帳戶，不需要另外領取。頁面下方可查看自己的中獎紀錄。</li>
+  <li><b>進入遊戲頁</b>從站內入口進入，身分與鑽石餘額自動帶入，不需另外登入。</li>
+  <li><b>選擇押注額</b>快捷籌碼 100 / 1,000 / 10,000 鑽，或自行輸入金額。押注額全程顯示在機台上。</li>
+  <li><b>拉一次</b>按下按鈕，先從餘額扣除押注額，三軸依序停下，約 2～3 秒。</li>
+  <li><b>看到派彩</b>中獎時依組合倍率計算派彩金額，畫面明確顯示「押注 × 倍率 = 派彩」。</li>
+  <li><b>鑽石即時入帳</b>派彩直接回到餘額，可立即再押或離開。下方可查詢自己的完整對局紀錄。</li>
 </ol>
 
-<h2><span class="num">03</span>遊戲規則</h2>
-<p><strong>三軸拉霸，共 6 種圖示。</strong>以三軸相同或特定組合判定中獎，規則一眼看得懂，不做複雜連線。</p>
+<h2><span class="num">03</span>遊戲規則與派彩倍率</h2>
+<p><strong>三軸拉霸，六種圖示，派彩 = 本次押注額 × 組合倍率。</strong>倍率依組合稀有度分級，押注額不影響中獎機率，只影響派彩金額。</p>
 <div class="scroll">
 <table>
-  <thead>
-    <tr><th>組合</th><th>說明</th><th>獎項等級</th></tr>
-  </thead>
+  <thead><tr><th>組合</th><th class="c">派彩倍率</th><th class="r">押 100 鑽</th><th class="r">押 1,000 鑽</th><th class="r">押 10,000 鑽</th></tr></thead>
   <tbody>
-    <tr><td>7　7　7</td><td>三個紅七</td><td>頭獎</td></tr>
-    <tr><td>BAR BAR BAR</td><td>三個 BAR</td><td>二獎</td></tr>
-    <tr><td>任三個相同水果</td><td>葡萄／檸檬／櫻桃各自成組</td><td>三獎</td></tr>
-    <tr><td>任兩個相同</td><td>安慰獎，維持手感</td><td>四獎</td></tr>
-    <tr><td>其他</td><td>未中獎</td><td>—</td></tr>
+    <tr><td><strong style="color:var(--pink)">7　7　7</strong></td><td class="c"><strong>×100</strong></td><td class="r">10,000</td><td class="r">100,000</td><td class="r">1,000,000</td></tr>
+    <tr><td><strong style="color:var(--gold)">BAR BAR BAR</strong></td><td class="c"><strong>×30</strong></td><td class="r">3,000</td><td class="r">30,000</td><td class="r">300,000</td></tr>
+    <tr><td>鈴鐺 三連</td><td class="c">×15</td><td class="r">1,500</td><td class="r">15,000</td><td class="r">150,000</td></tr>
+    <tr><td>葡萄 三連</td><td class="c">×8</td><td class="r">800</td><td class="r">8,000</td><td class="r">80,000</td></tr>
+    <tr><td>檸檬 三連</td><td class="c">×5</td><td class="r">500</td><td class="r">5,000</td><td class="r">50,000</td></tr>
+    <tr><td>櫻桃 三連</td><td class="c">×3</td><td class="r">300</td><td class="r">3,000</td><td class="r">30,000</td></tr>
+    <tr><td>任兩個相同</td><td class="c">×0.5</td><td class="r">50</td><td class="r">500</td><td class="r">5,000</td></tr>
+    <tr><td>其他</td><td class="c">×0</td><td class="r">0</td><td class="r">0</td><td class="r">0</td></tr>
   </tbody>
 </table>
 </div>
 <div class="note">
-  <p><strong>一定要有保底。</strong>建議設計為「連續 N 次未中獎，第 N+1 次必得四獎」。純機率會讓少數用戶連續槓龜十幾次，那是最容易流失也最容易客訴的一群人。N 值建議 8～10。</p>
+  <p><strong>「兩個相同」是回收一半，不是獲利。</strong>×0.5 代表押 100 拿回 50，用戶實際仍是虧損。這是拉霸類遊戲的標準設計，用來拉高「有中獎」的頻率、維持手感，但<strong>介面文案上不能寫成「恭喜中獎」</strong>，會引發客訴。建議寫「回收 50 鑽」。</p>
 </div>
 
 <h2><span class="num">04</span>視覺設計</h2>
-<p>以下是可實際操作的視覺提案，呈現機台外觀、轉軸動態與四個等級的中獎特效。</p>
-<div class="demo-hint"><span>💡</span><div><b>這是可以按的。</b>按「拉一次」是真實機率（多數會沒中），要看特效請直接按右邊的預覽按鈕，可以指定跑出任一等級的中獎表現。</div></div>
+<p>以下是可實際操作的視覺提案，含押注選擇、派彩顯示與各等級中獎特效。</p>
+<div class="demo-hint"><span>💡</span><div><b>這是可以按的。</b>先選押注額再按「拉一次」是真實機率（多數會沒中）。要看特效請直接按下方預覽按鈕，可指定跑出任一組合。餘額為模擬值 50,000 鑽。</div></div>
 
 <div class="stage" id="stage">
   <div class="rays" id="rays"></div>
   <div class="machine">
     <div class="bulb" id="bulb"></div>
-    <div class="topper"><div class="marquee" id="marquee">SWAG SLOT<small>LUCKY SPIN</small></div></div>
+    <div class="topper"><div class="marquee" id="marquee">SWAG SLOT<small>BET &amp; WIN</small></div></div>
     <div class="paytable">
-      <span>777<i>頭獎</i></span><span>BAR<i>二獎</i></span><span>同果<i>三獎</i></span><span>兩同<i>四獎</i></span>
+      <span>777<i>×100</i></span><span>BAR<i>×30</i></span><span>鈴<i>×15</i></span><span>葡<i>×8</i></span><span>檸<i>×5</i></span><span>櫻<i>×3</i></span><span>兩同<i>×0.5</i></span>
     </div>
     <div class="window" id="window">
       <div class="reels">
@@ -343,144 +276,169 @@ footer{margin-top:64px;padding-top:22px;border-top:1px solid var(--outline);colo
       </div>
       <div class="payline"></div>
     </div>
-    <div class="belly"><b>BARS &amp; 7s WINS!</b><em>7 7 7</em></div>
+    <div class="creditbar">
+      <div><span class="k">CREDIT</span><span class="v" id="cBal">50,000</span></div>
+      <div><span class="k">BET</span><span class="v" id="cBet">100</span></div>
+      <div><span class="k">WIN</span><span class="v pay" id="cWin">0</span></div>
+    </div>
+    <div class="belly"><b>BARS &amp; 7s WINS!</b><em>7 7 7 ×100</em></div>
     <div class="tray"></div>
     <div class="lever" id="lever"><div class="ball"></div><div class="rod"></div></div>
   </div>
   <div class="fx" id="fx"></div>
-  <div class="prize" id="prize"><div class="box">
-    <div class="lv" id="pLv"></div><div class="nm" id="pNm"></div><div class="ds" id="pDs"></div>
-    <button id="pBtn">收下獎勵</button>
+  <div class="prize" id="prize"><div class="box2">
+    <div class="lv" id="pLv"></div><div class="mx" id="pMx"></div>
+    <div class="nm" id="pNm"></div><div class="ds" id="pDs"></div>
+    <button id="pBtn">收下派彩</button>
   </div></div>
 </div>
 
+<div class="betbar">
+  <span class="lbl">押注：</span>
+  <button class="chip on" data-bet="100">100</button>
+  <button class="chip" data-bet="1000">1,000</button>
+  <button class="chip" data-bet="10000">10,000</button>
+  <input type="number" id="custom" placeholder="自訂金額" min="100" max="50000" step="100">
+</div>
 <div class="controls">
   <button class="btn main" id="spin">拉一次</button>
-  <span class="lbl">預覽特效：</span>
-  <button class="btn" data-t="1">頭獎</button>
-  <button class="btn" data-t="2">二獎</button>
-  <button class="btn" data-t="3">三獎</button>
-  <button class="btn" data-t="4">四獎</button>
-  <button class="btn" data-t="0">未中獎</button>
+  <span class="lbl">預覽：</span>
+  <button class="btn" data-k="s7">777 ×100</button>
+  <button class="btn" data-k="bar">BAR ×30</button>
+  <button class="btn" data-k="grape">葡萄 ×8</button>
+  <button class="btn" data-k="pair">兩同 ×0.5</button>
+  <button class="btn" data-k="lose">未中</button>
+  <button class="btn" id="reset">重置餘額</button>
 </div>
-<p class="status" id="status">今日剩餘次數 <b>3</b></p>
+<p class="status" id="status">選擇押注額後按「拉一次」。</p>
 
 <h3>中獎特效分級</h3>
-<p>特效強度必須跟獎項價值對齊。四獎天天中，特效太浮誇會讓頭獎失去份量。</p>
+<p>特效強度跟<strong>倍率</strong>對齊，不跟派彩金額對齊。押 10,000 中 ×0.5 派彩 5,000 鑽，特效仍然是最輕的那一級——否則用戶會把「回收一半」誤認為大獎。</p>
 <div class="scroll">
 <table>
-  <thead><tr><th>等級</th><th>畫面表現</th><th class="c">時長</th><th>音效建議</th></tr></thead>
+  <thead><tr><th>倍率</th><th>畫面表現</th><th class="c">時長</th><th>音效建議</th></tr></thead>
   <tbody>
-    <tr><td><strong style="color:var(--pink)">頭獎</strong></td><td>全螢幕金色光芒旋轉、機台震動、頂燈閃爍、招牌字閃白、大量金幣與彩帶落下、獎項彈窗</td><td class="c">約 4 秒</td><td>長版中獎音 + 金幣聲</td></tr>
-    <tr><td><strong style="color:var(--gold)">二獎</strong></td><td>轉軸金色外光、金幣落下、獎項彈窗</td><td class="c">約 2.5 秒</td><td>中版中獎音</td></tr>
-    <tr><td><strong>三獎</strong></td><td>轉軸品牌色外光、少量彩帶、獎項彈窗</td><td class="c">約 2 秒</td><td>短版提示音</td></tr>
-    <tr><td><strong>四獎</strong></td><td>僅相同的兩軸亮起白光，不開彈窗，結果列直接顯示</td><td class="c">約 1 秒</td><td>輕點擊聲</td></tr>
-    <tr><td>未中獎</td><td>無特效，結果列給文字回饋與再抽引導</td><td class="c">—</td><td>轉軸停止聲</td></tr>
+    <tr><td><strong style="color:var(--pink)">×100</strong></td><td>全螢幕金色光芒旋轉、機台震動、頂燈閃爍、招牌閃白、大量金幣與彩帶、派彩彈窗含倍率數字</td><td class="c">約 4 秒</td><td>長版中獎音 + 金幣聲</td></tr>
+    <tr><td><strong style="color:var(--gold)">×30 / ×15</strong></td><td>轉軸金色外光、金幣落下、派彩彈窗</td><td class="c">約 2.5 秒</td><td>中版中獎音</td></tr>
+    <tr><td><strong>×8 / ×5 / ×3</strong></td><td>轉軸品牌色外光、少量彩帶、派彩彈窗</td><td class="c">約 2 秒</td><td>短版提示音</td></tr>
+    <tr><td>×0.5</td><td>僅相同的兩軸亮白光，不開彈窗，結果列顯示「回收 N 鑽」</td><td class="c">約 1 秒</td><td>輕點擊聲</td></tr>
+    <tr><td>×0</td><td>無特效，結果列給文字回饋</td><td class="c">—</td><td>轉軸停止聲</td></tr>
   </tbody>
 </table>
 </div>
 
 <h3>設計說明</h3>
 <ul>
-  <li><strong>機台是懷舊實體風，介面是 SWAG 深色系。</strong>機台本體刻意做成鍍鉻＋深藍＋金邊的經典拉霸樣式製造反差與辨識度，周圍的按鈕、文字、彈窗則沿用平台既有的深色介面與品牌色，不會讓人覺得跳到另一個 App。</li>
-  <li><strong>轉軸依序停止。</strong>左中右間隔約 0.45 秒停下，最後一軸停下前是整個體驗最緊張的瞬間，這個節奏不要壓縮。</li>
-  <li><strong>拉桿是裝飾也是引導。</strong>桌機可點拉桿觸發，手機則以主按鈕為主，拉桿同步做出下拉動作，維持儀式感。</li>
-  <li><strong>六種圖示：</strong>紅 7、BAR、金鈴鐺、葡萄、檸檬、櫻桃。全部以向量繪製，不使用外部圖檔，確保載入速度與各機型清晰度。</li>
-  <li><strong>未中獎不能安靜。</strong>沒中也要有明確回饋與下一步引導，否則用戶會以為壞掉。</li>
+  <li><strong>CREDIT / BET / WIN 三格儀表是必要的。</strong>下注制一定要讓用戶隨時看到餘額、本次押注、本次派彩，這是信任基礎，也是客訴防線。</li>
+  <li><strong>機台是懷舊實體風，周邊介面是 SWAG 深色系。</strong>機台做成鍍鉻＋深藍＋金邊的經典樣式製造辨識度，按鈕與彈窗沿用平台既有視覺語言。</li>
+  <li><strong>轉軸依序停止</strong>，左中右間隔約 0.45 秒，最後一軸停下前是張力最高的瞬間，節奏不要壓縮。</li>
+  <li><strong>大額押注需二次確認。</strong>建議押注超過一定金額（例如 10,000 鑽）時跳出確認，避免誤觸爭議。</li>
+  <li><strong>六種圖示</strong>：紅 7、BAR、金鈴鐺、葡萄、檸檬、櫻桃，全部向量繪製，不使用外部圖檔。</li>
 </ul>
+<div class="note"><p><strong>以上為互動原型，不是最終視覺稿。</strong>正式開發前仍需設計師產出主視覺、獎項圖與四語系版面。原型的用途是在投入設計資源前，先對「動起來的感覺」取得共識。</p></div>
 
-<div class="note">
-  <p><strong>以上為互動原型，不是最終視覺稿。</strong>正式開發前仍需設計師產出主視覺（含活動主標、背景、獎項圖、四語系版面）。這份原型的用途是讓大家在投入設計資源前，先對「動起來是什麼感覺」有共識。</p>
-</div>
-
-<h2><span class="num">05</span>獎品設計</h2>
-<p>以下數值為<strong>提案初稿，請商業團隊直接改</strong>。設計原則是：頭獎要夠亮眼但極稀有，四獎要夠常見讓多數人有感。</p>
+<h2><span class="num">05</span>機率與回收率設計</h2>
+<p>下注制最重要的數字不是單一獎項機率，而是<strong>整體回收率（RTP，Return to Player）</strong>：用戶每押 100 鑽，長期平均可以拿回多少。以下為提案初稿：</p>
 <div class="scroll">
 <table>
-  <thead>
-    <tr><th>等級</th><th>獎品（建議）</th><th class="c">中獎率</th><th class="c">每日總量上限</th></tr>
-  </thead>
+  <thead><tr><th>組合</th><th class="c">中獎機率</th><th class="c">倍率</th><th class="c">貢獻回收率</th></tr></thead>
   <tbody>
-    <tr><td><strong style="color:var(--pink)">頭獎</strong></td><td>大額鑽石包</td><td class="c">0.1%</td><td class="c">全站每日 3 份</td></tr>
-    <tr><td><strong style="color:var(--gold)">二獎</strong></td><td>中額鑽石 + 限定徽章</td><td class="c">1%</td><td class="c">全站每日 50 份</td></tr>
-    <tr><td><strong>三獎</strong></td><td>指定內容觀看通行證</td><td class="c">8%</td><td class="c">不設上限</td></tr>
-    <tr><td><strong>四獎</strong></td><td>小額鑽石</td><td class="c">25%</td><td class="c">不設上限</td></tr>
-    <tr><td>未中獎</td><td>—</td><td class="c">65.9%</td><td class="c">—</td></tr>
+    <tr><td>7 7 7</td><td class="c">0.1%</td><td class="c">×100</td><td class="c">10.0%</td></tr>
+    <tr><td>BAR 三連</td><td class="c">0.4%</td><td class="c">×30</td><td class="c">12.0%</td></tr>
+    <tr><td>鈴鐺 三連</td><td class="c">0.8%</td><td class="c">×15</td><td class="c">12.0%</td></tr>
+    <tr><td>葡萄 三連</td><td class="c">1.5%</td><td class="c">×8</td><td class="c">12.0%</td></tr>
+    <tr><td>檸檬 三連</td><td class="c">2.5%</td><td class="c">×5</td><td class="c">12.5%</td></tr>
+    <tr><td>櫻桃 三連</td><td class="c">4.0%</td><td class="c">×3</td><td class="c">12.0%</td></tr>
+    <tr><td>任兩個相同</td><td class="c">38.0%</td><td class="c">×0.5</td><td class="c">19.0%</td></tr>
+    <tr><td>未中獎</td><td class="c">52.7%</td><td class="c">×0</td><td class="c">0%</td></tr>
+    <tr class="total"><td>合計</td><td class="c">100%</td><td class="c">—</td><td class="c">回收率 89.5%</td></tr>
   </tbody>
 </table>
 </div>
-<p>需要商業團隊確認的是：<strong>單次抽獎的期望成本</strong>（把上表機率乘上獎品成本）必須低於單次抽獎帶來的收入或留存價值，否則玩越多虧越多。這條算式請財務或 BD 過一次再定案。</p>
-
-<h2><span class="num">06</span>抽獎次數從哪來</h2>
-<p>這是整份 spec 最關鍵的商業決策，直接決定遊戲是「留存工具」還是「營收工具」。三種模式可擇一或混搭：</p>
-<div class="cards">
-  <div class="card">
-    <span class="tag rec">最快上線</span>
-    <h4>A. 每日免費一抽</h4>
-    <p>每人每天一次，零門檻。純留存導向，不直接帶營收，但開發最單純、合規風險最低。</p>
-  </div>
-  <div class="card">
-    <span class="tag mid">建議主力</span>
-    <h4>B. 消費滿額換次數</h4>
-    <p>當期消費每滿一定金額換一次抽獎。獎勵的是既有消費行為，屬於回饋性質而非付費博弈，合規上相對單純。</p>
-  </div>
-  <div class="card">
-    <span class="tag hard">需先確認可行性</span>
-    <h4>C. 直接花鑽石抽</h4>
-    <p>每抽扣固定鑽石。營收效果最直接，但這是付費隨機獎勵，合規與技術前提最多。</p>
-  </div>
-</div>
+<p>這組數字代表：<strong>平台每收 100 鑽押注，平均派回 89.5 鑽，留下 10.5 鑽。</strong>另有 47.3% 的局數會派出一些東西（含回收一半），讓體感不至於太乾。</p>
 <div class="note alert">
-  <span class="label">⚠ 開工前必須先確認</span>
-  <p>模式 C 需要平台端提供<strong>「扣除用戶鑽石」的能力</strong>。目前我手上的平台文件只有「發放鑽石」，沒有任何扣款機制。若確定要做 C，請先向平台工程確認這個能力是否存在——<strong>若不存在，模式 C 在現階段無法實作</strong>，只能改走 A 或 B。</p>
+  <span class="label">⚠ 回收率是商業決策，不是技術參數</span>
+  <p>89.5% 是我抓的提案值，<strong>必須由財務或 BD 依照鑽石成本結構重算</strong>。幾個要一起想的點：</p>
+  <p>調低回收率（例如 80%）短期抽成高，但用戶輸太快會迅速離開，總押注量下降，實際收入未必比較多。調高（例如 95%）用戶玩得久、押注量大，但單局利潤薄，且會出現大額贏家。</p>
+  <p>另外要算的是：<strong>派出去的鑽石不是純成本</strong>。如果贏來的鑽石最終用於站內內容消費，成本是內容分潤而非現金；但如果鑽石可以提領或轉移，那就是實打實的現金流出。這條算式的結論會直接影響回收率該設多少。</p>
 </div>
+
+<h2><span class="num">06</span>押注與扣款機制</h2>
+<div class="note stop">
+  <span class="label">⛔ 開發前置條件：目前無法實作</span>
+  <p>自由押注的前提是能<strong>從用戶帳戶扣除鑽石</strong>。我手上的平台介面文件只有「發放鑽石」，沒有任何扣款能力。<strong>這件事沒確認之前，這份規格無法進入開發。</strong></p>
+  <p>請向平台工程確認：是否存在未寫入文件的扣款機制？若不存在，是否願意為此開發？時程多久？這是整份規格的最上游依賴。</p>
+</div>
+<h3>押注額設計</h3>
+<div class="scroll">
+<table>
+  <thead><tr><th>項目</th><th>提案值</th><th>說明</th></tr></thead>
+  <tbody>
+    <tr><td>快捷籌碼</td><td>100 / 1,000 / 10,000 鑽</td><td>三段跨度大，覆蓋輕度到重度用戶</td></tr>
+    <tr><td>自訂輸入</td><td>100 鑽為級距</td><td>避免出現 37 鑽這類難以計算派彩的數字</td></tr>
+    <tr><td>單局下限</td><td>100 鑽</td><td>低於此值派彩無感，也拉高伺服器負擔</td></tr>
+    <tr><td>單局上限</td><td>待定</td><td><strong>必須設定。</strong>押 100 萬中 ×100 就是 1 億鑽，風險敞口需要天花板</td></tr>
+    <tr><td>單日押注上限</td><td>待定</td><td>建議設定，同時是風控與用戶保護機制</td></tr>
+  </tbody>
+</table>
+</div>
+<h3>金流原則</h3>
+<ul>
+  <li><strong>先扣款成功才轉動。</strong>扣款失敗直接中止，不可以先讓轉軸轉起來再處理扣款。</li>
+  <li><strong>結果由後端決定，前端只負責播動畫。</strong>前端絕不持有機率表，也不參與任何運算。</li>
+  <li><strong>每一局都要有完整紀錄</strong>：押注額、結果組合、倍率、派彩額、時間。對帳與客訴都靠這份紀錄。</li>
+  <li><strong>派彩失敗要能補發。</strong>扣款成功但派彩失敗是最嚴重的事故，必須有自動補發機制。</li>
+</ul>
 
 <h2><span class="num">07</span>上線範圍建議</h2>
 <div class="scroll">
 <table>
-  <thead>
-    <tr><th>階段</th><th>包含</th><th>不包含</th></tr>
-  </thead>
+  <thead><tr><th>階段</th><th>包含</th><th>不包含</th></tr></thead>
   <tbody>
-    <tr>
-      <td><strong>第一版</strong></td>
-      <td>三軸拉霸、四級獎項、保底機制、每日免費一抽（模式 A）、個人中獎紀錄、四語系介面</td>
-      <td>排行榜、社群分享、活動期間限定主題</td>
-    </tr>
-    <tr>
-      <td><strong>第二版</strong></td>
-      <td>消費換次數（模式 B）、全站中獎跑馬燈、稀有獎中獎站內通知</td>
-      <td>—</td>
-    </tr>
+    <tr><td><strong>第一版</strong></td><td>三軸拉霸、七級倍率派彩、三段快捷籌碼＋自訂、CREDIT/BET/WIN 儀表、對局紀錄查詢、單局與單日上限、四語系</td><td>排行榜、連續下注（Auto Spin）、免費體驗局</td></tr>
+    <tr><td><strong>第二版</strong></td><td>大額中獎全站跑馬燈、個人統計（總押注／總派彩）、活動期間倍率加成</td><td>—</td></tr>
   </tbody>
 </table>
 </div>
-<p>第一版刻意不做付費抽，先用免費抽驗證「用戶到底愛不愛玩」。如果免費都沒人玩，付費版本也不會有人玩。</p>
+<div class="note">
+  <p><strong>建議第一版不要做 Auto Spin（自動連抽）。</strong>它會大幅拉高單位時間的押注量，同時也大幅拉高用戶單日虧損速度與客訴風險。先用手動版本觀察真實行為數據，再決定要不要開。</p>
+</div>
 
 <h2><span class="num">08</span>需要商業團隊決定的事項</h2>
 <ul class="decide">
-  <li><span class="box"></span><div><b>抽獎次數的取得方式</b><span>A／B／C 擇一，或第一版 A、第二版 B</span></div></li>
-  <li><span class="box"></span><div><b>四個等級的實際獎品與數量</b><span>特別是頭獎要多大才有話題性</span></div></li>
-  <li><span class="box"></span><div><b>各獎項機率與每日總量上限</b><span>需搭配期望成本試算</span></div></li>
-  <li><span class="box"></span><div><b>活動檔期</b><span>常駐功能，還是限期活動？限期則需明確起訖時間</span></div></li>
-  <li><span class="box"></span><div><b>入口位置</b><span>首頁活動區、站內通知，或兩者都要</span></div></li>
-  <li><span class="box"></span><div><b>機率是否對外公示</b><span>見下方合規提醒，建議法務先看過</span></div></li>
-  <li><span class="box"></span><div><b>活動文案與主視覺方向</b><span>標題、規則說明、獎項文案、四語系翻譯</span></div></li>
+  <li><span class="box"></span><div><b>整體回收率目標</b><span>提案 89.5%，需財務依鑽石成本結構重算</span></div></li>
+  <li><span class="box"></span><div><b>各組合的倍率與機率</b><span>頭獎倍率越高話題性越強，但波動也越大</span></div></li>
+  <li><span class="box"></span><div><b>單局押注上限與單日押注上限</b><span>風險敞口的天花板，必須有數字</span></div></li>
+  <li><span class="box"></span><div><b>派彩鑽石是否與儲值鑽石同權</b><span>能否提領、能否轉贈，直接影響成本性質與法遵風險</span></div></li>
+  <li><span class="box"></span><div><b>平台端是否提供扣款能力</b><span>最上游依賴，沒有就做不了</span></div></li>
+  <li><span class="box"></span><div><b>是否對外公示各組合機率</b><span>建議法務先看過再決定</span></div></li>
+  <li><span class="box"></span><div><b>是否設置用戶保護機制</b><span>單日上限、冷卻期、自我排除，見第 09 章</span></div></li>
+  <li><span class="box"></span><div><b>活動文案與主視覺方向</b><span>標題、規則說明、派彩表、四語系翻譯</span></div></li>
 </ul>
 
-<h2><span class="num">09</span>風險與合規提醒</h2>
+<h2><span class="num">09</span>風險與合規</h2>
+<p>這一章在 v0.2 是提醒，在 v0.3 是<strong>前置條件</strong>。改為下注制之後風險等級不同，請在設計定案前完成法務確認。</p>
+<h3>法遵</h3>
 <ul>
-  <li><strong>機率公示：</strong>若採用付費抽（模式 C），台灣對線上遊戲的隨機獎勵有機率揭露要求，各獎項機率需明確標示於活動頁。<strong>請法務在定案前確認</strong>，這不是技術層面能決定的事。</li>
-  <li><strong>賭博觀感：</strong>拉霸機的視覺本身就帶有博弈聯想。文案上建議統一以「獎勵活動」「幸運轉盤」定位，避免使用賭場語彙。</li>
-  <li><strong>成本失控：</strong>務必為每個獎項設定每日總量上限。沒有上限的話，機率一旦估錯或被異常流量放大，損失是沒有天花板的。</li>
-  <li><strong>用戶客訴：</strong>中獎紀錄必須可查、獎勵必須可追蹤。「我明明中了但沒收到」是這類活動最常見的客訴，事前把紀錄做好比事後一筆筆查便宜得多。</li>
+  <li><strong>玩法定性：</strong>投入金額由用戶決定、回報為投入的倍數、結果純由機率決定——這三個要件同時成立時，與博弈的界線取決於「投入與回報是否具財產價值」。<strong>派彩鑽石能否提領或轉讓，是這題的關鍵分水嶺</strong>，請務必連同第 08 章那一項一起送法務判斷。</li>
+  <li><strong>機率揭露：</strong>付費隨機獎勵在台灣有機率揭露要求。下注制的揭露範圍可能包含各組合機率與整體回收率，實際義務範圍請法務確認。</li>
+  <li><strong>App 商店政策：</strong>iOS 與 Android 對含賭博機制的 App 有獨立審查標準，若 SWAG 有 App 版本或未來計畫上架，需一併評估。</li>
+  <li><strong>跨境問題：</strong>不同地區對這類玩法規範差異很大，若平台服務多個市場，需確認是否要做地區封鎖。</li>
+</ul>
+<h3>用戶保護</h3>
+<p>下注型玩法會產生一小群高頻高額用戶，他們貢獻的營收佔比通常很高，但也是客訴、退款爭議與聲譽風險最集中的來源。建議第一版就內建：單日押注上限、連續遊玩時間提醒、用戶可自行設定的限額或自我排除。<strong>這些機制事後補比事前做貴得多</strong>，而且事後通常是被迫在壓力下做的。</p>
+<h3>營運風險</h3>
+<ul>
+  <li><strong>機率或倍率設錯：</strong>下注制的損失是按押注量放大的，設錯一個數字的後果遠大於固定獎品制。上線前需在測試環境跑大量模擬局驗證實際回收率。</li>
+  <li><strong>異常行為：</strong>自動化腳本高頻下注會放大任何設計偏差，需要頻率限制與異常偵測。</li>
+  <li><strong>客訴：</strong>「我押了但沒扣」「中了但沒派彩」是必然會出現的，完整對局紀錄與自助查詢是必備，不是加分項。</li>
 </ul>
 
 <h2><span class="num">10</span>本次不做的事</h2>
-<p>先寫清楚，避免後續期待落差：不做多人對戰、不做玩家之間的獎品交易或轉贈、不做跨日累積的拉霸點數系統、不做實體獎品寄送。</p>
+<p>先寫清楚避免期待落差：不做多人對戰或對賭、不做玩家之間的鑽石交易或轉贈、不做實體獎品、不做跨局累積的彩金池（Progressive Jackpot）、第一版不做自動連抽。</p>
 
 <footer>
-  SWAG 老虎機小遊戲 · 商業規格書 v0.1 · 待確認事項回覆後轉入技術規格階段
+  SWAG 老虎機下注遊戲 · 商業規格書 v0.3 · 表中所有機率、倍率與回收率均為提案初稿，尚未定案
 </footer>
 
 </div>
@@ -488,70 +446,88 @@ footer{margin-top:64px;padding-top:22px;border-top:1px solid var(--outline);colo
 <script>
 (function(){
   var TILE=84, PAD=6, REPEAT=40;
-
   var SVG=[
-    // 0 紅七
     '<svg viewBox="0 0 84 84"><path d="M22 20h40v9L42 66h-13l20-36H22z" fill="#d8232a" stroke="#7d0a0e" stroke-width="2.5" stroke-linejoin="round"/></svg>',
-    // 1 BAR
     '<svg viewBox="0 0 84 84"><rect x="10" y="30" width="64" height="24" rx="4" fill="#123a6b" stroke="#d9c07a" stroke-width="2.5"/><text x="42" y="47" text-anchor="middle" font-family="Arial Black,Arial,sans-serif" font-size="16" font-weight="900" fill="#ffd75e" letter-spacing="1">BAR</text></svg>',
-    // 2 鈴鐺
     '<svg viewBox="0 0 84 84"><path d="M42 16c-11 0-17 8-17 19 0 12-3 17-7 22h48c-4-5-7-10-7-22 0-11-6-19-17-19z" fill="#ffc531" stroke="#a9760b" stroke-width="2.5" stroke-linejoin="round"/><circle cx="42" cy="63" r="6" fill="#a9760b"/><circle cx="42" cy="14" r="4" fill="#a9760b"/></svg>',
-    // 3 葡萄
     '<svg viewBox="0 0 84 84"><g fill="#8238BA" stroke="#4d1f73" stroke-width="2"><circle cx="42" cy="34" r="9"/><circle cx="30" cy="44" r="9"/><circle cx="54" cy="44" r="9"/><circle cx="36" cy="57" r="9"/><circle cx="48" cy="57" r="9"/></g><path d="M42 24c0-7 6-9 11-10" stroke="#2f7d32" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M44 18c6-6 13-5 15-1-3 5-11 6-15 1z" fill="#3ea043"/></svg>',
-    // 4 檸檬
     '<svg viewBox="0 0 84 84"><ellipse cx="42" cy="44" rx="25" ry="18" fill="#ffd60a" stroke="#b58500" stroke-width="2.5"/><path d="M63 36c5-3 8-8 7-12-5-1-10 2-12 7" fill="#3ea043" stroke="#2f7d32" stroke-width="2"/><ellipse cx="34" cy="38" rx="6" ry="4" fill="#fff3a8" opacity=".8"/></svg>',
-    // 5 櫻桃
     '<svg viewBox="0 0 84 84"><path d="M42 18c-8 12-18 18-22 26M42 18c6 12 12 18 14 28" stroke="#2f7d32" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="26" cy="53" r="12" fill="#e01b24" stroke="#8a0f16" stroke-width="2.5"/><circle cx="57" cy="55" r="11" fill="#e01b24" stroke="#8a0f16" stroke-width="2.5"/><circle cx="22" cy="49" r="3" fill="#ff9a9a" opacity=".85"/></svg>'
   ];
 
-  var TIERS={
-    1:{lv:'JACKPOT 頭獎',nm:'大額鑽石包',ds:'恭喜獲得本次活動最高獎項',c:'#F6418D'},
-    2:{lv:'二獎',nm:'中額鑽石 + 限定徽章',ds:'徽章已掛上你的個人頁',c:'#FFA500'},
-    3:{lv:'三獎',nm:'內容觀看通行證',ds:'有效期 24 小時，可於「我的」查看',c:'#00D2BE'},
-    4:{lv:'四獎',nm:'小額鑽石',ds:'已直接入帳',c:'#C8C8C8'}
-  };
+  var OUT=[
+    {k:'s7',    p:0.1,  m:100, s:[0,0,0], nm:'777 頭獎',  fx:3, c:'#F6418D'},
+    {k:'bar',   p:0.4,  m:30,  s:[1,1,1], nm:'BAR 三連',  fx:2, c:'#FFA500'},
+    {k:'bell',  p:0.8,  m:15,  s:[2,2,2], nm:'鈴鐺 三連',  fx:2, c:'#FFA500'},
+    {k:'grape', p:1.5,  m:8,   s:[3,3,3], nm:'葡萄 三連',  fx:1, c:'#00D2BE'},
+    {k:'lemon', p:2.5,  m:5,   s:[4,4,4], nm:'檸檬 三連',  fx:1, c:'#00D2BE'},
+    {k:'cherry',p:4.0,  m:3,   s:[5,5,5], nm:'櫻桃 三連',  fx:1, c:'#00D2BE'},
+    {k:'pair',  p:38.0, m:0.5, s:null,    nm:'兩個相同',   fx:0, c:'#FFFFFF'},
+    {k:'lose',  p:52.7, m:0,   s:null,    nm:'未中',      fx:-1,c:'#666666'}
+  ];
 
   var reels=[0,1,2].map(function(i){
     var el=document.getElementById('r'+i), strip=el.querySelector('.strip'), h='';
     for(var k=0;k<REPEAT;k++) for(var s=0;s<6;s++) h+='<div class="tile">'+SVG[s]+'</div>';
     strip.innerHTML=h;
     var o={el:el,strip:strip,idx:6+i*2};
-    place(o,false);
+    o.strip.style.transition='none';
+    o.strip.style.transform='translateY('+(-(o.idx*TILE)+PAD)+'px)';
     return o;
   });
-  function place(o,anim){
-    o.strip.style.transition = anim ? o.strip.style.transition : 'none';
-    o.strip.style.transform='translateY('+(-(o.idx*TILE)+PAD)+'px)';
-  }
 
-  var stage=document.getElementById('stage'), fx=document.getElementById('fx'),
-      win=document.getElementById('window'), rays=document.getElementById('rays'),
-      bulb=document.getElementById('bulb'), marq=document.getElementById('marquee'),
-      lever=document.getElementById('lever'), prize=document.getElementById('prize'),
-      status=document.getElementById('status'), spinBtn=document.getElementById('spin');
-  var busy=false, left=3;
+  var stage=document.getElementById('stage'),fx=document.getElementById('fx'),
+      win=document.getElementById('window'),rays=document.getElementById('rays'),
+      bulb=document.getElementById('bulb'),marq=document.getElementById('marquee'),
+      lever=document.getElementById('lever'),prize=document.getElementById('prize'),
+      status=document.getElementById('status'),spinBtn=document.getElementById('spin'),
+      cBal=document.getElementById('cBal'),cBet=document.getElementById('cBet'),cWin=document.getElementById('cWin'),
+      custom=document.getElementById('custom');
+  var busy=false, bal=50000, bet=100;
 
-  function rollTier(){
-    var r=Math.random()*100;
-    if(r<0.1) return 1;
-    if(r<1.1) return 2;
-    if(r<9.1) return 3;
-    if(r<34.1) return 4;
-    return 0;
+  function fmt(n){return n.toLocaleString('en-US');}
+  function sync(){cBal.textContent=fmt(bal);cBet.textContent=fmt(bet);}
+  sync();
+
+  function setBet(v){
+    bet=v;
+    Array.prototype.forEach.call(document.querySelectorAll('.chip'),function(c){
+      c.classList.toggle('on', parseInt(c.getAttribute('data-bet'),10)===v);
+    });
+    sync();
   }
+  Array.prototype.forEach.call(document.querySelectorAll('.chip'),function(c){
+    c.addEventListener('click',function(){custom.value='';setBet(parseInt(c.getAttribute('data-bet'),10));});
+  });
+  custom.addEventListener('input',function(){
+    var v=parseInt(custom.value,10);
+    if(!isNaN(v)&&v>=100){
+      bet=Math.min(v,50000);
+      Array.prototype.forEach.call(document.querySelectorAll('.chip'),function(c){c.classList.remove('on');});
+      sync();
+    }
+  });
+  document.getElementById('reset').addEventListener('click',function(){
+    bal=50000;cWin.textContent='0';sync();status.textContent='餘額已重置為 50,000 鑽。';
+  });
+
   function pick(a){return a[Math.floor(Math.random()*a.length)];}
-  function symbolsFor(t){
-    if(t===1) return [0,0,0];
-    if(t===2) return [1,1,1];
-    if(t===3){var f=pick([3,4,5]);return [f,f,f];}
-    if(t===4){
-      var a=pick([0,1,2,3,4,5]),b;do{b=pick([0,1,2,3,4,5]);}while(b===a);
-      var r=[a,a,b];
-      for(var i=r.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),tmp=r[i];r[i]=r[j];r[j]=tmp;}
+  function roll(){
+    var r=Math.random()*100,acc=0;
+    for(var i=0;i<OUT.length;i++){acc+=OUT[i].p;if(r<acc)return OUT[i];}
+    return OUT[OUT.length-1];
+  }
+  function symbolsFor(o){
+    if(o.s) return o.s.slice();
+    var all=[0,1,2,3,4,5],a,b,r,i,j,t;
+    if(o.k==='pair'){
+      a=pick(all);do{b=pick(all);}while(b===a);
+      r=[a,a,b];
+      for(i=r.length-1;i>0;i--){j=Math.floor(Math.random()*(i+1));t=r[i];r[i]=r[j];r[j]=t;}
       return r;
     }
-    var p=[0,1,2,3,4,5];
-    for(var i=p.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),tm=p[i];p[i]=p[j];p[j]=tm;}
+    var p=all.slice();
+    for(i=p.length-1;i>0;i--){j=Math.floor(Math.random()*(i+1));t=p[i];p[i]=p[j];p[j]=t;}
     return [p[0],p[1],p[2]];
   }
 
@@ -562,11 +538,10 @@ footer{margin-top:64px;padding-top:22px;border-top:1px solid var(--outline);colo
     reels.forEach(function(o){o.el.classList.remove('lit');o.el.style.removeProperty('--glow');});
     prize.classList.remove('on');
   }
-
   function burst(n,cls,colors){
     for(var i=0;i<n;i++){
       var d=document.createElement('i');
-      d.className='fxp '+cls;
+      d.className=cls;
       d.style.left=(4+Math.random()*92)+'%';
       d.style.animationDelay=(Math.random()*.6)+'s';
       d.style.setProperty('--x',(Math.random()*180-90)+'px');
@@ -577,71 +552,74 @@ footer{margin-top:64px;padding-top:22px;border-top:1px solid var(--outline);colo
     }
   }
 
-  function celebrate(t,syms){
-    if(t===0){status.innerHTML='這次沒中，再試一次！剩餘次數 <b>'+left+'</b>';return;}
-    var cfg=TIERS[t];
-    if(t===4){
-      var first=syms[0]===syms[1]?[0,1]:(syms[0]===syms[2]?[0,2]:[1,2]);
-      first.forEach(function(i){reels[i].el.style.setProperty('--glow','#FFFFFF');reels[i].el.classList.add('lit');});
-      status.innerHTML='中了 <b>四獎</b>：小額鑽石已入帳。剩餘次數 <b>'+left+'</b>';
+  function settle(o,syms,stake){
+    var pay=Math.floor(stake*o.m);
+    bal+=pay;cWin.textContent=fmt(pay);sync();
+
+    if(o.k==='lose'){
+      status.innerHTML='未中。押注 '+fmt(stake)+' 鑽，本局淨 <b class="dn">-'+fmt(stake)+'</b>　餘額 '+fmt(bal);
       return;
     }
-    win.style.setProperty('--glow',cfg.c);
-    win.classList.add('win');
-    if(t===3) burst(22,'cf',['#00D2BE','#60C4E8','#FFFFFF','#15EA48']);
-    if(t===2) burst(34,'cn');
-    if(t===1){
-      rays.classList.add('on');bulb.classList.add('flash');marq.classList.add('blink');
-      stage.classList.add('shake');
+    if(o.k==='pair'){
+      var first = syms[0]===syms[1]?[0,1]:(syms[0]===syms[2]?[0,2]:[1,2]);
+      first.forEach(function(i){reels[i].el.style.setProperty('--glow','#FFFFFF');reels[i].el.classList.add('lit');});
+      status.innerHTML='兩個相同，回收 '+fmt(pay)+' 鑽（×0.5）。本局淨 <b class="dn">-'+fmt(stake-pay)+'</b>　餘額 '+fmt(bal);
+      return;
+    }
+    win.style.setProperty('--glow',o.c);win.classList.add('win');
+    if(o.fx===1) burst(22,'cf',['#00D2BE','#60C4E8','#FFFFFF','#15EA48']);
+    if(o.fx===2) burst(34,'cn');
+    if(o.fx===3){
+      rays.classList.add('on');bulb.classList.add('flash');marq.classList.add('blink');stage.classList.add('shake');
       burst(46,'cn');burst(40,'cf',['#FFD100','#F6418D','#00D2BE','#FFFFFF','#FF7200']);
       setTimeout(function(){burst(30,'cn');},900);
     }
-    status.innerHTML='中了 <b>'+cfg.lv+'</b>！剩餘次數 <b>'+left+'</b>';
+    status.innerHTML=o.nm+'！押注 '+fmt(stake)+' × '+o.m+' = 派彩 <b class="up">'+fmt(pay)+'</b> 鑽　餘額 '+fmt(bal);
     setTimeout(function(){
-      prize.style.setProperty('--pc',cfg.c);
-      document.getElementById('pLv').textContent=cfg.lv;
-      document.getElementById('pNm').textContent=cfg.nm;
-      document.getElementById('pDs').textContent=cfg.ds;
+      prize.style.setProperty('--pc',o.c);
+      document.getElementById('pLv').textContent=o.nm;
+      document.getElementById('pMx').textContent='×'+o.m;
+      document.getElementById('pNm').textContent=fmt(pay)+' 鑽';
+      document.getElementById('pDs').textContent='押注 '+fmt(stake)+' 鑽，已直接入帳';
       prize.classList.add('on');
-    }, t===1?1100:600);
+    }, o.fx===3?1100:600);
   }
 
-  function spin(forced){
+  function spin(forcedKey){
     if(busy) return;
-    busy=true;clearFx();
-    spinBtn.disabled=true;
-    lever.classList.add('pull');
-    setTimeout(function(){lever.classList.remove('pull');},420);
+    var stake=bet;
+    if(stake<100){status.textContent='最低押注 100 鑽。';return;}
+    if(stake>bal){status.innerHTML='餘額不足。目前餘額 '+fmt(bal)+' 鑽，可按「重置餘額」繼續試玩。';return;}
 
-    var t = (forced===undefined||forced===null) ? rollTier() : forced;
-    var syms=symbolsFor(t);
-    if(forced===undefined||forced===null){ left=Math.max(0,left-1); }
-    status.textContent='轉動中…';
+    busy=true;clearFx();spinBtn.disabled=true;
+    lever.classList.add('pull');setTimeout(function(){lever.classList.remove('pull');},420);
+
+    bal-=stake;cWin.textContent='0';sync();
+
+    var o=null;
+    if(forcedKey){for(var i=0;i<OUT.length;i++){if(OUT[i].k===forcedKey){o=OUT[i];break;}}}
+    if(!o) o=roll();
+    var syms=symbolsFor(o);
+    status.textContent='轉動中…押注 '+fmt(stake)+' 鑽';
 
     var last=0;
-    reels.forEach(function(o,i){
-      if(o.idx>180){o.strip.style.transition='none';o.idx-=6*30;place(o,false);void o.strip.offsetHeight;}
-      var cur=o.idx%6, delta=((syms[i]-cur)%6+6)%6, loops=7+i*2;
-      o.idx+=loops*6+delta;
-      var dur=1500+i*450;last=Math.max(last,dur);
-      o.strip.style.transition='transform '+dur+'ms cubic-bezier(.12,.72,.18,1)';
-      o.strip.style.transform='translateY('+(-(o.idx*TILE)+PAD)+'px)';
+    reels.forEach(function(r,i){
+      if(r.idx>180){r.strip.style.transition='none';r.idx-=180;
+        r.strip.style.transform='translateY('+(-(r.idx*TILE)+PAD)+'px)';void r.strip.offsetHeight;}
+      var cur=r.idx%6, delta=((syms[i]-cur)%6+6)%6, loops=7+i*2, dur=1500+i*450;
+      r.idx+=loops*6+delta;last=Math.max(last,dur);
+      r.strip.style.transition='transform '+dur+'ms cubic-bezier(.12,.72,.18,1)';
+      r.strip.style.transform='translateY('+(-(r.idx*TILE)+PAD)+'px)';
     });
 
-    setTimeout(function(){
-      celebrate(t,syms);
-      busy=false;spinBtn.disabled=false;
-    }, last+180);
+    setTimeout(function(){settle(o,syms,stake);busy=false;spinBtn.disabled=false;},last+180);
   }
 
-  spinBtn.addEventListener('click',function(){
-    if(left<=0){status.innerHTML='今日次數已用完，<b>明天再來</b>或透過消費取得更多次數。';return;}
-    spin(null);
-  });
-  lever.addEventListener('click',function(){spinBtn.click();});
+  spinBtn.addEventListener('click',function(){spin(null);});
+  lever.addEventListener('click',function(){spin(null);});
   document.getElementById('pBtn').addEventListener('click',function(){prize.classList.remove('on');});
-  Array.prototype.forEach.call(document.querySelectorAll('.controls [data-t]'),function(b){
-    b.addEventListener('click',function(){spin(parseInt(b.getAttribute('data-t'),10));});
+  Array.prototype.forEach.call(document.querySelectorAll('.controls [data-k]'),function(b){
+    b.addEventListener('click',function(){spin(b.getAttribute('data-k'));});
   });
 })();
 </script>
